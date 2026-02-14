@@ -104,6 +104,18 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.testfx</groupId>
+			<artifactId>testfx-core</artifactId>
+			<version>4.0.18</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testfx</groupId>
+			<artifactId>testfx-junit</artifactId>
+			<version>4.0.18</version>
+			<scope>test</scope>
+		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.jfree/jfreechart -->
 		<dependency>
@@ -283,7 +295,29 @@
         </descriptorRefs>
       </configuration>
     </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+        <configuration>
+          <argLine>
+            --add-opens javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+            --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+            --add-opens javafx.graphics/com.sun.glass.utils=ALL-UNNAMED
+            --add-opens javafx.base/com.sun.javafx.runtime=ALL-UNNAMED
+            --add-opens com.sciome.bmdexpress2/com.sciome.bmdexpress2=ALL-UNNAMED
+            --add-opens com.sciome.bmdexpress2/com.sciome.bmdexpress2.mvp.view.mainstage=ALL-UNNAMED
+            --add-opens com.sciome.bmdexpress2/com.sciome.bmdexpress2.shared=ALL-UNNAMED
+            --add-opens com.sciome.bmdexpress2/com.sciome.bmdexpress2.shared.eventbus=ALL-UNNAMED
+            --add-opens com.sciome.bmdexpress2/com.sciome.bmdexpress2.util=ALL-UNNAMED
+            --add-reads com.sciome.bmdexpress2=ALL-UNNAMED
+          </argLine>
+          <systemPropertyVariables>
+            <testfx.headless>false</testfx.headless>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
-    
+
 </project>

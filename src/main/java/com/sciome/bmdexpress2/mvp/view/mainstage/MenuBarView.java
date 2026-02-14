@@ -36,6 +36,9 @@ import javafx.stage.Window;
 
 public class MenuBarView extends BMDExpressViewBase implements IMenuBarView, Initializable
 {
+	// Test hook: when non-null, bypasses native FileChooser
+	static java.util.function.BiFunction<Window, String, List<File>> fileChooserSupplier = null;
+
 
 	// Menu Bar
 	@FXML
@@ -138,21 +141,30 @@ public class MenuBarView extends BMDExpressViewBase implements IMenuBarView, Ini
 	public void handle_importExpressionData(ActionEvent event)
 	{
 
-		// prompt the user to select a file and then tell the presenter to fire off loading the experiment
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Import Expression Data");
-		try
+		List<File> selectedFile;
+		if (fileChooserSupplier != null)
 		{
-			File initialDirectory = new File(BMDExpressProperties.getInstance().getExpressionPath());
-			if (initialDirectory.exists())
-				fileChooser.setInitialDirectory(initialDirectory);
+			selectedFile = fileChooserSupplier.apply(
+					menuBar.getScene().getWindow(), "Import Expression Data");
 		}
-		catch (Exception e)
-		{}
-		fileChooser.getExtensionFilters()
-				.addAll(new ExtensionFilter("Text Files", "*.txt", "*.csv", "*.dat"));
+		else
+		{
+			// prompt the user to select a file and then tell the presenter to fire off loading the experiment
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Import Expression Data");
+			try
+			{
+				File initialDirectory = new File(BMDExpressProperties.getInstance().getExpressionPath());
+				if (initialDirectory.exists())
+					fileChooser.setInitialDirectory(initialDirectory);
+			}
+			catch (Exception e)
+			{}
+			fileChooser.getExtensionFilters()
+					.addAll(new ExtensionFilter("Text Files", "*.txt", "*.csv", "*.dat"));
 
-		List<File> selectedFile = fileChooser.showOpenMultipleDialog(menuBar.getScene().getWindow());
+			selectedFile = fileChooser.showOpenMultipleDialog(menuBar.getScene().getWindow());
+		}
 		if (selectedFile != null && selectedFile.size() > 0)
 		{
 
