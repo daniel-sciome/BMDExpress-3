@@ -9,7 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * Provides various ways to uniquely identify the chemical/compound being tested.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TestArticleIdentifier implements Serializable {
+public class TestArticleIdentifier implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,20 +21,23 @@ public class TestArticleIdentifier implements Serializable {
 	/**
 	 * Default constructor
 	 */
-	public TestArticleIdentifier() {
+	public TestArticleIdentifier()
+	{
 	}
 
 	/**
 	 * Constructor with name only (backwards compatibility)
 	 */
-	public TestArticleIdentifier(String name) {
+	public TestArticleIdentifier(String name)
+	{
 		this.name = name;
 	}
 
 	/**
 	 * Constructor with all identifiers
 	 */
-	public TestArticleIdentifier(String name, String casrn, String dsstox) {
+	public TestArticleIdentifier(String name, String casrn, String dsstox)
+	{
 		this.name = name;
 		this.casrn = casrn;
 		this.dsstox = dsstox;
@@ -41,34 +45,41 @@ public class TestArticleIdentifier implements Serializable {
 
 	// Getters and setters
 
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
-	public String getCasrn() {
+	public String getCasrn()
+	{
 		return casrn;
 	}
 
-	public void setCasrn(String casrn) {
+	public void setCasrn(String casrn)
+	{
 		this.casrn = casrn;
 	}
 
-	public String getDsstox() {
+	public String getDsstox()
+	{
 		return dsstox;
 	}
 
-	public void setDsstox(String dsstox) {
+	public void setDsstox(String dsstox)
+	{
 		this.dsstox = dsstox;
 	}
 
 	/**
 	 * Check if any identifier is populated
 	 */
-	public boolean hasIdentifier() {
+	public boolean hasIdentifier()
+	{
 		return (name != null && !name.isEmpty()) ||
 		       (casrn != null && !casrn.isEmpty()) ||
 		       (dsstox != null && !dsstox.isEmpty());
@@ -77,14 +88,18 @@ public class TestArticleIdentifier implements Serializable {
 	/**
 	 * Get primary identifier (prefers name, falls back to others)
 	 */
-	public String getPrimaryIdentifier() {
-		if (name != null && !name.isEmpty()) {
+	public String getPrimaryIdentifier()
+	{
+		if (name != null && !name.isEmpty())
+		{
 			return name;
 		}
-		if (casrn != null && !casrn.isEmpty()) {
+		if (casrn != null && !casrn.isEmpty())
+		{
 			return "CAS: " + casrn;
 		}
-		if (dsstox != null && !dsstox.isEmpty()) {
+		if (dsstox != null && !dsstox.isEmpty())
+		{
 			return "DSSTOX: " + dsstox;
 		}
 		return null;
@@ -93,17 +108,21 @@ public class TestArticleIdentifier implements Serializable {
 	/**
 	 * Get formatted string with all available identifiers
 	 */
-	public String getFormattedString() {
+	public String getFormattedString()
+	{
 		StringBuilder sb = new StringBuilder();
 
-		if (name != null && !name.isEmpty()) {
+		if (name != null && !name.isEmpty())
+		{
 			sb.append(name);
 		}
-		if (casrn != null && !casrn.isEmpty()) {
+		if (casrn != null && !casrn.isEmpty())
+		{
 			if (sb.length() > 0) sb.append(" | ");
 			sb.append("CAS: ").append(casrn);
 		}
-		if (dsstox != null && !dsstox.isEmpty()) {
+		if (dsstox != null && !dsstox.isEmpty())
+		{
 			if (sb.length() > 0) sb.append(" | ");
 			sb.append("DSSTOX: ").append(dsstox);
 		}
@@ -112,7 +131,8 @@ public class TestArticleIdentifier implements Serializable {
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return getFormattedString();
 	}
 }

@@ -310,6 +310,8 @@
             --add-opens com.sciome.bmdexpress2/com.sciome.bmdexpress2.shared=ALL-UNNAMED
             --add-opens com.sciome.bmdexpress2/com.sciome.bmdexpress2.shared.eventbus=ALL-UNNAMED
             --add-opens com.sciome.bmdexpress2/com.sciome.bmdexpress2.util=ALL-UNNAMED
+            --add-opens com.sciome.bmdexpress2/com.sciome.bmdexpress2.guitest.model=com.fasterxml.jackson.databind
+            --add-opens com.sciome.bmdexpress2/com.sciome.bmdexpress2.guitest=com.fasterxml.jackson.databind
             --add-reads com.sciome.bmdexpress2=ALL-UNNAMED
           </argLine>
           <systemPropertyVariables>

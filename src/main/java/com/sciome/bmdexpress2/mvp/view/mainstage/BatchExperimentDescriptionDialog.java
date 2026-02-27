@@ -30,7 +30,8 @@ import javafx.stage.Window;
  * Shows all experiments with their individual fields in a scrollable view.
  * Uses the unified ExperimentDescription class.
  */
-public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExperiment, ExperimentDescription>> {
+public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExperiment, ExperimentDescription>>
+{
 
 	private List<DoseResponseExperiment> experiments;
 	private Map<DoseResponseExperiment, ExperimentFields> fieldMap;
@@ -38,7 +39,8 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 	/**
 	 * Inner class to hold fields for one experiment
 	 */
-	private static class ExperimentFields {
+	private static class ExperimentFields
+	{
 		TextField testArticleField;
 		ComboBox<String> speciesField;
 		ComboBox<String> strainField;
@@ -50,7 +52,8 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 	/**
 	 * Create batch edit dialog
 	 */
-	public BatchExperimentDescriptionDialog(Window owner, List<DoseResponseExperiment> experiments) {
+	public BatchExperimentDescriptionDialog(Window owner, List<DoseResponseExperiment> experiments)
+	{
 		this.experiments = experiments;
 		this.fieldMap = new HashMap<>();
 
@@ -64,7 +67,8 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 		mainContent.setPadding(new Insets(10));
 
 		// Add fields for each experiment
-		for (DoseResponseExperiment experiment : experiments) {
+		for (DoseResponseExperiment experiment : experiments)
+		{
 			GridPane expGrid = createExperimentFields(experiment);
 			mainContent.getChildren().add(expGrid);
 		}
@@ -88,33 +92,42 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 		okButton.setDisable(!areAllRequiredFieldsFilled());
 
 		// Add listeners to enable/disable OK button based on field validation for all experiments
-		for (ExperimentFields fields : fieldMap.values()) {
-			fields.speciesField.valueProperty().addListener((obs, old, newVal) -> {
+		for (ExperimentFields fields : fieldMap.values())
+		{
+			fields.speciesField.valueProperty().addListener((obs, old, newVal) ->
+			{
 				okButton.setDisable(!areAllRequiredFieldsFilled());
 			});
-			fields.strainField.valueProperty().addListener((obs, old, newVal) -> {
+			fields.strainField.valueProperty().addListener((obs, old, newVal) ->
+			{
 				okButton.setDisable(!areAllRequiredFieldsFilled());
 			});
-			fields.sexField.textProperty().addListener((obs, old, newVal) -> {
+			fields.sexField.textProperty().addListener((obs, old, newVal) ->
+			{
 				okButton.setDisable(!areAllRequiredFieldsFilled());
 			});
-			fields.organField.valueProperty().addListener((obs, old, newVal) -> {
+			fields.organField.valueProperty().addListener((obs, old, newVal) ->
+			{
 				okButton.setDisable(!areAllRequiredFieldsFilled());
 			});
 		}
 
 		// Convert the result when OK is clicked
-		setResultConverter(dialogButton -> {
-			if (dialogButton == okButtonType) {
+		setResultConverter(dialogButton ->
+		{
+			if (dialogButton == okButtonType)
+			{
 				Map<DoseResponseExperiment, ExperimentDescription> results = new HashMap<>();
-				for (DoseResponseExperiment exp : experiments) {
+				for (DoseResponseExperiment exp : experiments)
+				{
 					ExperimentFields fields = fieldMap.get(exp);
 					ExperimentDescription result = new ExperimentDescription();
 					result.setSubjectType("in vivo"); // Default to in vivo
 
 					// Set test article
 					String testArticleName = getTextOrNull(fields.testArticleField.getText());
-					if (testArticleName != null) {
+					if (testArticleName != null)
+					{
 						TestArticleIdentifier testArticle = new TestArticleIdentifier();
 						testArticle.setName(testArticleName);
 						result.setTestArticle(testArticle);
@@ -135,15 +148,19 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 	/**
 	 * Create fields for one experiment
 	 */
-	private GridPane createExperimentFields(DoseResponseExperiment experiment) {
+	private GridPane createExperimentFields(DoseResponseExperiment experiment)
+	{
 		ExperimentFields fields = new ExperimentFields();
 		fieldMap.put(experiment, fields);
 
 		// Get current description or create a new one
 		ExperimentDescription currentDesc = experiment.getExperimentDescription();
-		if (currentDesc != null) {
+		if (currentDesc != null)
+		{
 			fields.initialDescription = currentDesc;
-		} else {
+		}
+		else
+		{
 			fields.initialDescription = new ExperimentDescription();
 			fields.initialDescription.setSubjectType("in vivo");
 		}
@@ -166,7 +183,8 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 		fields.testArticleField = new TextField();
 		fields.testArticleField.setPromptText("e.g., Chemical name");
 		fields.testArticleField.setPrefWidth(400);
-		if (fields.initialDescription.getTestArticle() != null && fields.initialDescription.getTestArticle().getName() != null) {
+		if (fields.initialDescription.getTestArticle() != null && fields.initialDescription.getTestArticle().getName() != null)
+		{
 			fields.testArticleField.setText(fields.initialDescription.getTestArticle().getName());
 		}
 		grid.add(fields.testArticleField, 1, row++);
@@ -177,7 +195,8 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 		fields.speciesField.setItems(FXCollections.observableArrayList(ExperimentDescription.SPECIES_VOCABULARY));
 		fields.speciesField.setEditable(true);
 		fields.speciesField.setPrefWidth(400);
-		if (fields.initialDescription.getSpecies() != null) {
+		if (fields.initialDescription.getSpecies() != null)
+		{
 			fields.speciesField.setValue(fields.initialDescription.getSpecies());
 		}
 		// No default value - user must select
@@ -194,19 +213,23 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 		updateStrainOptions(fields.strainField, selectedSpecies);
 
 		// Set initial strain value only if from file
-		if (fields.initialDescription.getStrain() != null) {
+		if (fields.initialDescription.getStrain() != null)
+		{
 			fields.strainField.setValue(fields.initialDescription.getStrain());
 		}
 		// No default value - user must select
 
 		// Add listener to update strain options when species changes
-		fields.speciesField.valueProperty().addListener((observable, oldValue, newValue) -> {
+		fields.speciesField.valueProperty().addListener((observable, oldValue, newValue) ->
+		{
 			String currentStrain = fields.strainField.getValue();
 			updateStrainOptions(fields.strainField, newValue);
 
 			// If current strain is not in the new list and is not a custom value, clear it
-			if (currentStrain != null && !fields.strainField.getItems().contains(currentStrain)) {
-				if (oldValue != null && ExperimentDescription.getStrainsForSpecies(oldValue).contains(currentStrain)) {
+			if (currentStrain != null && !fields.strainField.getItems().contains(currentStrain))
+			{
+				if (oldValue != null && ExperimentDescription.getStrainsForSpecies(oldValue).contains(currentStrain))
+				{
 					fields.strainField.setValue(null);
 				}
 			}
@@ -220,7 +243,8 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 		fields.sexField = new TextField();
 		fields.sexField.setPromptText("e.g., Male, Female, Both");
 		fields.sexField.setPrefWidth(400);
-		if (fields.initialDescription.getSex() != null) {
+		if (fields.initialDescription.getSex() != null)
+		{
 			fields.sexField.setText(fields.initialDescription.getSex());
 		}
 		// No default value - user must enter
@@ -232,7 +256,8 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 		fields.organField.setItems(FXCollections.observableArrayList(ExperimentDescription.ORGAN_VOCABULARY));
 		fields.organField.setEditable(true);
 		fields.organField.setPrefWidth(400);
-		if (fields.initialDescription.getOrgan() != null) {
+		if (fields.initialDescription.getOrgan() != null)
+		{
 			fields.organField.setValue(fields.initialDescription.getOrgan());
 		}
 		// No default value - user must select
@@ -244,8 +269,10 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 	/**
 	 * Get text from field or null if empty
 	 */
-	private String getTextOrNull(String text) {
-		if (text == null || text.trim().isEmpty()) {
+	private String getTextOrNull(String text)
+	{
+		if (text == null || text.trim().isEmpty())
+		{
 			return null;
 		}
 		return text.trim();
@@ -254,7 +281,8 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 	/**
 	 * Update strain dropdown options based on selected species
 	 */
-	private void updateStrainOptions(ComboBox<String> strainField, String species) {
+	private void updateStrainOptions(ComboBox<String> strainField, String species)
+	{
 		List<String> strains = ExperimentDescription.getStrainsForSpecies(species);
 		strainField.setItems(FXCollections.observableArrayList(strains));
 	}
@@ -262,12 +290,15 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 	/**
 	 * Check if all required fields are filled for all experiments
 	 */
-	private boolean areAllRequiredFieldsFilled() {
-		for (ExperimentFields fields : fieldMap.values()) {
+	private boolean areAllRequiredFieldsFilled()
+	{
+		for (ExperimentFields fields : fieldMap.values())
+		{
 			if (getTextOrNull(fields.speciesField.getValue()) == null ||
 				getTextOrNull(fields.strainField.getValue()) == null ||
 				getTextOrNull(fields.sexField.getText()) == null ||
-				getTextOrNull(fields.organField.getValue()) == null) {
+				getTextOrNull(fields.organField.getValue()) == null)
+				{
 				return false;
 			}
 		}
@@ -278,7 +309,8 @@ public class BatchExperimentDescriptionDialog extends Dialog<Map<DoseResponseExp
 	 * Static method to show dialog and get results
 	 */
 	public static Map<DoseResponseExperiment, ExperimentDescription> showDialog(
-			Window owner, List<DoseResponseExperiment> experiments) {
+			Window owner, List<DoseResponseExperiment> experiments)
+			{
 		BatchExperimentDescriptionDialog dialog = new BatchExperimentDescriptionDialog(owner, experiments);
 		return dialog.showAndWait().orElse(null);
 	}

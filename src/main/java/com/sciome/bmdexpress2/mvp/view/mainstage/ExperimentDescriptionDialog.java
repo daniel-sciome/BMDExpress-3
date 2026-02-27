@@ -25,7 +25,8 @@ import javafx.stage.Window;
  * Displays auto-parsed values if available and allows user editing.
  * Uses the unified ExperimentDescription class for all experiment types.
  */
-public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
+public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription>
+{
 
 	private TextField testArticleField;
 	private ComboBox<String> speciesField;
@@ -38,11 +39,15 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 	/**
 	 * Create dialog with auto-parsed description
 	 */
-	public ExperimentDescriptionDialog(Window owner, ExperimentDescription parsedDescription, String filename) {
+	public ExperimentDescriptionDialog(Window owner, ExperimentDescription parsedDescription, String filename)
+	{
 		// Use the description directly or create a new one
-		if (parsedDescription != null) {
+		if (parsedDescription != null)
+		{
 			this.initialDescription = parsedDescription;
-		} else {
+		}
+		else
+		{
 			this.initialDescription = new ExperimentDescription();
 			this.initialDescription.setSubjectType("in vivo");
 		}
@@ -68,7 +73,8 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 		testArticleField = new TextField();
 		testArticleField.setPromptText("e.g., Perfluoro-3-methoxypropanoic acid");
 		testArticleField.setPrefWidth(300);
-		if (initialDescription.getTestArticle() != null && initialDescription.getTestArticle().getName() != null) {
+		if (initialDescription.getTestArticle() != null && initialDescription.getTestArticle().getName() != null)
+		{
 			testArticleField.setText(initialDescription.getTestArticle().getName());
 		}
 		grid.add(testArticleLabel, 0, 1);
@@ -81,7 +87,8 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 		speciesField.setEditable(true);
 		speciesField.setPromptText("Select or enter species");
 		speciesField.setPrefWidth(300);
-		if (initialDescription.getSpecies() != null) {
+		if (initialDescription.getSpecies() != null)
+		{
 			speciesField.setValue(initialDescription.getSpecies());
 		}
 		// No default value - user must select
@@ -100,20 +107,24 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 		updateStrainOptions(selectedSpecies);
 
 		// Set initial strain value only if from file
-		if (initialDescription.getStrain() != null) {
+		if (initialDescription.getStrain() != null)
+		{
 			strainField.setValue(initialDescription.getStrain());
 		}
 		// No default value - user must select
 
 		// Add listener to update strain options when species changes
-		speciesField.valueProperty().addListener((observable, oldValue, newValue) -> {
+		speciesField.valueProperty().addListener((observable, oldValue, newValue) ->
+		{
 			String currentStrain = strainField.getValue();
 			updateStrainOptions(newValue);
 
 			// If current strain is not in the new list and is not a custom value, clear it
-			if (currentStrain != null && !strainField.getItems().contains(currentStrain)) {
+			if (currentStrain != null && !strainField.getItems().contains(currentStrain))
+			{
 				// Keep custom values, but if it was from old species vocabulary, clear it
-				if (oldValue != null && ExperimentDescription.getStrainsForSpecies(oldValue).contains(currentStrain)) {
+				if (oldValue != null && ExperimentDescription.getStrainsForSpecies(oldValue).contains(currentStrain))
+				{
 					strainField.setValue(null);
 				}
 			}
@@ -128,7 +139,8 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 		sexField = new TextField();
 		sexField.setPromptText("e.g., Male, Female, Both");
 		sexField.setPrefWidth(300);
-		if (initialDescription.getSex() != null) {
+		if (initialDescription.getSex() != null)
+		{
 			sexField.setText(initialDescription.getSex());
 		}
 		// No default value - user must enter
@@ -142,7 +154,8 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 		organField.setEditable(true);
 		organField.setPromptText("Select or enter organ");
 		organField.setPrefWidth(300);
-		if (initialDescription.getOrgan() != null) {
+		if (initialDescription.getOrgan() != null)
+		{
 			organField.setValue(initialDescription.getOrgan());
 		}
 		// No default value - user must select
@@ -168,28 +181,35 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 		okButton.setDisable(!areRequiredFieldsFilled());
 
 		// Add listeners to enable/disable OK button based on field validation
-		speciesField.valueProperty().addListener((obs, old, newVal) -> {
+		speciesField.valueProperty().addListener((obs, old, newVal) ->
+		{
 			okButton.setDisable(!areRequiredFieldsFilled());
 		});
-		strainField.valueProperty().addListener((obs, old, newVal) -> {
+		strainField.valueProperty().addListener((obs, old, newVal) ->
+		{
 			okButton.setDisable(!areRequiredFieldsFilled());
 		});
-		sexField.textProperty().addListener((obs, old, newVal) -> {
+		sexField.textProperty().addListener((obs, old, newVal) ->
+		{
 			okButton.setDisable(!areRequiredFieldsFilled());
 		});
-		organField.valueProperty().addListener((obs, old, newVal) -> {
+		organField.valueProperty().addListener((obs, old, newVal) ->
+		{
 			okButton.setDisable(!areRequiredFieldsFilled());
 		});
 
 		// Convert the result when OK is clicked
-		setResultConverter(dialogButton -> {
-			if (dialogButton == okButtonType) {
+		setResultConverter(dialogButton ->
+		{
+			if (dialogButton == okButtonType)
+			{
 				ExperimentDescription result = new ExperimentDescription();
 				result.setSubjectType("in vivo"); // Default to in vivo
 
 				// Set test article
 				String testArticleName = getTextOrNull(testArticleField.getText());
-				if (testArticleName != null) {
+				if (testArticleName != null)
+				{
 					TestArticleIdentifier testArticle = new TestArticleIdentifier();
 					testArticle.setName(testArticleName);
 					result.setTestArticle(testArticle);
@@ -211,8 +231,10 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 	/**
 	 * Get text from field or null if empty
 	 */
-	private String getTextOrNull(String text) {
-		if (text == null || text.trim().isEmpty()) {
+	private String getTextOrNull(String text)
+	{
+		if (text == null || text.trim().isEmpty())
+		{
 			return null;
 		}
 		return text.trim();
@@ -221,7 +243,8 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 	/**
 	 * Update strain dropdown options based on selected species
 	 */
-	private void updateStrainOptions(String species) {
+	private void updateStrainOptions(String species)
+	{
 		List<String> strains = ExperimentDescription.getStrainsForSpecies(species);
 		strainField.setItems(FXCollections.observableArrayList(strains));
 	}
@@ -229,7 +252,8 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 	/**
 	 * Check if all required fields are filled
 	 */
-	private boolean areRequiredFieldsFilled() {
+	private boolean areRequiredFieldsFilled()
+	{
 		return getTextOrNull(speciesField.getValue()) != null &&
 			   getTextOrNull(strainField.getValue()) != null &&
 			   getTextOrNull(sexField.getText()) != null &&
@@ -239,7 +263,8 @@ public class ExperimentDescriptionDialog extends Dialog<ExperimentDescription> {
 	/**
 	 * Static method to show dialog and get result
 	 */
-	public static ExperimentDescription showDialog(Window owner, ExperimentDescription parsedDescription, String filename) {
+	public static ExperimentDescription showDialog(Window owner, ExperimentDescription parsedDescription, String filename)
+	{
 		ExperimentDescriptionDialog dialog = new ExperimentDescriptionDialog(owner, parsedDescription, filename);
 		return dialog.showAndWait().orElse(null);
 	}

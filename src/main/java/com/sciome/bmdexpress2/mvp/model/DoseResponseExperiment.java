@@ -334,6 +334,13 @@ public class DoseResponseExperiment extends BMDExpressAnalysisDataSet
 					.add("Logtransformation set to default of: " + LogTransformationEnum.BASE2);
 		}
 
+		// experimentDescription is a later addition. Older project files won't have it.
+		// null is acceptable - user can set metadata later via the edit dialog.
+		if (this.experimentDescription == null)
+		{
+			this.experimentDescription = null;
+		}
+
 	}
 
 	@Override

@@ -13,71 +13,87 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * Vocabulary values are loaded from vocabulary.yml via VocabularyConfig.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ExperimentDescription implements Serializable {
+public class ExperimentDescription implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
 	// Vocabulary accessors - delegate to VocabularyConfig for externalized values
-	public static List<String> getProviderVocabulary() {
+	public static List<String> getProviderVocabulary()
+	{
 		return VocabularyConfig.getInstance().getProviders();
 	}
 
-	public static List<String> getPlatformVocabulary() {
+	public static List<String> getPlatformVocabulary()
+	{
 		return VocabularyConfig.getInstance().getPlatforms();
 	}
 
-	public static List<String> getSubjectTypeVocabulary() {
+	public static List<String> getSubjectTypeVocabulary()
+	{
 		return VocabularyConfig.getInstance().getSubjectTypes();
 	}
 
-	public static List<String> getArticleRouteVocabulary() {
+	public static List<String> getArticleRouteVocabulary()
+	{
 		return VocabularyConfig.getInstance().getArticleRoutes();
 	}
 
-	public static List<String> getArticleVehicleVocabulary() {
+	public static List<String> getArticleVehicleVocabulary()
+	{
 		return VocabularyConfig.getInstance().getArticleVehicles();
 	}
 
-	public static List<String> getAdministrationMeansVocabulary() {
+	public static List<String> getAdministrationMeansVocabulary()
+	{
 		return VocabularyConfig.getInstance().getAdministrationMeans();
 	}
 
-	public static List<String> getInVitroDurationVocabulary() {
+	public static List<String> getInVitroDurationVocabulary()
+	{
 		return VocabularyConfig.getInstance().getInVitroDurations();
 	}
 
-	public static List<String> getInVivoDurationVocabulary() {
+	public static List<String> getInVivoDurationVocabulary()
+	{
 		return VocabularyConfig.getInstance().getInVivoDurations();
 	}
 
-	public static List<String> getStudyDurationVocabulary() {
+	public static List<String> getStudyDurationVocabulary()
+	{
 		return VocabularyConfig.getInstance().getAllDurations();
 	}
 
-	public static List<String> getArticleTypeVocabulary() {
+	public static List<String> getArticleTypeVocabulary()
+	{
 		return VocabularyConfig.getInstance().getArticleTypes();
 	}
 
-	public static List<String> getSpeciesVocabulary() {
+	public static List<String> getSpeciesVocabulary()
+	{
 		return VocabularyConfig.getInstance().getSpecies();
 	}
 
-	public static List<String> getSexVocabulary() {
+	public static List<String> getSexVocabulary()
+	{
 		return VocabularyConfig.getInstance().getSexes();
 	}
 
-	public static List<String> getOrganVocabulary() {
+	public static List<String> getOrganVocabulary()
+	{
 		return VocabularyConfig.getInstance().getOrgans();
 	}
 
-	public static Map<String, List<String>> getStrainsBySpecies() {
+	public static Map<String, List<String>> getStrainsBySpecies()
+	{
 		return VocabularyConfig.getInstance().getStrains();
 	}
 
 	/**
 	 * Get strains for a specific species
 	 */
-	public static List<String> getStrainsForSpecies(String species) {
+	public static List<String> getStrainsForSpecies(String species)
+	{
 		return VocabularyConfig.getInstance().getStrainsForSpecies(species);
 	}
 
@@ -121,120 +137,149 @@ public class ExperimentDescription implements Serializable {
 	/**
 	 * Default constructor
 	 */
-	public ExperimentDescription() {
+	public ExperimentDescription()
+	{
 	}
 
 	// Getters and setters
 
-	public TestArticleIdentifier getTestArticle() {
+	public TestArticleIdentifier getTestArticle()
+	{
 		return testArticle;
 	}
 
-	public void setTestArticle(TestArticleIdentifier testArticle) {
+	public void setTestArticle(TestArticleIdentifier testArticle)
+	{
 		this.testArticle = testArticle;
 	}
 
-	public String getStudyDuration() {
+	public String getStudyDuration()
+	{
 		return studyDuration;
 	}
 
-	public void setStudyDuration(String studyDuration) {
+	public void setStudyDuration(String studyDuration)
+	{
 		this.studyDuration = studyDuration;
 	}
 
-	public String getPlatform() {
+	public String getPlatform()
+	{
 		return platform;
 	}
 
-	public void setPlatform(String platform) {
+	public void setPlatform(String platform)
+	{
 		this.platform = platform;
 	}
 
-	public String getProvider() {
+	public String getProvider()
+	{
 		return provider;
 	}
 
-	public void setProvider(String provider) {
+	public void setProvider(String provider)
+	{
 		this.provider = provider;
 	}
 
-	public String getSubjectType() {
+	public String getSubjectType()
+	{
 		return subjectType;
 	}
 
-	public void setSubjectType(String subjectType) {
+	public void setSubjectType(String subjectType)
+	{
 		this.subjectType = subjectType;
 	}
 
-	public String getArticleRoute() {
+	public String getArticleRoute()
+	{
 		return articleRoute;
 	}
 
-	public void setArticleRoute(String articleRoute) {
+	public void setArticleRoute(String articleRoute)
+	{
 		this.articleRoute = articleRoute;
 	}
 
-	public String getArticleVehicle() {
+	public String getArticleVehicle()
+	{
 		return articleVehicle;
 	}
 
-	public void setArticleVehicle(String articleVehicle) {
+	public void setArticleVehicle(String articleVehicle)
+	{
 		this.articleVehicle = articleVehicle;
 	}
 
-	public String getAdministrationMeans() {
+	public String getAdministrationMeans()
+	{
 		return administrationMeans;
 	}
 
-	public void setAdministrationMeans(String administrationMeans) {
+	public void setAdministrationMeans(String administrationMeans)
+	{
 		this.administrationMeans = administrationMeans;
 	}
 
-	public String getArticleType() {
+	public String getArticleType()
+	{
 		return articleType;
 	}
 
-	public void setArticleType(String articleType) {
+	public void setArticleType(String articleType)
+	{
 		this.articleType = articleType;
 	}
 
-	public String getSpecies() {
+	public String getSpecies()
+	{
 		return species;
 	}
 
-	public void setSpecies(String species) {
+	public void setSpecies(String species)
+	{
 		this.species = species;
 	}
 
-	public String getStrain() {
+	public String getStrain()
+	{
 		return strain;
 	}
 
-	public void setStrain(String strain) {
+	public void setStrain(String strain)
+	{
 		this.strain = strain;
 	}
 
-	public String getSex() {
+	public String getSex()
+	{
 		return sex;
 	}
 
-	public void setSex(String sex) {
+	public void setSex(String sex)
+	{
 		this.sex = sex;
 	}
 
-	public String getOrgan() {
+	public String getOrgan()
+	{
 		return organ;
 	}
 
-	public void setOrgan(String organ) {
+	public void setOrgan(String organ)
+	{
 		this.organ = organ;
 	}
 
-	public String getCellLine() {
+	public String getCellLine()
+	{
 		return cellLine;
 	}
 
-	public void setCellLine(String cellLine) {
+	public void setCellLine(String cellLine)
+	{
 		this.cellLine = cellLine;
 	}
 
@@ -243,28 +288,32 @@ public class ExperimentDescription implements Serializable {
 	/**
 	 * Get the experiment type based on subject type
 	 */
-	public String getExperimentType() {
+	public String getExperimentType()
+	{
 		return subjectType != null ? subjectType : "in vivo";
 	}
 
 	/**
 	 * Check if this is an in vivo experiment
 	 */
-	public boolean isInVivo() {
+	public boolean isInVivo()
+	{
 		return !"in vitro".equals(subjectType);
 	}
 
 	/**
 	 * Check if this is an in vitro experiment
 	 */
-	public boolean isInVitro() {
+	public boolean isInVitro()
+	{
 		return "in vitro".equals(subjectType);
 	}
 
 	/**
 	 * Check if any description fields are populated
 	 */
-	public boolean hasDescription() {
+	public boolean hasDescription()
+	{
 		return (testArticle != null && testArticle.hasIdentifier()) ||
 		       (studyDuration != null && !studyDuration.isEmpty()) ||
 		       (platform != null && !platform.isEmpty()) ||
@@ -285,29 +334,36 @@ public class ExperimentDescription implements Serializable {
 	 * Get a single-line string suitable for status bar display.
 	 * Fields are separated by " | " delimiter.
 	 */
-	public String getStatusBarString() {
+	public String getStatusBarString()
+	{
 		StringBuilder sb = new StringBuilder();
 
-		if (testArticle != null && testArticle.getPrimaryIdentifier() != null) {
+		if (testArticle != null && testArticle.getPrimaryIdentifier() != null)
+		{
 			sb.append(" | Test Article: ").append(testArticle.getPrimaryIdentifier());
 		}
 
 		// In vivo fields
-		if (species != null && !species.isEmpty()) {
+		if (species != null && !species.isEmpty())
+		{
 			sb.append(" | Species: ").append(species);
 		}
-		if (strain != null && !strain.isEmpty()) {
+		if (strain != null && !strain.isEmpty())
+		{
 			sb.append(" | Strain: ").append(strain);
 		}
-		if (sex != null && !sex.isEmpty()) {
+		if (sex != null && !sex.isEmpty())
+		{
 			sb.append(" | Sex: ").append(sex);
 		}
-		if (organ != null && !organ.isEmpty()) {
+		if (organ != null && !organ.isEmpty())
+		{
 			sb.append(" | Organ: ").append(organ);
 		}
 
 		// In vitro field
-		if (cellLine != null && !cellLine.isEmpty()) {
+		if (cellLine != null && !cellLine.isEmpty())
+		{
 			sb.append(" | Cell Line: ").append(cellLine);
 		}
 
@@ -317,63 +373,78 @@ public class ExperimentDescription implements Serializable {
 	/**
 	 * Get a formatted string representation of the description
 	 */
-	public String getFormattedString() {
+	public String getFormattedString()
+	{
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Experiment Type: ").append(getExperimentType()).append("\n");
 
-		if (testArticle != null && testArticle.hasIdentifier()) {
+		if (testArticle != null && testArticle.hasIdentifier())
+		{
 			sb.append("Test Article: ").append(testArticle.getFormattedString()).append("\n");
 		}
 
-		if (subjectType != null && !subjectType.isEmpty()) {
+		if (subjectType != null && !subjectType.isEmpty())
+		{
 			sb.append("Subject Type: ").append(subjectType).append("\n");
 		}
 
 		// In vivo specific fields
-		if (species != null && !species.isEmpty()) {
+		if (species != null && !species.isEmpty())
+		{
 			sb.append("Species: ").append(species).append("\n");
 		}
-		if (strain != null && !strain.isEmpty()) {
+		if (strain != null && !strain.isEmpty())
+		{
 			sb.append("Strain: ").append(strain).append("\n");
 		}
-		if (sex != null && !sex.isEmpty()) {
+		if (sex != null && !sex.isEmpty())
+		{
 			sb.append("Sex: ").append(sex).append("\n");
 		}
-		if (organ != null && !organ.isEmpty()) {
+		if (organ != null && !organ.isEmpty())
+		{
 			sb.append("Organ: ").append(organ).append("\n");
 		}
 
 		// In vitro specific field
-		if (cellLine != null && !cellLine.isEmpty()) {
+		if (cellLine != null && !cellLine.isEmpty())
+		{
 			sb.append("Cell Line: ").append(cellLine).append("\n");
 		}
 
-		if (articleRoute != null && !articleRoute.isEmpty()) {
+		if (articleRoute != null && !articleRoute.isEmpty())
+		{
 			sb.append("Article Route: ").append(articleRoute).append("\n");
 		}
 
-		if (articleVehicle != null && !articleVehicle.isEmpty()) {
+		if (articleVehicle != null && !articleVehicle.isEmpty())
+		{
 			sb.append("Article Vehicle: ").append(articleVehicle).append("\n");
 		}
 
-		if (administrationMeans != null && !administrationMeans.isEmpty()) {
+		if (administrationMeans != null && !administrationMeans.isEmpty())
+		{
 			sb.append("Administration Means: ").append(administrationMeans).append("\n");
 		}
 
-		if (studyDuration != null && !studyDuration.isEmpty()) {
+		if (studyDuration != null && !studyDuration.isEmpty())
+		{
 			sb.append("Study Duration: ").append(studyDuration).append("\n");
 		}
 
-		if (platform != null && !platform.isEmpty()) {
+		if (platform != null && !platform.isEmpty())
+		{
 			sb.append("Platform: ").append(platform).append("\n");
 		}
 
-		if (provider != null && !provider.isEmpty()) {
+		if (provider != null && !provider.isEmpty())
+		{
 			sb.append("Provider: ").append(provider).append("\n");
 		}
 
-		if (articleType != null && !articleType.isEmpty()) {
+		if (articleType != null && !articleType.isEmpty())
+		{
 			sb.append("Article Type: ").append(articleType).append("\n");
 		}
 
@@ -383,10 +454,12 @@ public class ExperimentDescription implements Serializable {
 	/**
 	 * Create a copy of this description
 	 */
-	public ExperimentDescription copy() {
+	public ExperimentDescription copy()
+	{
 		ExperimentDescription copy = new ExperimentDescription();
 
-		if (testArticle != null) {
+		if (testArticle != null)
+		{
 			copy.setTestArticle(new TestArticleIdentifier(
 				testArticle.getName(),
 				testArticle.getCasrn(),
@@ -410,7 +483,8 @@ public class ExperimentDescription implements Serializable {
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return getFormattedString();
 	}
 }

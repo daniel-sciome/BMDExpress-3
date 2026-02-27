@@ -18,79 +18,89 @@ import java.util.List;
  *
  * @param <F> The type of FactsBase this validator operates on
  */
-public abstract class ValidatorBase<F extends FactsBase> {
+public abstract class ValidatorBase<F extends FactsBase>
+{
 
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final Rules rules = new Rules();
-    private final RulesEngine rulesEngine = new DefaultRulesEngine();
+	private final Rules rules = new Rules();
+	private final RulesEngine rulesEngine = new DefaultRulesEngine();
 
-    /**
-     * Constructor - registers rules on creation
-     */
-    protected ValidatorBase() {
-        registerRules(rules);
-        logger.info("Registered {} validation rules for {}", rules.size(), getClass().getSimpleName());
-    }
+	/**
+	 * Constructor - registers rules on creation
+	 */
+	protected ValidatorBase()
+	{
+		registerRules(rules);
+		logger.info("Registered {} validation rules for {}", rules.size(), getClass().getSimpleName());
+	}
 
-    /**
-     * Register all rules. Subclasses must implement this.
-     */
-    protected abstract void registerRules(Rules rules);
+	/**
+	 * Register all rules. Subclasses must implement this.
+	 */
+	protected abstract void registerRules(Rules rules);
 
-    /**
-     * Get the key used to store facts in the Easy Rules Facts object.
-     * Default is "facts", but subclasses can override for clarity.
-     */
-    protected String getFactsKey() {
-        return "facts";
-    }
+	/**
+	 * Get the key used to store facts in the Easy Rules Facts object.
+	 * Default is "facts", but subclasses can override for clarity.
+	 */
+	protected String getFactsKey()
+	{
+		return "facts";
+	}
 
-    /**
-     * Validate facts using the rules engine.
-     * After calling this method, check facts.hasErrors() and facts.getErrors()
-     * to retrieve validation results.
-     *
-     * @param facts The facts to validate
-     */
-    public void validate(F facts) {
-        logger.debug("Validating with {} rules", rules.size());
+	/**
+	 * Validate facts using the rules engine.
+	 * After calling this method, check facts.hasErrors() and facts.getErrors()
+	 * to retrieve validation results.
+	 *
+	 * @param facts The facts to validate
+	 */
+	public void validate(F facts)
+	{
+		logger.debug("Validating with {} rules", rules.size());
 
-        Facts easyFacts = new Facts();
-        easyFacts.put(getFactsKey(), facts);
+		Facts easyFacts = new Facts();
+		easyFacts.put(getFactsKey(), facts);
 
-        rulesEngine.fire(rules, easyFacts);
+		rulesEngine.fire(rules, easyFacts);
 
-        if (facts.hasErrors()) {
-            logger.debug("Validation found {} errors", facts.getErrors().size());
-        } else {
-            logger.debug("Validation passed with no errors");
-        }
+		if (facts.hasErrors())
+		{
+			logger.debug("Validation found {} errors", facts.getErrors().size());
+		}
+		else
+		{
+			logger.debug("Validation passed with no errors");
+		}
 
-        if (facts.hasWarnings()) {
-            logger.debug("Validation found {} warnings", facts.getWarnings().size());
-        }
-    }
+		if (facts.hasWarnings())
+		{
+			logger.debug("Validation found {} warnings", facts.getWarnings().size());
+		}
+	}
 
-    /**
-     * Convenience method to validate and return errors.
-     *
-     * @param facts The facts to validate
-     * @return List of error messages, empty if valid
-     */
-    public List<String> validateAndGetErrors(F facts) {
-        validate(facts);
-        return facts.getErrors();
-    }
+	/**
+	 * Convenience method to validate and return errors.
+	 *
+	 * @param facts The facts to validate
+	 * @return List of error messages, empty if valid
+	 */
+	public List<String> validateAndGetErrors(F facts)
+	{
+		validate(facts);
+		return facts.getErrors();
+	}
 
-    /**
-     * Convenience method to check if facts are valid.
-     *
-     * @param facts The facts to validate
-     * @return true if valid (no errors), false otherwise
-     */
-    public boolean isValid(F facts) {
-        validate(facts);
-        return !facts.hasErrors();
-    }
+	/**
+	 * Convenience method to check if facts are valid.
+	 *
+	 * @param facts The facts to validate
+	 * @return true if valid (no errors), false otherwise
+	 */
+	public boolean isValid(F facts)
+	{
+		validate(facts);
+		return !facts.hasErrors();
+	}
 }
