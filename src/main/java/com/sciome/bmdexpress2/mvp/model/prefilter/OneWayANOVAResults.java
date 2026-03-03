@@ -16,6 +16,7 @@ import com.sciome.bmdexpress2.mvp.model.DoseResponseExperiment;
 import com.sciome.bmdexpress2.mvp.model.IStatModelProcessable;
 import com.sciome.bmdexpress2.mvp.model.LogTransformationEnum;
 import com.sciome.bmdexpress2.mvp.model.info.AnalysisInfo;
+import com.sciome.bmdexpress2.mvp.model.info.ExperimentDescription;
 import com.sciome.bmdexpress2.mvp.model.probe.ProbeResponse;
 import com.sciome.bmdexpress2.mvp.model.refgene.ReferenceGeneAnnotation;
 
@@ -218,6 +219,19 @@ public class OneWayANOVAResults extends BMDExpressAnalysisDataSet
 		columnHeader.add("NOTEL");
 		columnHeader.add("LOTEL");
 
+		// Append experiment metadata column headers (Test Article, CASRN, Species, etc.)
+		// so metadata is visible in the table view and exports for this prefilter result.
+		// Guarded for old .bm2 files that may not have experiment descriptions.
+		if (this.doseResponseExperiment != null)
+		{
+			try
+			{
+				columnHeader.addAll(
+					this.doseResponseExperiment.getExperimentDescription().getColumnHeaders());
+			}
+			catch (Exception e) { /* metadata unavailable — skip columns */ }
+		}
+
 	}
 
 	@Override
@@ -247,9 +261,24 @@ public class OneWayANOVAResults extends BMDExpressAnalysisDataSet
 				probeToGeneMap.put(refGeneAnnotation.getProbe().getId(), refGeneAnnotation);
 			}
 		}
+
+		// Get metadata values once — they're the same for every row in this result set
+		// because all rows come from the same experiment.
+		// Falls back to empty list for old .bm2 files without metadata.
+		List<Object> metadataValues = java.util.Collections.emptyList();
+		if (this.doseResponseExperiment != null)
+		{
+			try
+			{
+				metadataValues =
+					this.doseResponseExperiment.getExperimentDescription().getColumnValues();
+			}
+			catch (Exception e) { /* metadata unavailable — rows get no metadata */ }
+		}
+
 		for (OneWayANOVAResult oneWayResult : oneWayANOVAResults)
 		{
-			oneWayResult.createRowData(probeToGeneMap);
+			oneWayResult.createRowData(probeToGeneMap, metadataValues);
 		}
 	}
 

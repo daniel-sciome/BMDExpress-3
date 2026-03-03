@@ -132,11 +132,36 @@ public class ProbeStatResult extends BMDExpressAnalysisRow implements Serializab
 		this.chiSquaredResults = chiSquaredResults;
 	}
 
-	// calculate columns and rows. The purpose of this is to agregate all the results
-	// so the data can be viewed by a table.
+	/**
+	 * Backward-compatible overload: creates row data without experiment metadata.
+	 * Used by code that doesn't have access to the experiment description.
+	 */
 	public void createRowData(Map<String, ReferenceGeneAnnotation> referenceGeneAnnotations,
 			Double adjustedPValue, Double pValue, Double bestFoldChange, List<Float> foldChanges, Float loel,
 			Float noel, Float wAUC)
+	{
+		createRowData(referenceGeneAnnotations, adjustedPValue, pValue, bestFoldChange, foldChanges,
+				loel, noel, wAUC, java.util.Collections.emptyList());
+	}
+
+	/**
+	 * Creates row data for table display and export.
+	 * Aggregates all stat results, prefilter metrics, and experiment metadata
+	 * into a single row list matching BMDResult.fillColumnHeader() order.
+	 *
+	 * @param referenceGeneAnnotations probe ID to gene annotation map
+	 * @param adjustedPValue prefilter adjusted p-value (may be null)
+	 * @param pValue prefilter p-value (may be null)
+	 * @param bestFoldChange maximum fold change across doses
+	 * @param foldChanges per-dose fold change values
+	 * @param loel lowest observed effect level dose
+	 * @param noel no observed effect level dose
+	 * @param wAUC weighted area under the curve (may be null)
+	 * @param metadataValues experiment metadata values to append at the end
+	 */
+	public void createRowData(Map<String, ReferenceGeneAnnotation> referenceGeneAnnotations,
+			Double adjustedPValue, Double pValue, Double bestFoldChange, List<Float> foldChanges, Float loel,
+			Float noel, Float wAUC, List<Object> metadataValues)
 	{
 		row = new ArrayList<Object>();
 		row.add(probeResponse.getProbe().getId());
@@ -281,6 +306,10 @@ public class ProbeStatResult extends BMDExpressAnalysisRow implements Serializab
 
 		for (Float fc : foldChanges)
 			row.add(fc);
+
+		// Append experiment metadata values (Test Article, CASRN, Species, etc.)
+		// at the end of the row to match the metadata columns in the header.
+		row.addAll(metadataValues);
 
 	}
 

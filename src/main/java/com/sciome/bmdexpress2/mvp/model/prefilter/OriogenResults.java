@@ -12,6 +12,7 @@ import com.sciome.bmdexpress2.mvp.model.DoseResponseExperiment;
 import com.sciome.bmdexpress2.mvp.model.IStatModelProcessable;
 import com.sciome.bmdexpress2.mvp.model.LogTransformationEnum;
 import com.sciome.bmdexpress2.mvp.model.info.AnalysisInfo;
+import com.sciome.bmdexpress2.mvp.model.info.ExperimentDescription;
 import com.sciome.bmdexpress2.mvp.model.probe.ProbeResponse;
 import com.sciome.bmdexpress2.mvp.model.refgene.ReferenceGeneAnnotation;
 
@@ -206,6 +207,18 @@ public class OriogenResults extends BMDExpressAnalysisDataSet
 
 		columnHeader.add("NOTEL");
 		columnHeader.add("LOTEL");
+
+		// Append experiment metadata column headers (Test Article, CASRN, Species, etc.)
+		// Guarded for old .bm2 files that may not have experiment descriptions.
+		if (this.doseResponseExperiment != null)
+		{
+			try
+			{
+				columnHeader.addAll(
+					this.doseResponseExperiment.getExperimentDescription().getColumnHeaders());
+			}
+			catch (Exception e) { /* metadata unavailable — skip columns */ }
+		}
 	}
 
 	@Override
@@ -235,9 +248,23 @@ public class OriogenResults extends BMDExpressAnalysisDataSet
 				probeToGeneMap.put(refGeneAnnotation.getProbe().getId(), refGeneAnnotation);
 			}
 		}
+
+		// Get metadata values once — same for every row in this result set.
+		// Falls back to empty list for old .bm2 files without metadata.
+		List<Object> metadataValues = java.util.Collections.emptyList();
+		if (this.doseResponseExperiment != null)
+		{
+			try
+			{
+				metadataValues =
+					this.doseResponseExperiment.getExperimentDescription().getColumnValues();
+			}
+			catch (Exception e) { /* metadata unavailable — rows get no metadata */ }
+		}
+
 		for (OriogenResult oriogenResult : oriogenResults)
 		{
-			oriogenResult.createRowData(probeToGeneMap);
+			oriogenResult.createRowData(probeToGeneMap, metadataValues);
 		}
 	}
 

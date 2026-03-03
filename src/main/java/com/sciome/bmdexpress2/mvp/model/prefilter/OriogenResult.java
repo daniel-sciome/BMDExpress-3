@@ -137,7 +137,23 @@ public class OriogenResult extends BMDExpressAnalysisRow implements Serializable
 		this.bestFoldChange = bestFoldChange;
 	}
 
+	/**
+	 * Backward-compatible overload: creates row data without experiment metadata.
+	 */
 	public void createRowData(Map<String, ReferenceGeneAnnotation> referenceGeneAnnotations)
+	{
+		createRowData(referenceGeneAnnotations, java.util.Collections.emptyList());
+	}
+
+	/**
+	 * Creates the row data for table display and export.
+	 * Builds the row list in the same order as OriogenResults.fillColumnHeader().
+	 *
+	 * @param referenceGeneAnnotations map of probe ID to gene annotation for gene symbol lookup
+	 * @param metadataValues experiment metadata values to append at the end
+	 */
+	public void createRowData(Map<String, ReferenceGeneAnnotation> referenceGeneAnnotations,
+			List<Object> metadataValues)
 	{
 		if (row != null)
 		{
@@ -199,6 +215,9 @@ public class OriogenResult extends BMDExpressAnalysisRow implements Serializable
 		}
 		row.add(noelDose);
 		row.add(loelDose);
+
+		// Append experiment metadata values at the end of the row.
+		row.addAll(metadataValues);
 	}
 
 	public List<Float> getNoelLoelPValues()

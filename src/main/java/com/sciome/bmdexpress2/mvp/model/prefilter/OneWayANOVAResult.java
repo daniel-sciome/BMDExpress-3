@@ -177,7 +177,24 @@ public class OneWayANOVAResult extends BMDExpressAnalysisRow
 		this.bestFoldChange = bestFoldChange;
 	}
 
+	/**
+	 * Backward-compatible overload: creates row data without experiment metadata.
+	 * Delegates to the metadata-aware overload with an empty metadata list.
+	 */
 	public void createRowData(Map<String, ReferenceGeneAnnotation> referenceGeneAnnotations)
+	{
+		createRowData(referenceGeneAnnotations, java.util.Collections.emptyList());
+	}
+
+	/**
+	 * Creates the row data for table display and export.
+	 * Builds the row list in the same order as OneWayANOVAResults.fillColumnHeader().
+	 *
+	 * @param referenceGeneAnnotations map of probe ID to gene annotation for gene symbol lookup
+	 * @param metadataValues experiment metadata values to append at the end (from ExperimentDescription.getColumnValues())
+	 */
+	public void createRowData(Map<String, ReferenceGeneAnnotation> referenceGeneAnnotations,
+			List<Object> metadataValues)
 	{
 		if (row != null)
 		{
@@ -243,6 +260,10 @@ public class OneWayANOVAResult extends BMDExpressAnalysisRow
 
 		row.add(noelDose);
 		row.add(loelDose);
+
+		// Append experiment metadata values (Test Article, CASRN, Species, etc.)
+		// at the end of the row to match the metadata columns in the header.
+		row.addAll(metadataValues);
 	}
 
 	public List<Float> getNoelLoelPValues()

@@ -1,6 +1,7 @@
 package com.sciome.bmdexpress2.mvp.model.info;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -133,6 +134,69 @@ public class ExperimentDescription implements Serializable
 
 	// In vitro specific field
 	private String cellLine;
+
+	// ── Column name constants for table display and export ──
+	// These 8 columns represent the scientifically meaningful metadata fields
+	// that should appear in every table view and export throughout the pipeline.
+	public static final String COL_TEST_ARTICLE = "Test Article";
+	public static final String COL_CASRN = "CASRN";
+	public static final String COL_SPECIES = "Species";
+	public static final String COL_STRAIN = "Strain";
+	public static final String COL_SEX = "Sex";
+	public static final String COL_ORGAN = "Organ";
+	public static final String COL_CELL_LINE = "Cell Line";
+	public static final String COL_STUDY_DURATION = "Study Duration";
+
+	/**
+	 * Factory method that creates an empty ExperimentDescription with all fields null.
+	 * Used as a never-null default so callers don't need null checks.
+	 * The object itself is non-null but all metadata fields are unset.
+	 */
+	public static ExperimentDescription empty() {
+		return new ExperimentDescription();
+	}
+
+	/**
+	 * Returns the standard set of metadata column headers for table display and export.
+	 * The order here must match getColumnValues() — both methods define the
+	 * canonical column layout for experiment metadata.
+	 *
+	 * @return list of 8 column header strings
+	 */
+	public List<String> getColumnHeaders() {
+		return Arrays.asList(
+			COL_TEST_ARTICLE, COL_CASRN, COL_SPECIES, COL_STRAIN,
+			COL_SEX, COL_ORGAN, COL_CELL_LINE, COL_STUDY_DURATION
+		);
+	}
+
+	/**
+	 * Returns the metadata field values in the same order as getColumnHeaders().
+	 * Every value is guaranteed non-null — null fields become empty strings.
+	 * This is critical for old .bm2 files where ExperimentDescription was not set:
+	 * all 8 values will be empty strings, producing blank metadata columns in the table.
+	 *
+	 * @return list of 8 non-null values matching the column header order
+	 */
+	public List<Object> getColumnValues() {
+		// TestArticleIdentifier fields (getName/getCasrn) can themselves be null
+		// even when the testArticle object exists, so we double-check both levels.
+		String articleName = (testArticle != null && testArticle.getName() != null)
+			? testArticle.getName() : "";
+		String articleCasrn = (testArticle != null && testArticle.getCasrn() != null)
+			? testArticle.getCasrn() : "";
+
+		return Arrays.asList(
+			articleName,
+			articleCasrn,
+			species != null ? species : "",
+			strain != null ? strain : "",
+			sex != null ? sex : "",
+			organ != null ? organ : "",
+			cellLine != null ? cellLine : "",
+			studyDuration != null ? studyDuration : ""
+		);
+	}
 
 	/**
 	 * Default constructor

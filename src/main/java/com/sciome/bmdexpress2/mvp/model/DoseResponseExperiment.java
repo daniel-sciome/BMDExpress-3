@@ -47,6 +47,10 @@ public class DoseResponseExperiment extends BMDExpressAnalysisDataSet
 
 	private transient List<String> columnHeader;
 	private transient List<Object> columnHeader2;
+	// Tracks whether metadata values have been appended to ProbeResponse rows.
+	// ProbeResponse.getRow() only contains [probeId, response1, response2, ...] by default.
+	// When the table view needs metadata columns, we append them once to each row.
+	private transient boolean metadataAppendedToRows = false;
 	private Long id;
 
 	private transient List<DoseGroup> doseGroups;
@@ -144,8 +148,17 @@ public class DoseResponseExperiment extends BMDExpressAnalysisDataSet
 		return this.analysisInfo;
 	}
 
+	/**
+	 * Returns the experiment metadata description, never null.
+	 * If no description was set (e.g., legacy data loaded from before metadata support),
+	 * lazily initializes an empty description so callers never need null checks.
+	 */
 	public ExperimentDescription getExperimentDescription()
 	{
+		if (experimentDescription == null)
+		{
+			experimentDescription = ExperimentDescription.empty();
+		}
 		return experimentDescription;
 	}
 
@@ -227,14 +240,57 @@ public class DoseResponseExperiment extends BMDExpressAnalysisDataSet
 			{
 				columnHeader.add(treatment.getName());
 			}
+
+			// Append experiment metadata columns so they appear in the
+			// expression data table view and exports.
+			// Guarded so old .bm2 files without metadata still load cleanly.
+			try
+			{
+				columnHeader.addAll(getExperimentDescription().getColumnHeaders());
+			}
+			catch (Exception e)
+			{
+				// Metadata unavailable — table shows without metadata columns
+			}
 		}
 		return columnHeader;
 	}
 
+	/**
+	 * Returns probe response rows for table display.
+	 * On first access after column header initialization, appends experiment
+	 * metadata values to each ProbeResponse row so the row length matches
+	 * the column header count (which includes metadata columns).
+	 */
 	@Override
 	@JsonIgnore
 	public List getAnalysisRows()
 	{
+		// Append metadata values to each ProbeResponse row if not already done.
+		// ProbeResponse.getRow() normally returns [probeId, resp1, resp2, ...].
+		// We need to append the 8 metadata values so the row aligns with
+		// getColumnHeader() which includes metadata columns at the end.
+		// Wrapped in try-catch so old .bm2 files with missing/corrupt metadata
+		// still display their core expression data without crashing.
+		if (!metadataAppendedToRows && probeResponses != null && probeResponses.size() > 0)
+		{
+			try
+			{
+				List<Object> metadataValues = getExperimentDescription().getColumnValues();
+				for (ProbeResponse pr : probeResponses)
+				{
+					pr.getRow().addAll(metadataValues);
+				}
+				metadataAppendedToRows = true;
+			}
+			catch (Exception e)
+			{
+				// If metadata can't be resolved (old .bm2, missing config, etc.),
+				// skip appending. The table will show columns with "null" for
+				// metadata — acceptable degradation for legacy files.
+				metadataAppendedToRows = true;
+			}
+		}
 		return probeResponses;
 	}
 
@@ -250,6 +306,20 @@ public class DoseResponseExperiment extends BMDExpressAnalysisDataSet
 			for (Treatment treatment : treatments)
 			{
 				columnHeader2.add(treatment.getDose());
+			}
+
+			// Append matching metadata column entries for the second header row.
+			// These labels mirror the metadata column names from getColumnHeader().
+			try
+			{
+				for (String header : getExperimentDescription().getColumnHeaders())
+				{
+					columnHeader2.add(header);
+				}
+			}
+			catch (Exception e)
+			{
+				// Metadata unavailable — table shows without metadata columns
 			}
 		}
 		return columnHeader2;
@@ -334,11 +404,22 @@ public class DoseResponseExperiment extends BMDExpressAnalysisDataSet
 					.add("Logtransformation set to default of: " + LogTransformationEnum.BASE2);
 		}
 
-		// experimentDescription is a later addition. Older project files won't have it.
-		// null is acceptable - user can set metadata later via the edit dialog.
+		// experimentDescription is a later addition. Ensure it's never null
+		// so downstream code can always call getExperimentDescription() safely.
+		// Wrapped in try-catch because ExperimentDescription class loading may
+		// trigger VocabularyConfig static initialization, which could fail if
+		// the app isn't fully started (e.g., loading a .bm2 from command line).
 		if (this.experimentDescription == null)
 		{
-			this.experimentDescription = null;
+			try
+			{
+				this.experimentDescription = ExperimentDescription.empty();
+			}
+			catch (Exception e)
+			{
+				// Swallow — getExperimentDescription() will retry lazily later
+				// when the app is fully initialized.
+			}
 		}
 
 	}

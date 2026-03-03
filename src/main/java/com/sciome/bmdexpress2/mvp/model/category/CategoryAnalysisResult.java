@@ -1386,7 +1386,23 @@ public abstract class CategoryAnalysisResult extends BMDExpressAnalysisRow
 		return headers;
 	}
 
+	/**
+	 * Backward-compatible overload: creates row data without experiment metadata.
+	 * Called by getRow() when row data hasn't been initialized yet.
+	 */
 	protected void createRowData()
+	{
+		createRowData(java.util.Collections.emptyList());
+	}
+
+	/**
+	 * Creates the row data for table display and export.
+	 * Builds the row in the same order as CategoryAnalysisResults.fillColumnHeader()
+	 * plus this result type's generateColumnHeader().
+	 *
+	 * @param metadataValues experiment metadata values to append at the end
+	 */
+	protected void createRowData(List<Object> metadataValues)
 	{
 		stringBuffer = getStringBuffer();
 		if (row != null)
@@ -1595,6 +1611,10 @@ public abstract class CategoryAnalysisResult extends BMDExpressAnalysisRow
 		row.add(this.medianZScore);
 		row.add(this.maxZScore);
 		row.add(this.meanZScore);
+
+		// Append experiment metadata values (Test Article, CASRN, Species, etc.)
+		// at the end of the row to match the metadata columns in the header.
+		row.addAll(metadataValues);
 
 	}
 

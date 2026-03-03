@@ -265,6 +265,19 @@ public class BMDResult extends BMDExpressAnalysisDataSet implements Serializable
 			}
 		}
 
+		// Append experiment metadata column headers after all analysis columns.
+		// These come from the parent DoseResponseExperiment's ExperimentDescription.
+		// Guarded for old .bm2 files that may not have experiment descriptions.
+		if (this.doseResponseExperiment != null)
+		{
+			try
+			{
+				columnHeader.addAll(
+					this.doseResponseExperiment.getExperimentDescription().getColumnHeaders());
+			}
+			catch (Exception e) { /* metadata unavailable — skip columns */ }
+		}
+
 	}
 
 	@Override
@@ -335,6 +348,21 @@ public class BMDResult extends BMDExpressAnalysisDataSet implements Serializable
 				probeToGeneMap.put(refGeneAnnotation.getProbe().getId(), refGeneAnnotation);
 			}
 		}
+
+		// Get metadata values once — same for every row because all rows
+		// come from the same parent experiment.
+		// Falls back to empty list for old .bm2 files without metadata.
+		List<Object> metadataValues = java.util.Collections.emptyList();
+		if (this.doseResponseExperiment != null)
+		{
+			try
+			{
+				metadataValues =
+					this.doseResponseExperiment.getExperimentDescription().getColumnValues();
+			}
+			catch (Exception e) { /* metadata unavailable — rows get no metadata */ }
+		}
+
 		int index = 0;
 		for (ProbeStatResult probeStatResult : probeStatResults)
 		{
@@ -381,13 +409,46 @@ public class BMDResult extends BMDExpressAnalysisDataSet implements Serializable
 				if (index == 0)
 				{
 					// at this point, the header doesn't know about individual fold changes
-					// so we can add it here to the header row
+					// so we can add it here to the header row.
+					// NOTE: metadata headers were already appended in fillColumnHeader(),
+					// so these FC headers need to be inserted BEFORE the metadata headers.
+					// We remove the metadata headers, add FCs, then re-add metadata headers.
+					// For old .bm2 files without metadata, metadataCount is 0
+					// and the remove/re-add loop is a no-op.
+					int metadataCount = 0;
+					try
+					{
+						if (this.doseResponseExperiment != null)
+						{
+							metadataCount = this.doseResponseExperiment
+								.getExperimentDescription().getColumnHeaders().size();
+						}
+					}
+					catch (Exception e) { /* metadata unavailable */ }
+
+					List<String> metadataHeaders = new ArrayList<>();
+					if (metadataCount > 0 && columnHeader.size() >= metadataCount)
+					{
+						metadataHeaders = new ArrayList<>(
+							columnHeader.subList(columnHeader.size() - metadataCount,
+								columnHeader.size()));
+						// Remove metadata headers temporarily
+						for (int r = 0; r < metadataCount; r++)
+						{
+							columnHeader.remove(columnHeader.size() - 1);
+						}
+					}
+
+					// Add FC headers
 					int i = 1;
 					for (Float foldChange : foldChanges)
 					{
 						columnHeader.add("FC Dose Level " + i);
 						i++;
 					}
+
+					// Re-add metadata headers at the end (no-op if metadataHeaders is empty)
+					columnHeader.addAll(metadataHeaders);
 				}
 			}
 
@@ -401,7 +462,7 @@ public class BMDResult extends BMDExpressAnalysisDataSet implements Serializable
 			// logwAUC = logwAUCList.get(index);
 
 			probeStatResult.createRowData(probeToGeneMap, adjustedPValue, pValue, bestFoldChange, foldChanges,
-					loel, noel, wAUC);
+					loel, noel, wAUC, metadataValues);
 			index++;
 
 		}

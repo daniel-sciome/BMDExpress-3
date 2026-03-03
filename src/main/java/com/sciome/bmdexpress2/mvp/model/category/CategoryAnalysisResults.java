@@ -297,6 +297,19 @@ public class CategoryAnalysisResults extends BMDExpressAnalysisDataSet implement
 		columnHeader.add(MAX_ZSCORE);
 		columnHeader.add(MEAN_ZSCORE);
 
+		// Append experiment metadata column headers after all analysis columns.
+		// These come from the root DoseResponseExperiment's ExperimentDescription.
+		// Guarded for old .bm2 files that may not have experiment descriptions.
+		try
+		{
+			ExperimentDescription desc = getExperimentDescription();
+			if (desc != null)
+			{
+				columnHeader.addAll(desc.getColumnHeaders());
+			}
+		}
+		catch (Exception e) { /* metadata unavailable — skip columns */ }
+
 	}
 
 	@Override
@@ -306,9 +319,24 @@ public class CategoryAnalysisResults extends BMDExpressAnalysisDataSet implement
 		if (columnHeader == null || columnHeader.size() == 0)
 		{
 			fillColumnHeader();
-			// refresh all the data rows so all transient properties are availabe
+
+			// Get metadata values once — same for every row because all rows
+			// come from the same parent experiment via BMDResult.
+			// Falls back to empty list for old .bm2 files without metadata.
+			List<Object> metadataValues = java.util.Collections.emptyList();
+			try
+			{
+				ExperimentDescription desc = getExperimentDescription();
+				if (desc != null)
+				{
+					metadataValues = desc.getColumnValues();
+				}
+			}
+			catch (Exception e) { /* metadata unavailable — rows get no metadata */ }
+
+			// refresh all the data rows so all transient properties are available
 			for (CategoryAnalysisResult result : this.categoryAnalsyisResults)
-				result.createRowData();
+				result.createRowData(metadataValues);
 		}
 		return columnHeader;
 	}
@@ -426,6 +454,10 @@ public class CategoryAnalysisResults extends BMDExpressAnalysisDataSet implement
 	 */
 	public void generateRowData()
 	{
+		// Ensure column headers (and row data) are initialized with metadata.
+		// getColumnHeader() triggers fillColumnHeader() + createRowData(metadataValues).
+		getColumnHeader();
+
 		for (CategoryAnalysisResult cResult : getCategoryAnalsyisResults())
 		{
 			cResult.getRow();

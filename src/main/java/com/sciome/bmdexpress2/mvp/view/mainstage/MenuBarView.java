@@ -36,7 +36,13 @@ import javafx.stage.Window;
 
 public class MenuBarView extends BMDExpressViewBase implements IMenuBarView, Initializable
 {
-	// Test hook: when non-null, bypasses native FileChooser
+	/*
+	 * Test hook: when non-null, bypasses the native FileChooser dialog.
+	 * Production code never sets this field — it stays null and the real
+	 * FileChooser runs. Test code (ActionExecutor) sets it via reflection
+	 * so that stub_file_chooser / clear_file_chooser_stub workflow actions
+	 * can supply files without opening a native OS dialog.
+	 */
 	static java.util.function.BiFunction<Window, String, List<File>> fileChooserSupplier = null;
 
 
@@ -140,8 +146,10 @@ public class MenuBarView extends BMDExpressViewBase implements IMenuBarView, Ini
 	 */
 	public void handle_importExpressionData(ActionEvent event)
 	{
-
 		List<File> selectedFile;
+
+		// Test hook: when fileChooserSupplier is set (by ActionExecutor via reflection),
+		// bypass the native FileChooser dialog and return the pre-configured files instead.
 		if (fileChooserSupplier != null)
 		{
 			selectedFile = fileChooserSupplier.apply(
@@ -149,7 +157,7 @@ public class MenuBarView extends BMDExpressViewBase implements IMenuBarView, Ini
 		}
 		else
 		{
-			// prompt the user to select a file and then tell the presenter to fire off loading the experiment
+			// Production path: prompt the user to select a file via native OS dialog
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("Import Expression Data");
 			try
@@ -165,13 +173,12 @@ public class MenuBarView extends BMDExpressViewBase implements IMenuBarView, Ini
 
 			selectedFile = fileChooser.showOpenMultipleDialog(menuBar.getScene().getWindow());
 		}
+
 		if (selectedFile != null && selectedFile.size() > 0)
 		{
-
 			BMDExpressProperties.getInstance().setExpressionPath(selectedFile.get(0).getParent());
 			// inform subscribers.
 			presenter.loadExperiment(selectedFile);
-
 		}
 
 	}
