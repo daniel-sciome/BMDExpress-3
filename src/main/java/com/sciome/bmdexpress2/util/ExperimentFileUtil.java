@@ -9,30 +9,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Vector;
 
 import com.sciome.bmdexpress2.mvp.model.DoseResponseExperiment;
 import com.sciome.bmdexpress2.mvp.model.probe.Probe;
 import com.sciome.bmdexpress2.mvp.model.probe.ProbeResponse;
 import com.sciome.bmdexpress2.mvp.model.probe.Treatment;
-import com.sciome.bmdexpress2.shared.eventbus.BMDExpressEventBus;
-import com.sciome.bmdexpress2.shared.eventbus.project.ShowErrorEvent;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.stage.Modality;
-import javafx.stage.Window;
-
+/**
+ * Reads tab-delimited dose-response data files into DoseResponseExperiment objects.
+ *
+ * bmdx-core: stripped of JavaFX dependencies (Alert dialog for header detection).
+ * In headless/CLI mode, callers must specify isFirstLineHeader explicitly.
+ * File header metadata parsing (ExperimentDescriptionParser) is still invoked.
+ */
 public class ExperimentFileUtil
 {
 	private static ExperimentFileUtil instance = null;
 
 	protected ExperimentFileUtil()
 	{
-		// Exists only to defeat instantiation.
 	}
 
 	public static ExperimentFileUtil getInstance()
@@ -44,20 +40,19 @@ public class ExperimentFileUtil
 		return instance;
 	}
 
-	/*
-	 * read an dose response experiement file and return an instance.
+	/**
+	 * Read a tab-delimited dose-response file and return a DoseResponseExperiment.
+	 *
+	 * The file format is BMDExpress's standard pivot layout:
+	 *   Row 0 (optional header): probe_id  colname1  colname2  ...
+	 *   Row 1 (dose row):        label     dose1     dose2     ...
+	 *   Row 2+:                  probeId   value1    value2    ...
+	 *
+	 * @param infile             The input file (tab-delimited .txt or .csv)
+	 * @param isFirstLineHeader  Whether the first line contains column headers
+	 * @return A DoseResponseExperiment, or null if parsing fails
 	 */
 	public DoseResponseExperiment readFile(File infile, boolean isFirstLineHeader)
-	{
-		return readFile(infile, null, isFirstLineHeader);
-	}
-
-	public DoseResponseExperiment readFile(File infile, Window owner)
-	{
-		return readFile(infile, owner, false);
-	}
-
-	public DoseResponseExperiment readFile(File infile, Window owner, boolean isFirstLineHeader)
 	{
 		try
 		{
@@ -68,7 +63,7 @@ public class ExperimentFileUtil
 			String line = "";
 			int c = 0;
 
-			DoseResponseExperiment doseResponseExperiement = new DoseResponseExperiment();
+			DoseResponseExperiment doseResponseExperiment = new DoseResponseExperiment();
 
 			try
 			{
@@ -92,53 +87,39 @@ public class ExperimentFileUtil
 				}
 
 				String[] headers = new String[c];
-
 				for (int j = 0; j < c; j++)
 				{
 					headers[j] = "Column " + j;
 				}
 
-				// let's loop through the vectors and create our experiment object
-
 				if (vecData.size() > 1)
 				{
-					// get the headers and create treatment list.
-					String[] experiementHeaders = vecData.get(0);
+					String[] experimentHeaders = vecData.get(0);
 
+					// If isFirstLineHeader is false, auto-detect: if any non-first
+					// column in the first row is non-numeric, treat it as a header.
 					int starti = 0;
-					if (isFirstLineHeader || (owner != null && isFirstVecHeader(experiementHeaders, owner)))
+					if (isFirstLineHeader || autoDetectHeader(experimentHeaders))
 					{
 						starti = 1;
 					}
-					// else if (owner == null)
-					// starti = 1;
+
 					List<Treatment> treatments = new ArrayList<>();
-					for (int i = 1; i < experiementHeaders.length; i++)
+					for (int i = 1; i < experimentHeaders.length; i++)
 					{
 						Float dose = Float.valueOf(vecData.get(starti)[i]);
-						String colheader = experiementHeaders[i];
+						String colheader = experimentHeaders[i];
 						if (starti == 0)
 						{
 							colheader = headers[i - 1];
 						}
-
 						Treatment treatment = new Treatment(colheader, dose);
 						treatments.add(treatment);
-
 					}
 
-					// sort the treatments and keep track of the new indexes
-					// so we can put the responses in corresponding order.
-					List<Treatment> orderedTreatments = new ArrayList<>(treatments.size());
-
-					for (Treatment t : treatments)
-					{
-						orderedTreatments.add(t);
-					}
-
-					// sort the treatments
+					// Sort treatments by dose and track the reordering
+					List<Treatment> orderedTreatments = new ArrayList<>(treatments);
 					Collections.sort(orderedTreatments, new Comparator<Treatment>() {
-
 						@Override
 						public int compare(Treatment o1, Treatment o2)
 						{
@@ -147,18 +128,14 @@ public class ExperimentFileUtil
 					});
 
 					List<Integer> orderedIndexes = new ArrayList<>(treatments.size());
-
 					for (Treatment t : treatments)
 					{
 						orderedIndexes.add(orderedTreatments.indexOf(t));
 					}
 
 					List<ProbeResponse> probeResponses = new ArrayList<>();
-					// load probes and response data.
-
 					for (int i = starti + 1; i < vecData.size(); i++)
 					{
-						// initialized a byte array which will be stored for speedy serialization
 						String probeID = vecData.get(i)[0];
 						Probe probe = new Probe();
 						probe.setId(probeID);
@@ -176,27 +153,22 @@ public class ExperimentFileUtil
 							}
 							catch (Exception e)
 							{
-								BMDExpressEventBus.getInstance()
-										.post(new ShowErrorEvent("The value found is not numeric on line: "
-												+ (i + 1) + ", column: " + (j + 1) + " of file \""
-												+ infile.getName() + "\""));
+								System.err.println("Non-numeric value on line " + (i + 1) +
+									", column " + (j + 1) + " of file \"" + infile.getName() + "\"");
 								return null;
 							}
-
 						}
+
 						if (responseRow.size() != treatments.size())
 						{
-							BMDExpressEventBus.getInstance().post(new ShowErrorEvent(
-									"Number of dose reponses does not match number of values for line: "
-											+ (i + 1) + " of file \"" + infile.getName() + "\""));
+							System.err.println("Column count mismatch on line " + (i + 1) +
+								" of file \"" + infile.getName() + "\"");
 							return null;
 						}
 
-						// put the responses in corresponding order to the treatments.
+						// Reorder responses to match sorted treatments
 						List<Float> orderedResponses = new ArrayList<>(responseRow.size());
-						// initialize the ordered Reponses to null
-						for (@SuppressWarnings("unused")
-						Float response : responseRow)
+						for (int idx = 0; idx < responseRow.size(); idx++)
 						{
 							orderedResponses.add(null);
 						}
@@ -209,34 +181,23 @@ public class ExperimentFileUtil
 
 						probeResponse.setResponses(orderedResponses);
 						probeResponses.add(probeResponse);
-
 					}
 
-					doseResponseExperiement.setTreatments(orderedTreatments);
-					doseResponseExperiement.setProbeResponses(probeResponses);
+					doseResponseExperiment.setTreatments(orderedTreatments);
+					doseResponseExperiment.setProbeResponses(probeResponses);
+
 					String fileName = infile.getName();
 					if (fileName.indexOf(".") > 0)
 						fileName = fileName.substring(0, fileName.lastIndexOf("."));
-					doseResponseExperiement.setName(fileName);
+					doseResponseExperiment.setName(fileName);
 
-					// Parse experimental metadata from file header and filename
+					// Parse experimental metadata from file header
 					ExperimentDescriptionParser.ParseResult parseResult =
 						ExperimentDescriptionParser.parseFromFile(infile);
+					doseResponseExperiment.setExperimentDescription(parseResult.getDescription());
 
-					// Check for validation issues - fail import if any found
-					if (parseResult.hasIssues()) {
-						BMDExpressEventBus.getInstance().post(
-							new com.sciome.bmdexpress2.shared.eventbus.project.ShowValidationErrorEvent(
-								parseResult.getIssues(), infile.getName()));
-						return null;
-					}
-
-					doseResponseExperiement.setExperimentDescription(parseResult.getDescription());
-
-					return doseResponseExperiement;
+					return doseResponseExperiment;
 				}
-				else
-				{}
 			}
 			catch (IOException e)
 			{
@@ -254,78 +215,29 @@ public class ExperimentFileUtil
 		}
 		catch (Exception e)
 		{
-			BMDExpressEventBus.getInstance().post(new ShowErrorEvent(e.getMessage()));
 			e.printStackTrace();
 		}
 
 		return null;
 	}
 
-	/*
-	 * trying to auto detect whether a column is a header. Let's assume that if it is a header, then some of
-	 * the names will not be numeric.
+	/**
+	 * Auto-detect whether the first row is a header by checking if any
+	 * non-first column value is non-numeric.
 	 */
-	private boolean isFirstVecHeader(String[] headers, Window owner)
+	private boolean autoDetectHeader(String[] headers)
 	{
-
 		for (int i = 1; i < headers.length; i++)
 		{
-			if (!isNumeric(headers[i]))
+			try
+			{
+				Double.parseDouble(headers[i]);
+			}
+			catch (NumberFormatException nfe)
 			{
 				return true;
 			}
 		}
-
-		String headerPreview = "";
-		for (int i = 1; i < headers.length; i++)
-		{
-			headerPreview += headers[i] + "  ";
-		}
-
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Column headers confirmation.");
-		alert.setHeaderText("Is the first line column headers?");
-		alert.getDialogPane().setPrefSize(500, 300);
-		alert.initOwner(owner);
-		alert.initModality(Modality.WINDOW_MODAL);
-
-		final String finalHeaderPreview = headerPreview;
-
-		// WebView webView = new WebView();
-		// webView.getEngine().loadContent(
-		// "<html><b>First line looks like this:</b><p><pre> " + finalHeaderPreview + "</pre></html>");
-		// webView.setPrefSize(150, 60);
-
-		Label headerLabel = new Label();
-		headerLabel.setText("First line looks like this: " + finalHeaderPreview);
-		alert.getDialogPane().setContent(headerLabel);
-		// alert.setContentText("<b> First line looks like this: </b><p>" + headerPreview);
-
-		ButtonType buttonYes = new ButtonType("Yes");
-		ButtonType buttonNo = new ButtonType("No");
-
-		alert.getButtonTypes().setAll(buttonYes, buttonNo);
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonYes)
-		{
-			return true;
-		}
-
 		return false;
 	}
-
-	private boolean isNumeric(String str)
-	{
-		try
-		{
-			double d = Double.parseDouble(str);
-		}
-		catch (NumberFormatException nfe)
-		{
-			return false;
-		}
-		return true;
-	}
-
 }

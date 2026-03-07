@@ -14,7 +14,7 @@ import com.sciome.bmdexpress2.mvp.model.stat.BMDResult;
 import com.sciome.bmdexpress2.util.annotation.FileAnnotation;
 import com.sciome.filter.DataFilterPack;
 
-import javafx.collections.transformation.FilteredList;
+// bmdx-core: replaced JavaFX FilteredList with java.util.List
 
 public interface IProjectNavigationService
 {
@@ -31,7 +31,7 @@ public interface IProjectNavigationService
 			boolean getParentNotes);
 
 	public void exportFilteredResults(BMDExpressAnalysisDataSet bmdResults,
-			FilteredList<BMDExpressAnalysisRow> filteredResults, File selectedFile, DataFilterPack pack,
+			List<BMDExpressAnalysisRow> filteredResults, File selectedFile, DataFilterPack pack,
 			boolean getParentNotes);
 
 	public void exportBMDResultBestModel(BMDResult bmdResults, File selectedFile, boolean getParentNotes);
@@ -45,7 +45,7 @@ public interface IProjectNavigationService
 	void exportBMDResultModeledResponses(BMDResult bmdResults, File selectedFile, boolean getParentNotes);
 
 	public void exportFilteredModeledResponses(BMDExpressAnalysisDataSet bmdAnalysisDataSet,
-			FilteredList<BMDExpressAnalysisRow> filteredData, File selectedFile,
+			List<BMDExpressAnalysisRow> filteredData, File selectedFile,
 			DataFilterPack filterDataPack, boolean getParentNotes);
 
 	public void exportBMDExpressAnalysisModeledResponses(BMDExpressAnalysisDataSet bmdAnalysisDataSet,

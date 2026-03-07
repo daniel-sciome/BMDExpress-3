@@ -44,7 +44,9 @@ import com.sciome.filter.DataFilter;
 import com.sciome.filter.DataFilterPack;
 import com.sciome.filter.DataFilterType;
 
-import javafx.collections.transformation.FilteredList;
+// bmdx-core: replaced JavaFX FilteredList with java.util.List
+// FilteredList<T> extends javafx.collections.ObservableList which extends java.util.List,
+// so List<T> is the correct headless replacement.
 
 public class ProjectNavigationService implements IProjectNavigationService
 {
@@ -270,7 +272,7 @@ public class ProjectNavigationService implements IProjectNavigationService
 
 	@Override
 	public void exportFilteredResults(BMDExpressAnalysisDataSet bmdResults,
-			FilteredList<BMDExpressAnalysisRow> filteredResults, File selectedFile, DataFilterPack pack,
+			List<BMDExpressAnalysisRow> filteredResults, File selectedFile, DataFilterPack pack,
 			boolean getParentNotes)
 	{
 		StringBuilder filterInformation = new StringBuilder();
@@ -649,7 +651,7 @@ public class ProjectNavigationService implements IProjectNavigationService
 
 	@Override
 	public void exportFilteredModeledResponses(BMDExpressAnalysisDataSet bmdAnalysisDataSet,
-			FilteredList<BMDExpressAnalysisRow> filteredData, File selectedFile,
+			List<BMDExpressAnalysisRow> filteredData, File selectedFile,
 			DataFilterPack filterDataPack, boolean getParentNotes)
 	{
 
