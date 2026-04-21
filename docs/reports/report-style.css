@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --fg: #1a1a1a;
+  --fg-muted: #555;
+  --bg: #fafafa;
+  --bg-code: #f5f2ec;
+  --accent: #0055aa;
+  --accent-muted: #c7d7e8;
+  --rule: #ddd;
+  --table-header: #e8e8e8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 40px 30px 80px;
+  color: var(--fg);
+  background: var(--bg);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+  color: #111;
+}
+
+h1 {
+  font-size: 2.3em;
+  margin-top: 0;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid var(--accent);
+}
+
+h2 {
+  font-size: 1.7em;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid var(--rule);
+}
+
+h3 { font-size: 1.3em; }
+h4 { font-size: 1.1em; color: var(--accent); }
+
+p, li { color: var(--fg); }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+code {
+  font-family: 'JetBrains Mono', 'Monaco', monospace;
+  font-size: 0.88em;
+  background: var(--bg-code);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #8b4513;
+}
+
+pre {
+  font-family: 'JetBrains Mono', 'Monaco', monospace;
+  background: #fbf8f1;
+  border: 1px solid #e8e0ce;
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  padding: 14px 18px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  color: #1a1a1a;
+  font-size: 1em;
+}
+
+blockquote {
+  border-left: 3px solid var(--accent-muted);
+  padding: 4px 20px;
+  margin: 1em 0;
+  color: var(--fg-muted);
+  font-style: italic;
+  background: #f5f7fa;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  font-size: 0.92em;
+}
+
+th, td {
+  padding: 8px 12px;
+  text-align: left;
+  border: 1px solid var(--rule);
+}
+
+th {
+  background: var(--table-header);
+  font-weight: 600;
+}
+
+tr:nth-child(even) td { background: #fff; }
+tr:nth-child(odd) td { background: #fafafa; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2.5em 0;
+}
+
+ul, ol { padding-left: 1.5em; }
+li { margin: 0.25em 0; }
+
+/* Commit hashes and file paths */
+code:first-child, li > code {
+  color: #0055aa;
+}
+
+/* Meta block at top */
+.meta {
+  font-size: 0.95em;
+  color: var(--fg-muted);
+  border-left: 3px solid var(--accent-muted);
+  padding: 10px 18px;
+  margin: 1em 0 2em;
+  background: #f5f7fa;
+}
+
+/* Section dividers */
+h2::before { content: ""; }
+
+/* Footer */
+footer {
+  margin-top: 4em;
+  padding-top: 1em;
+  border-top: 1px solid var(--rule);
+  font-size: 0.85em;
+  color: var(--fg-muted);
+  text-align: center;
+}

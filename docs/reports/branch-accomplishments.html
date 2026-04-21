@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BMDExpress-3 — Branch Accomplishments</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="report-style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">BMDExpress-3 — Branch Accomplishments</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#bmdexpress-3--branch-accomplishments-report"
+id="toc-bmdexpress-3--branch-accomplishments-report">BMDExpress-3 —
+Branch Accomplishments Report</a>
+<ul>
+<li><a href="#executive-summary" id="toc-executive-summary">Executive
+summary</a></li>
+<li><a href="#part-1--experiment-metadata-branch"
+id="toc-part-1--experiment-metadata-branch">Part 1 —
+<code>experiment-metadata</code> branch</a>
+<ul>
+<li><a href="#commit-timeline" id="toc-commit-timeline">Commit
+timeline</a></li>
+<li><a href="#conversation-glue--how-it-was-built"
+id="toc-conversation-glue--how-it-was-built">Conversation glue — how it
+was built</a></li>
+<li><a href="#11-the-metadata-model" id="toc-11-the-metadata-model">1.1
+The metadata model</a></li>
+<li><a href="#12-vocabulary-externalization-024eba5"
+id="toc-12-vocabulary-externalization-024eba5">1.2 Vocabulary
+externalization (<code>024eba5</code>)</a></li>
+<li><a href="#13-validation-rules-engine-995d99c"
+id="toc-13-validation-rules-engine-995d99c">1.3 Validation rules engine
+(<code>995d99c</code>)</a></li>
+<li><a href="#14-parsing-metadata-from-file-headers"
+id="toc-14-parsing-metadata-from-file-headers">1.4 Parsing metadata from
+file headers</a></li>
+<li><a href="#15-ui-metadata-dialogs"
+id="toc-15-ui-metadata-dialogs">1.5 UI: metadata dialogs</a></li>
+<li><a href="#16-metadata-columns-across-the-entire-pipeline-0767a73"
+id="toc-16-metadata-columns-across-the-entire-pipeline-0767a73">1.6
+Metadata columns across the entire pipeline
+(<code>0767a73</code>)</a></li>
+<li><a href="#17-visual-gui-test-runner-f0e7e1c"
+id="toc-17-visual-gui-test-runner-f0e7e1c">1.7 Visual GUI test runner
+(<code>f0e7e1c</code>)</a></li>
+<li><a href="#18-bm2-deserialization-test-0767a73"
+id="toc-18-bm2-deserialization-test-0767a73">1.8 Bm2 deserialization
+test (<code>0767a73</code>)</a></li>
+</ul></li>
+<li><a href="#part-2--bmdx-core-branch"
+id="toc-part-2--bmdx-core-branch">Part 2 — <code>bmdx-core</code>
+branch</a>
+<ul>
+<li><a href="#21-committed-state-the-strip-caebfe1"
+id="toc-21-committed-state-the-strip-caebfe1">2.1 Committed state: the
+strip (<code>caebfe1</code>)</a></li>
+<li><a href="#22-uncommitted-work-in-progress"
+id="toc-22-uncommitted-work-in-progress">2.2 Uncommitted
+work-in-progress</a></li>
+<li><a href="#23-conversation-glue--bmdx-core"
+id="toc-23-conversation-glue--bmdx-core">2.3 Conversation glue —
+<code>bmdx-core</code></a></li>
+</ul></li>
+<li><a href="#part-3--dependency-additions"
+id="toc-part-3--dependency-additions">Part 3 — Dependency additions</a>
+<ul>
+<li><a href="#in-experiment-metadata" id="toc-in-experiment-metadata">In
+<code>experiment-metadata</code>:</a></li>
+<li><a href="#in-bmdx-core" id="toc-in-bmdx-core">In
+<code>bmdx-core</code>:</a></li>
+</ul></li>
+<li><a href="#part-4--how-the-branches-relate"
+id="toc-part-4--how-the-branches-relate">Part 4 — How the branches
+relate</a></li>
+<li><a href="#part-5--statistics" id="toc-part-5--statistics">Part 5 —
+Statistics</a>
+<ul>
+<li><a href="#experiment-metadata-vs-main"
+id="toc-experiment-metadata-vs-main"><code>experiment-metadata</code> vs
+<code>main</code></a></li>
+<li><a href="#bmdx-core-vs-experiment-metadata"
+id="toc-bmdx-core-vs-experiment-metadata"><code>bmdx-core</code> vs
+<code>experiment-metadata</code></a></li>
+</ul></li>
+<li><a href="#part-6--outstanding-items"
+id="toc-part-6--outstanding-items">Part 6 — Outstanding items</a></li>
+<li><a href="#appendix--report-methodology"
+id="toc-appendix--report-methodology">Appendix — Report
+methodology</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="bmdexpress-3--branch-accomplishments-report">BMDExpress-3 —
+Branch Accomplishments Report</h1>
+<p><strong>Branches:</strong> <code>experiment-metadata</code> and
+<code>bmdx-core</code> <strong>Base:</strong> <code>main</code>
+(upstream Sciome) <strong>Report date:</strong> 2026-04-17
+<strong>Author/operator:</strong> Dan Svoboda (<a
+href="mailto:dlsvob@gmail.com">dlsvob@gmail.com</a>)</p>
+<hr />
+<h2 id="executive-summary">Executive summary</h2>
+<p>Two branches, stacked.</p>
+<ol type="1">
+<li><p><strong><code>experiment-metadata</code></strong> — 18 commits on
+top of <code>main</code>. Adds a full experimental-metadata system to
+BMDExpress-3: auto-parsing from file headers, controlled vocabularies
+(externalized to YAML), a rules-engine validator (easy-rules), editing
+dialogs (single + batch), and propagation of the 8 metadata columns
+through every downstream analysis data type. Also introduces a visual
+GUI test runner built on TestFX.</p></li>
+<li><p><strong><code>bmdx-core</code></strong> — 1 committed commit on
+top of <code>experiment-metadata</code>, plus substantial uncommitted
+work. The committed work strips the JavaFX GUI, analysis engines (BMD
+modeling, prefilters, category analysis), and associated CLI runners —
+keeping only the data model, metadata system, and .bm2 I/O. The
+uncommitted work layers in a <strong>domain-neutral data model</strong>
+(Endpoint / EndpointResponse interfaces) so the core can hold apical tox
+study data and categorical observations alongside genomics.</p></li>
+</ol>
+<p>Throughout, much of the work was planned and executed in Claude Code
+sessions spanning Dec 2025 → Apr 2026. The conversation log (excerpted
+below) is the connective tissue between commits.</p>
+<hr />
+<h2 id="part-1--experiment-metadata-branch">Part 1 —
+<code>experiment-metadata</code> branch</h2>
+<h3 id="commit-timeline">Commit timeline</h3>
+<pre><code>e99db41  2025-12-01  Add experimental metadata capture with controlled vocabularies
+6a8ecb3  2025-12-??  Add ability to edit experiment metadata for existing experiments
+ced2a53  2025-12-02  Add experiment metadata editing and display
+25b0624  2025-12-??  Refactor metadata to support In Vivo/In Vitro hierarchy and enforce data integrity
+c98b57e  2025-12-??  Add expanded experiment metadata fields with validation
+db21925  2025-12-??  Update README.md
+0aa38ac  2025-12-??  Merge remote-tracking branch &#39;origin/main&#39; into experiment-metadata
+c57351e  2025-12-??  Merge branch &#39;experiment-metadata&#39; of auerbachs/BMDExpress-3
+256daba  2025-12-??  Refactor experiment metadata code for DRY and maintainability
+f567e2d  2025-12-??  Refactor: Collapse ExperimentDescription hierarchy into unified class
+7055204  2025-12-??  Refactor: Extract status bar formatting to ExperimentDescription
+024eba5  2025-12-??  Externalize vocabularies to YAML configuration
+f43e8f0  2025-12-??  Fix: Handle null experiments from validation failures
+0857ef4  2025-12-??  Restore platform chooser dialog for expression data import
+82847ef  2025-12-12  Add convenience methods for ExperimentDescription access
+f0e7e1c  2026-02-26  Add visual GUI test runner with TestFX
+995d99c  2026-02-??  Add experiment metadata validation rules and description dialogs
+0767a73  2026-02-??  Propagate ExperimentDescription metadata columns through entire pipeline</code></pre>
+<p><strong>Diff summary vs <code>main</code>:</strong></p>
+<ul>
+<li><strong>54 files changed, 5,900 insertions, 50
+deletions</strong></li>
+<li>18 net-new classes (model, rules, dialogs, guitest infra)</li>
+<li>1 new YAML configuration (<code>vocabulary.yml</code>)</li>
+</ul>
+<h3 id="conversation-glue--how-it-was-built">Conversation glue — how it
+was built</h3>
+<p>The Claude Code transcripts in
+<code>~/.claude/projects/-home-svobodadl-Dev-Projects-BMDExpress-3/</code>
+show how this branch evolved:</p>
+<ul>
+<li><p><strong><code>c1e98253.jsonl</code></strong> (5.5MB, Mar 3) —
+starts with "what is the name of the active branch?" and "how is it
+different from main?" The user's framing was: <em>"review this
+additional code. is it any good? does it follow the coding pattern and
+practice of main?"</em> This became the driver for the DRY /
+hierarchy-collapse / vocabulary-externalization commits below.</p></li>
+<li><p><strong><code>4965bbe9.jsonl</code></strong> (2.0MB, Feb 26) —
+plan-driven: <em>"Implement the following plan: Fix Misalignments with
+Main Branch Patterns."</em> This corresponds to the <code>995d99c</code>
+/ <code>f567e2d</code> / <code>024eba5</code> sequence.</p></li>
+<li><p><strong><code>7cd3506f.jsonl</code></strong> (2.6MB, Feb 26) —
+<em>"Implement the following plan: Visual GUI Test Runner with
+TestFX"</em> → commit <code>f0e7e1c</code>.</p></li>
+<li><p><strong><code>9d30fa37.jsonl</code></strong> (4.5MB, Mar 3) —
+<em>"Implement the following plan: Integrate ExperimentDescription as a
+First-Class Part of the Object Model"</em> → commit <code>0767a73</code>
+(metadata-column propagation).</p></li>
+<li><p><strong><code>af484666.jsonl</code></strong> (1.5MB, Mar 3) —
+<em>"Implement the following plan: Make Expression Data Import Pipeline
+Robust for Metadata"</em> and <em>"branch the repo. llm-metadata"</em> —
+spawning the (now separate) <code>llm-metadata</code> branch.</p></li>
+</ul>
+<h3 id="11-the-metadata-model">1.1 The metadata model</h3>
+<p><strong>Key file:</strong>
+<code>src/main/java/com/sciome/bmdexpress2/mvp/model/info/ExperimentDescription.java</code></p>
+<p>Final unified class after the hierarchy collapse (commit
+<code>f567e2d</code>). The *.java file went from three classes
+(<code>ExperimentDescriptionBase</code>,
+<code>InVivoExperimentDescription</code>,
+<code>InVitroExperimentDescription</code>) with routes of administration
+(<code>OralRoute</code>, <code>InhalationRoute</code>,
+<code>IntravenousRoute</code>, <code>TransdermalRoute</code>) to one
+unified <code>ExperimentDescription</code> using plain fields with
+validation rules enforcing the in-vivo vs in-vitro constraints.</p>
+<p>Core fields (abridged):</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> ExperimentDescription <span class="kw">implements</span> <span class="bu">Serializable</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Common</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> TestArticleIdentifier testArticle<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> subjectType<span class="op">;</span>           <span class="co">// &quot;in vivo&quot; | &quot;in vitro&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> provider<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> platform<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> articleType<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> articleRoute<span class="op">;</span>          <span class="co">// oral | inhaled | transdermal | ...</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> articleVehicle<span class="op">;</span>        <span class="co">// corn oil | feed | water | aerosol | gas</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> administrationMeans<span class="op">;</span>   <span class="co">// gavage (oral only)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> studyDuration<span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> inVivoDuration<span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">// In-vivo fields</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> species<span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> strain<span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> sex<span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> organ<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">// In-vitro field</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">String</span> cellLine<span class="op">;</span></span></code></pre></div>
+<p>The class delegates all vocabulary lookups to
+<code>VocabularyConfig</code> (YAML-backed singleton) rather than
+hard-coding them:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="bu">List</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> <span class="fu">getSpeciesVocabulary</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> VocabularyConfig<span class="op">.</span><span class="fu">getInstance</span><span class="op">().</span><span class="fu">getSpecies</span><span class="op">();</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="bu">List</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> <span class="fu">getOrganVocabulary</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> VocabularyConfig<span class="op">.</span><span class="fu">getInstance</span><span class="op">().</span><span class="fu">getOrgans</span><span class="op">();</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="bu">List</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> <span class="fu">getStrainsForSpecies</span><span class="op">(</span><span class="bu">String</span> species<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> VocabularyConfig<span class="op">.</span><span class="fu">getInstance</span><span class="op">().</span><span class="fu">getStrainsForSpecies</span><span class="op">(</span>species<span class="op">);</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">// ... plus ARTICLE_ROUTE_VOCABULARY, SEX_VOCABULARY, STRAINS_BY_SPECIES,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">// IN_VIVO_DURATION_VOCABULARY, STUDY_DURATION_VOCABULARY, ARTICLE_TYPE_VOCABULARY</span></span></code></pre></div>
+<p>Commit <code>7055204</code> moved status-bar formatting out of
+<code>MainPresenter</code> and into the model itself:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ExperimentDescription.java</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getStatusBarString</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">StringBuilder</span> sb <span class="op">=</span> <span class="kw">new</span> <span class="bu">StringBuilder</span><span class="op">();</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>testArticle <span class="op">!=</span> <span class="kw">null</span> <span class="op">&amp;&amp;</span> testArticle<span class="op">.</span><span class="fu">hasIdentifier</span><span class="op">())</span> <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>species <span class="op">!=</span> <span class="kw">null</span> <span class="op">&amp;&amp;</span> <span class="op">!</span>species<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        sb<span class="op">.</span><span class="fu">append</span><span class="op">(</span><span class="st">&quot; | Species: &quot;</span><span class="op">).</span><span class="fu">append</span><span class="op">(</span>species<span class="op">);</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... strain, sex, organ, cellLine</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sb<span class="op">.</span><span class="fu">toString</span><span class="op">();</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="12-vocabulary-externalization-024eba5">1.2 Vocabulary
+externalization (<code>024eba5</code>)</h3>
+<p><strong>New file:</strong>
+<code>src/main/resources/vocabulary.yml</code></p>
+<p>Before this commit, species / organ / strain lists were hard-coded
+arrays inside <code>ExperimentDescription.java</code>. After, they live
+in YAML:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># vocabulary.yml (excerpts)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">providers</span><span class="kw">:</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Affymetrix</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Agilent</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> BioSpyder</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> RefSeq</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Ensembl</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Clinical Endpoint</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Generic</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">subjectTypes</span><span class="kw">:</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> in vivo</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> in vitro</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">articleRoutes</span><span class="kw">:</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> oral</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> inhaled</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> transdermal</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fu">articleVehicles</span><span class="kw">:</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> corn oil</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> feed</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> water</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> aerosol</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> gas</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="fu">administrationMeans</span><span class="kw">:</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> gavage</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="fu">species</span><span class="kw">:</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> rat</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mouse</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> human</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> rabbit</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> dog</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> monkey</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> zebrafish</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> guinea pig</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> hamster</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> pig</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="fu">sexes</span><span class="kw">:</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> male</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> female</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> both</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mixed</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> NA</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="fu">organs</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">adrenal</span><span class="kw">,</span><span class="at"> blood</span><span class="kw">,</span><span class="at"> bone</span><span class="kw">,</span><span class="at"> brain</span><span class="kw">,</span><span class="at"> colon</span><span class="kw">,</span><span class="at"> heart</span><span class="kw">,</span><span class="at"> intestine</span><span class="kw">,</span><span class="at"> kidney</span><span class="kw">,</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="at">         liver</span><span class="kw">,</span><span class="at"> lung</span><span class="kw">,</span><span class="at"> ovary</span><span class="kw">,</span><span class="at"> pancreas</span><span class="kw">,</span><span class="at"> skin</span><span class="kw">,</span><span class="at"> spleen</span><span class="kw">,</span><span class="at"> stomach</span><span class="kw">,</span><span class="at"> testis</span><span class="kw">,</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="at">         thymus</span><span class="kw">,</span><span class="at"> thyroid</span><span class="kw">,</span><span class="at"> uterus</span><span class="kw">]</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="fu">strains</span><span class="kw">:</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">rat</span><span class="kw">:</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> Sprague-Dawley</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> Wistar</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> Fischer 344</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">mouse</span><span class="kw">:</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> C57BL/6</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> BALB/c</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> DBA/2</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="at">    ...</span></span></code></pre></div>
+<p><strong>New file:</strong>
+<code>src/main/java/com/sciome/bmdexpress2/mvp/model/info/VocabularyConfig.java</code></p>
+<p>Singleton with SnakeYAML parsing and memoized getters. Wires up
+<code>module-info.java</code> with
+<code>requires org.yaml.snakeyaml;</code> and <code>opens</code> of the
+<code>info</code> package for reflective access.</p>
+<h3 id="13-validation-rules-engine-995d99c">1.3 Validation rules engine
+(<code>995d99c</code>)</h3>
+<p><strong>New subpackage:</strong>
+<code>src/main/java/com/sciome/bmdexpress2/mvp/model/info/rules/</code></p>
+<p>Uses <strong>Easy Rules</strong>
+(<code>org.jeasy.rules:easy-rules-core:4.1.0</code>). Each rule is a
+pojo registered with a central validator:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// MetadataValidator.java (excerpt)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> MetadataValidator <span class="kw">extends</span> ValidatorBase<span class="op">&lt;</span>MetadataFacts<span class="op">&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> MetadataValidator INSTANCE <span class="op">=</span> <span class="kw">new</span> <span class="fu">MetadataValidator</span><span class="op">();</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">registerRules</span><span class="op">(</span>Rules rules<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Subject Type rules</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> SubjectTypeRules<span class="op">.</span><span class="fu">InVitroDurationRule</span><span class="op">());</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> SubjectTypeRules<span class="op">.</span><span class="fu">InVivoDurationRule</span><span class="op">());</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> SubjectTypeRules<span class="op">.</span><span class="fu">InVitroRequiresCellLine</span><span class="op">());</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> SubjectTypeRules<span class="op">.</span><span class="fu">InVivoRequiresSpecies</span><span class="op">());</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> SubjectTypeRules<span class="op">.</span><span class="fu">InVivoRequiresStrain</span><span class="op">());</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> SubjectTypeRules<span class="op">.</span><span class="fu">InVivoRequiresSex</span><span class="op">());</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> SubjectTypeRules<span class="op">.</span><span class="fu">InVivoRequiresOrgan</span><span class="op">());</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> SubjectTypeRules<span class="op">.</span><span class="fu">InVitroCannotHaveInVivoFields</span><span class="op">());</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Article Route rules (oral/inhaled/transdermal constraints)</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> ArticleRouteRules<span class="op">.</span><span class="fu">AdminMeansOnlyForOral</span><span class="op">());</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> ArticleRouteRules<span class="op">.</span><span class="fu">OralRequiresAdminMeans</span><span class="op">());</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> ArticleRouteRules<span class="op">.</span><span class="fu">TransdermalNoVehicle</span><span class="op">());</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> ArticleRouteRules<span class="op">.</span><span class="fu">EMFNoVehicle</span><span class="op">());</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> ArticleRouteRules<span class="op">.</span><span class="fu">OralVehicleValidation</span><span class="op">());</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> ArticleRouteRules<span class="op">.</span><span class="fu">InhaledVehicleValidation</span><span class="op">());</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Species/Strain consistency rules</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> SpeciesStrainRules<span class="op">.</span><span class="fu">StrainMatchesSpecies</span><span class="op">());</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Platform/Provider rules</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        rules<span class="op">.</span><span class="fu">register</span><span class="op">(</span><span class="kw">new</span> PlatformRules<span class="op">.</span><span class="fu">ProviderMatchesPlatform</span><span class="op">());</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Usage is a fluent facts builder:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>MetadataFacts facts <span class="op">=</span> <span class="kw">new</span> <span class="fu">MetadataFacts</span><span class="op">()</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">subjectType</span><span class="op">(</span><span class="st">&quot;in vivo&quot;</span><span class="op">)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">species</span><span class="op">(</span><span class="st">&quot;rat&quot;</span><span class="op">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">strain</span><span class="op">(</span><span class="st">&quot;C57BL/6&quot;</span><span class="op">)</span>          <span class="co">// mouse strain — rule will flag this</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">articleRoute</span><span class="op">(</span><span class="st">&quot;oral&quot;</span><span class="op">)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">administrationMeans</span><span class="op">(</span><span class="st">&quot;gavage&quot;</span><span class="op">);</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>MetadataValidator<span class="op">.</span><span class="fu">validateMetadata</span><span class="op">(</span>facts<span class="op">);</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>facts<span class="op">.</span><span class="fu">hasErrors</span><span class="op">())</span> <span class="op">{</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="bu">String</span> error <span class="op">:</span> facts<span class="op">.</span><span class="fu">getErrors</span><span class="op">())</span> <span class="op">{</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">// &quot;Strain &#39;C57BL/6&#39; does not belong to species &#39;rat&#39;&quot;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="14-parsing-metadata-from-file-headers">1.4 Parsing metadata from
+file headers</h3>
+<p><strong>File:</strong>
+<code>src/main/java/com/sciome/bmdexpress2/util/ExperimentDescriptionParser.java</code>
+<strong>Size:</strong> 779 lines (biggest single new file in the
+branch)</p>
+<p>Pipeline: read the header block of an expression data file
+(<code># key: value</code> style), tokenize, map each key to a setter
+via a keyword dictionary, validate against
+<code>MetadataValidator</code>, return an
+<code>ExperimentDescription</code> + a list of issues.</p>
+<p>Representative keyword dictionary:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span><span class="op">[]</span> TEST_ARTICLE_KEYS <span class="op">=</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="st">&quot;test article&quot;</span><span class="op">,</span> <span class="st">&quot;testarticle&quot;</span><span class="op">,</span> <span class="st">&quot;chemical&quot;</span><span class="op">,</span> <span class="st">&quot;compound&quot;</span><span class="op">,</span> <span class="st">&quot;article&quot;</span><span class="op">};</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span><span class="op">[]</span> SPECIES_KEYS <span class="op">=</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="st">&quot;species&quot;</span><span class="op">,</span> <span class="st">&quot;organism&quot;</span><span class="op">};</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span><span class="op">[]</span> STRAIN_KEYS <span class="op">=</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="st">&quot;strain&quot;</span><span class="op">};</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span><span class="op">[]</span> SEX_KEYS <span class="op">=</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="st">&quot;sex&quot;</span><span class="op">,</span> <span class="st">&quot;gender&quot;</span><span class="op">};</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span><span class="op">[]</span> ORGAN_KEYS <span class="op">=</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="st">&quot;organ&quot;</span><span class="op">,</span> <span class="st">&quot;tissue&quot;</span><span class="op">};</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">// ... ARTICLE_ROUTE_KEYS, ARTICLE_VEHICLE_KEYS, PLATFORM_KEYS, PROVIDER_KEYS,</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">//     IN_VIVO_DURATION_KEYS, STUDY_DURATION_KEYS, ARTICLE_TYPE_KEYS, etc.</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">Set</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> SEX_KEYWORDS <span class="op">=</span> <span class="kw">new</span> <span class="bu">HashSet</span><span class="op">&lt;&gt;(</span><span class="bu">Arrays</span><span class="op">.</span><span class="fu">asList</span><span class="op">(</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;male&quot;</span><span class="op">,</span> <span class="st">&quot;female&quot;</span><span class="op">,</span> <span class="st">&quot;m&quot;</span><span class="op">,</span> <span class="st">&quot;f&quot;</span><span class="op">,</span> <span class="st">&quot;both&quot;</span><span class="op">,</span> <span class="st">&quot;mixed&quot;</span><span class="op">,</span> <span class="st">&quot;na&quot;</span><span class="op">));</span></span></code></pre></div>
+<p>Each field is parsed with <code>parseVocabularyField()</code> which
+validates against the YAML vocabulary before calling the setter.
+Unrecognized values produce an issue (not a failure).</p>
+<h3 id="15-ui-metadata-dialogs">1.5 UI: metadata dialogs</h3>
+<p>Two dialogs, both <code>Dialog&lt;...&gt;</code> subclasses:</p>
+<p><strong>Single experiment dialog</strong> —
+<code>src/main/java/com/sciome/bmdexpress2/mvp/view/mainstage/ExperimentDescriptionDialog.java</code>
+(~270 lines).</p>
+<p>Layout: <code>GridPane</code> with rows for Test Article, Subject
+Type, Species, Strain, Sex, Organ, Cell Line. Editable
+<code>ComboBox</code>es for controlled-vocab fields;
+<code>TextField</code> for free-text. Subject-Type selector toggles
+which field group is visible. OK button disabled until required fields
+are filled.</p>
+<p><strong>Batch dialog</strong> —
+<code>src/main/java/com/sciome/bmdexpress2/mvp/view/mainstage/BatchExperimentDescriptionDialog.java</code>
+(~317 lines original). Scrollable <code>VBox</code> of per-experiment
+<code>GridPane</code>s. Returns
+<code>Map&lt;DoseResponseExperiment, ExperimentDescription&gt;</code>.</p>
+<p>Both go through the validator on OK and present issues in a blocking
+alert if any rule fails.</p>
+<p>Wired into <code>ProjectNavigationView</code> via right-click context
+menu:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ProjectNavigationView.java</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">MenuItem</span> editMetadata <span class="op">=</span> <span class="kw">new</span> <span class="bu">MenuItem</span><span class="op">(</span><span class="st">&quot;Edit Description&quot;</span><span class="op">);</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>editMetadata<span class="op">.</span><span class="fu">setOnAction</span><span class="op">(</span>e <span class="op">-&gt;</span> presenter<span class="op">.</span><span class="fu">editExperimentMetadata</span><span class="op">(</span>selected<span class="op">));</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">MenuItem</span> batchEdit <span class="op">=</span> <span class="kw">new</span> <span class="bu">MenuItem</span><span class="op">(</span><span class="st">&quot;Batch Edit Metadata&quot;</span><span class="op">);</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>batchEdit<span class="op">.</span><span class="fu">setOnAction</span><span class="op">(</span>e <span class="op">-&gt;</span> presenter<span class="op">.</span><span class="fu">batchEditMetadata</span><span class="op">(</span>multi<span class="op">));</span></span></code></pre></div>
+<p>And wired into the import flow
+(<code>ProjectNavigationPresenter.onLoadExperiement</code>):</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Collect experiments whose metadata is incomplete, then prompt for each.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">List</span><span class="op">&lt;</span>DoseResponseExperiment<span class="op">&gt;</span> needMetadata <span class="op">=</span> <span class="kw">new</span> <span class="bu">ArrayList</span><span class="op">&lt;&gt;();</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>DoseResponseExperiment exp <span class="op">:</span> experiments<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    ExperimentDescription desc <span class="op">=</span> exp<span class="op">.</span><span class="fu">getExperimentDescription</span><span class="op">();</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>desc <span class="op">==</span> <span class="kw">null</span> <span class="op">||</span> <span class="op">!</span><span class="fu">isMetadataComplete</span><span class="op">(</span>desc<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        needMetadata<span class="op">.</span><span class="fu">add</span><span class="op">(</span>exp<span class="op">);</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>DoseResponseExperiment exp <span class="op">:</span> needMetadata<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    ExperimentDescription updated <span class="op">=</span> <span class="fu">getView</span><span class="op">()</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">showExperimentDescriptionDialog</span><span class="op">(</span>exp<span class="op">.</span><span class="fu">getExperimentDescription</span><span class="op">(),</span> exp<span class="op">.</span><span class="fu">getName</span><span class="op">());</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>updated <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> exp<span class="op">.</span><span class="fu">setExperimentDescription</span><span class="op">(</span>updated<span class="op">);</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="16-metadata-columns-across-the-entire-pipeline-0767a73">1.6
+Metadata columns across the entire pipeline (<code>0767a73</code>)</h3>
+<p><strong>Scope:</strong> 17 files, 894 insertions.</p>
+<p>This commit makes the 8 scientifically meaningful metadata columns —
+Test Article, CASRN, Species, Strain, Sex, Organ, Cell Line, Subject
+Type — accessible on every result type. Two new methods on
+<code>ExperimentDescription</code>:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="bu">List</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> <span class="fu">getColumnHeaders</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">Arrays</span><span class="op">.</span><span class="fu">asList</span><span class="op">(</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        COL_TEST_ARTICLE<span class="op">,</span> COL_CASRN<span class="op">,</span> COL_SPECIES<span class="op">,</span> COL_STRAIN<span class="op">,</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        COL_SEX<span class="op">,</span> COL_ORGAN<span class="op">,</span> COL_CELL_LINE<span class="op">,</span> COL_SUBJECT_TYPE<span class="op">);</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="bu">List</span><span class="op">&lt;</span><span class="bu">Object</span><span class="op">&gt;</span> <span class="fu">getColumnValues</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// TestArticleIdentifier fields can themselves be null even when</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// the testArticle object exists, so we double-check both levels.</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> testArticleName <span class="op">=</span> <span class="op">(</span>testArticle <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">?</span> testArticle<span class="op">.</span><span class="fu">getName</span><span class="op">()</span> <span class="op">:</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> casrn <span class="op">=</span> <span class="op">(</span>testArticle <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">?</span> testArticle<span class="op">.</span><span class="fu">getCasrn</span><span class="op">()</span> <span class="op">:</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">Arrays</span><span class="op">.</span><span class="fu">asList</span><span class="op">(</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">nullToEmpty</span><span class="op">(</span>testArticleName<span class="op">),</span> <span class="fu">nullToEmpty</span><span class="op">(</span>casrn<span class="op">),</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">nullToEmpty</span><span class="op">(</span>species<span class="op">),</span> <span class="fu">nullToEmpty</span><span class="op">(</span>strain<span class="op">),</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">nullToEmpty</span><span class="op">(</span>sex<span class="op">),</span> <span class="fu">nullToEmpty</span><span class="op">(</span>organ<span class="op">),</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">nullToEmpty</span><span class="op">(</span>cellLine<span class="op">),</span> <span class="fu">nullToEmpty</span><span class="op">(</span>subjectType<span class="op">));</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Then the same columns are injected into every result row via the
+<code>BMDExpressAnalysisRow.getRow()</code> override in:</p>
+<ul>
+<li><code>BMDResult.java</code> (+
+<code>ProbeStatResult.java</code>)</li>
+<li><code>OneWayANOVAResult.java</code> /
+<code>OneWayANOVAResults.java</code></li>
+<li><code>WilliamsTrendResult.java</code> /
+<code>WilliamsTrendResults.java</code></li>
+<li><code>OriogenResult.java</code> /
+<code>OriogenResults.java</code></li>
+<li><code>CurveFitPrefilterResult.java</code> /
+<code>CurveFitPrefilterResults.java</code></li>
+<li><code>CategoryAnalysisResult.java</code> /
+<code>CategoryAnalysisResults.java</code></li>
+</ul>
+<p>Each results class gained a method like:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// BMDResult.java</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="bu">List</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> <span class="fu">getColumnHeader</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">List</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> header <span class="op">=</span> <span class="kw">new</span> <span class="bu">ArrayList</span><span class="op">&lt;&gt;();</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    header<span class="op">.</span><span class="fu">addAll</span><span class="op">(</span>doseResponseExperiment<span class="op">.</span><span class="fu">getExperimentDescription</span><span class="op">().</span><span class="fu">getColumnHeaders</span><span class="op">());</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    header<span class="op">.</span><span class="fu">addAll</span><span class="op">(</span><span class="kw">...</span>existing columns<span class="kw">...</span><span class="op">);</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> header<span class="op">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Commit <code>82847ef</code> added the upward traversal so downstream
+result types can reach the description:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">// CategoryAnalysisResults.java — traverses BMDResult → DoseResponseExperiment</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> ExperimentDescription <span class="fu">getExperimentDescription</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>bmdResults <span class="op">==</span> <span class="kw">null</span> <span class="op">||</span> bmdResults<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span> <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> bmdResults<span class="op">.</span><span class="fu">get</span><span class="op">(</span><span class="dv">0</span><span class="op">).</span><span class="fu">getExperimentDescription</span><span class="op">();</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">// BMDResult.java — traverses DoseResponseExperiment</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> ExperimentDescription <span class="fu">getExperimentDescription</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">(</span>doseResponseExperiment <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="op">?</span> doseResponseExperiment<span class="op">.</span><span class="fu">getExperimentDescription</span><span class="op">()</span> <span class="op">:</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">// PrefilterResults.java — default interface method</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="kw">default</span> ExperimentDescription <span class="fu">getExperimentDescription</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    DoseResponseExperiment dre <span class="op">=</span> <span class="fu">getDoseResponseExperiment</span><span class="op">();</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">(</span>dre <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">?</span> dre<span class="op">.</span><span class="fu">getExperimentDescription</span><span class="op">()</span> <span class="op">:</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="17-visual-gui-test-runner-f0e7e1c">1.7 Visual GUI test runner
+(<code>f0e7e1c</code>)</h3>
+<p><strong>New subpackage:</strong>
+<code>src/test/java/com/sciome/bmdexpress2/guitest/</code></p>
+<p>Built on <strong>TestFX</strong> (added to <code>pom.xml</code>:
+<code>org.testfx:testfx-core:4.0.16-alpha</code>,
+<code>testfx-junit5:4.0.16-alpha</code>). The user's prompt in the Feb
+26 transcript:</p>
+<blockquote>
+<p><em>"do we have a way to run gui tests visually? i.e. i want to have
+a list of workflows, and the user actions that comprise them, and be
+able to step through them so that i can watch."</em></p>
+</blockquote>
+<p>Result: a YAML-configured workflow engine with visual
+step-through.</p>
+<p>Components:</p>
+<ul>
+<li><strong><code>WorkflowDefinition</code></strong> — root type, holds
+name / description / setup / steps</li>
+<li><strong><code>StepDefinition</code></strong> — one user action:
+<code>click</code>, <code>type</code>, <code>select</code>,
+<code>assert</code></li>
+<li><strong><code>SetupDefinition</code></strong> — per-workflow
+preconditions (files to create, etc.)</li>
+<li><strong><code>WorkflowLoader</code></strong> — SnakeYAML parser for
+<code>src/test/resources/workflows/*.yaml</code></li>
+<li><strong><code>ActionExecutor</code></strong> — dispatches each step
+to the TestFX <code>FxRobot</code></li>
+<li><strong><code>ControlPanel</code></strong> — JavaFX side-panel UI:
+list of workflows, step list, Play / Pause / Step-Next buttons</li>
+<li><strong><code>VisualTestRunner</code></strong> — main entrypoint;
+launches the target app plus the control panel and binds them
+together</li>
+</ul>
+<p>Sample workflow:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># src/test/resources/workflows/import-expression-data.yaml</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Import Expression Data</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">description</span><span class="kw">:</span><span class="at"> Import a sample expression file and confirm metadata prompt appears</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setup</span><span class="kw">:</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">createFile</span><span class="kw">:</span><span class="at"> testdata/sample_expression.txt</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">click</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#menuFile&quot;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">click</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#menuImportExpression&quot;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#filePathField&quot;</span><span class="at"> </span><span class="er">&quot;testdata/sample_expression.txt&quot;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">click</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#btnImport&quot;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">assert</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Experiment Description dialog appears&quot;</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#testArticleField&quot;</span><span class="at"> </span><span class="er">&quot;PFOA&quot;</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">select</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#speciesField&quot;</span><span class="at"> </span><span class="er">&quot;rat&quot;</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">click</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;OK&quot;</span></span></code></pre></div>
+<p>Menu wire-up in <code>MenuBarView</code>:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">MenuItem</span> visualTestRunner <span class="op">=</span> <span class="kw">new</span> <span class="bu">MenuItem</span><span class="op">(</span><span class="st">&quot;Visual Test Runner...&quot;</span><span class="op">);</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>visualTestRunner<span class="op">.</span><span class="fu">setOnAction</span><span class="op">(</span>e <span class="op">-&gt;</span> <span class="kw">new</span> <span class="fu">VisualTestRunner</span><span class="op">().</span><span class="fu">start</span><span class="op">(</span><span class="kw">new</span> <span class="fu">Stage</span><span class="op">()));</span></span></code></pre></div>
+<h3 id="18-bm2-deserialization-test-0767a73">1.8 Bm2 deserialization
+test (<code>0767a73</code>)</h3>
+<p><strong>File:</strong>
+<code>src/test/java/com/sciome/bmdexpress2/model/Bm2DeserializationTest.java</code>
+(361 lines)</p>
+<p>Guards against Jackson deserialization regressions. Walks a fixture
+<code>.bm2</code> file, deserializes it, and asserts every expected
+field on every analysis type round-trips. Particularly important after
+the object-model refactors in <code>f567e2d</code> and
+<code>025b0624</code>.</p>
+<hr />
+<h2 id="part-2--bmdx-core-branch">Part 2 — <code>bmdx-core</code>
+branch</h2>
+<h3 id="21-committed-state-the-strip-caebfe1">2.1 Committed state: the
+strip (<code>caebfe1</code>)</h3>
+<p><strong>Single commit.</strong> Message:</p>
+<blockquote>
+<p>Strip BMDExpress 3 to headless bmdx-core library (132 sources,
+288KB)</p>
+<p>Remove GUI (JavaFX views, charts, dialogs), analysis engines (BMD
+modeling, prefilters, category analysis), and their CLI runners. Keep
+the full data model (88 classes for .bm2 deserialization), native CLI
+I/O commands (combine, export, query, delete), metadata system
+(ExperimentDescription, vocabulary, parser), and utilities
+(ExperimentFileUtil, ProjectUtilities, annotation).</p>
+<p>Add sync-from-upstream.sh for merging parent branch model changes
+with automatic missing-class restoration and compile verification.</p>
+</blockquote>
+<p><strong>Diff stat vs <code>experiment-metadata</code>:</strong> 501
+files changed, <strong>238 insertions, 93,674 deletions</strong>.</p>
+<h4 id="what-was-removed">What was removed</h4>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>What</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>commandline/</code> (analysis runners)</td>
+<td><code>ANOVARunner</code>, <code>BMDAnalysisRunner</code>,
+<code>CategoryAnalysisRunner</code>,
+<code>CurveFitPrefilterRunner</code>,
+<code>NonParametricAnalysisRunner</code>, <code>OriogenRunner</code>,
+<code>WilliamsTrendRunner</code>, <code>AnalyzeRunner</code> (1,335
+lines alone)</td>
+<td>Analysis-engine entry points</td>
+</tr>
+<tr>
+<td><code>commandline/config/**</code></td>
+<td><code>BMDSConfig</code>, <code>CategoryConfig</code>,
+<code>IVIVEConfig</code>, <code>NonParametricConfig</code>,
+<code>PrefilterConfig</code>, etc.</td>
+<td>Configuration for removed engines</td>
+</tr>
+<tr>
+<td><code>mvp/presenter/**</code></td>
+<td><code>BMDAnalysisPresenter</code>,
+<code>CategorizationPresenter</code>, <code>MainPresenter</code>,
+<code>MenuBarPresenter</code>, <code>ProjectNavigationPresenter</code>
+(1,108 lines) and all prefilter / visualization / dataview
+presenters</td>
+<td>JavaFX GUI layer</td>
+</tr>
+<tr>
+<td><code>mvp/view/**</code></td>
+<td><code>BMDAnalysisView</code>, <code>CategorizationView</code>,
+<code>AnnotationUpdateView</code>, plus the single + batch description
+dialogs, curve fit view</td>
+<td>JavaFX GUI layer</td>
+</tr>
+<tr>
+<td><code>mvp/view/mainstage/</code></td>
+<td><code>ProjectNavigationView</code>, MenuBarView, dialogs</td>
+<td>JavaFX GUI layer</td>
+</tr>
+<tr>
+<td><code>guitest/**</code> + <code>workflows/**</code> +
+<code>testdata/**</code></td>
+<td>Entire visual test runner + sample data</td>
+<td>Depended on the removed views</td>
+</tr>
+<tr>
+<td><code>src/main/resources/tissues/*</code></td>
+<td><code>Adipose</code>, <code>Adrenal Gland</code>,
+<code>Bone Marrow</code>, <code>Brain</code>, <code>Colon</code>,
+<code>Heart</code>, <code>Kidney</code>, <code>Liver</code>,
+<code>Lung</code>, <code>Ovary</code>, <code>Pancreas</code>,
+<code>Skin</code>, <code>Spleen</code>, <code>Stomach</code>,
+<code>Testis</code>, <code>Thymus</code>, <code>Thyroid</code>,
+<code>Uterus</code>, <code>tissues.txt</code> (18 files)</td>
+<td>Tissue-specific enrichment tables used only by the removed
+category-analysis engine</td>
+</tr>
+<tr>
+<td><code>mvp/model/Bm2DeserializationTest</code></td>
+<td>Legacy test</td>
+<td>Moved to <code>src/test/</code> in uncommitted work</td>
+</tr>
+</tbody>
+</table>
+<h4 id="what-was-kept">What was kept</h4>
+<ul>
+<li><strong>Entire data model</strong> (88 classes):
+<code>BMDExpressAnalysisDataSet</code>, <code>BMDProject</code>,
+<code>DoseResponseExperiment</code>, <code>BMDResult</code>,
+<code>OneWayANOVAResults</code>, <code>WilliamsTrendResults</code>,
+<code>OriogenResults</code>, <code>CurveFitPrefilterResults</code>,
+<code>CategoryAnalysisResults</code>, <code>ProbeResponse</code>,
+<code>Probe</code>, <code>Treatment</code>, <code>ChipInfo</code>,
+<code>AnalysisInfo</code>, the full stat result hierarchy, etc.</li>
+<li><strong>Metadata system</strong>:
+<code>ExperimentDescription</code>, <code>VocabularyConfig</code>,
+<code>TestArticleIdentifier</code>, rules/ subpackage,
+<code>ExperimentDescriptionParser</code>.</li>
+<li><strong>.bm2 I/O</strong>: <code>ExperimentFileUtil</code>,
+<code>ProjectUtilities</code>, annotation utilities.</li>
+<li><strong>CLI I/O commands</strong>: <code>combine</code>,
+<code>export</code>, <code>query</code>, <code>delete</code> (the pieces
+in <code>BMDExpressCommandLine</code> that read/write <code>.bm2</code>
+without running analyses).</li>
+<li><strong>vocabulary.yml</strong>.</li>
+</ul>
+<h4 id="what-was-added">What was added</h4>
+<p><strong><code>scripts/sync-from-upstream.sh</code></strong> (151
+lines) — the one net-new file beyond the stripping. Because bmdx-core is
+a curated subset, any future data-model change in
+<code>experiment-metadata</code> needs to be re-synced. This script does
+it safely:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sync strategy (abridged from the script):</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   1. Merge the upstream branch (experiment-metadata) into bmdx-core,</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#      preserving our deletions via `-X ours` merge strategy on any</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#      previously-removed files.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   2. Try to compile.  If clean, done.</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   3. If compile fails with &quot;cannot find symbol&quot; errors, parse the</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#      missing class names from the Maven output, check them out</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#      directly from the upstream branch, retry compilation.</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   4. Loop up to MAX_ROUNDS=5 times to cover transitive dependencies</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#      (class A needs class B needs class C).</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   5. If still failing after 5 rounds, print remaining errors for</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#      manual resolution.</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="va">CURRENT_BRANCH</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> branch <span class="at">--show-current</span><span class="va">)</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">$CURRENT_BRANCH</span><span class="st">&quot;</span> <span class="ot">!=</span> <span class="st">&quot;bmdx-core&quot;</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;ERROR: Must be on the bmdx-core branch (currently on &#39;</span><span class="va">$CURRENT_BRANCH</span><span class="st">&#39;)&quot;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<h3 id="22-uncommitted-work-in-progress">2.2 Uncommitted
+work-in-progress</h3>
+<p><code>git status</code> at time of report (files modified vs last
+commit):</p>
+<pre><code>M  src/main/java/com/sciome/bmdexpress2/mvp/model/DoseResponseExperiment.java        (+74 lines)
+M  src/main/java/com/sciome/bmdexpress2/mvp/model/IStatModelProcessable.java         (+39)
+M  src/main/java/com/sciome/bmdexpress2/mvp/model/info/ExperimentDescription.java    (+53)
+M  src/main/java/com/sciome/bmdexpress2/mvp/model/info/VocabularyConfig.java         (+21)
+M  src/main/java/com/sciome/bmdexpress2/mvp/model/probe/Probe.java                   (+10)
+M  src/main/java/com/sciome/bmdexpress2/mvp/model/probe/ProbeResponse.java           (+35)
+M  src/main/java/com/sciome/bmdexpress2/util/ExperimentDescriptionParser.java        (+8)
+M  src/main/resources/vocabulary.yml                                                 (+26)
+?? src/main/java/com/sciome/bmdexpress2/mvp/model/probe/Endpoint.java                (new)
+?? src/main/java/com/sciome/bmdexpress2/mvp/model/probe/EndpointResponse.java        (new)
+?? src/test/                                                                         (new, moved from src/main/java)
+?? docs/                                                                             (new)</code></pre>
+<p>Total: <strong>252 insertions, 14 deletions</strong> + 2 new
+interface files.</p>
+<p>Theme: <strong>domain-neutral data model</strong>. The
+<code>.bm2</code> format and the surrounding object graph were
+originally genomics-only (Probe, ProbeResponse, ChipInfo). The
+uncommitted work generalizes these into a domain-agnostic pair of
+interfaces while keeping all existing
+<code>Probe</code>/<code>ProbeResponse</code> code working.</p>
+<h4 id="221-new-interfaces">2.2.1 New interfaces</h4>
+<p><strong><code>src/main/java/com/sciome/bmdexpress2/mvp/model/probe/Endpoint.java</code></strong></p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span><span class="im"> com</span><span class="op">.</span><span class="im">sciome</span><span class="op">.</span><span class="im">bmdexpress2</span><span class="op">.</span><span class="im">mvp</span><span class="op">.</span><span class="im">model</span><span class="op">.</span><span class="im">probe</span><span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a> <span class="co">*</span> Domain<span class="co">-</span>neutral interface for a measured quantity in a dose<span class="co">-</span>response experiment<span class="co">.</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a> <span class="co">*</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a> <span class="co">*</span> In genomics<span class="co">,</span> an endpoint is a gene probe <span class="co">(</span>microarray spot<span class="co">,</span> S1500<span class="co">+</span> target<span class="co">,</span> etc<span class="co">.).</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a> <span class="co">*</span> In apical toxicology<span class="co">,</span> an endpoint is a clinical measurement <span class="co">(</span>ALT<span class="co">,</span> body weight<span class="co">,</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a> <span class="co">*</span> liver weight<span class="co">,</span> etc<span class="co">.).</span>  This interface abstracts over both <span class="co">—</span> any object that has</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a> <span class="co">*</span> a string identifier can serve as an endpoint<span class="co">.</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a> <span class="co">*/</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">interface</span> <span class="bu">Endpoint</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">/**</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>     <span class="co">*</span> Returns the unique identifier for this endpoint<span class="co">.</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>     <span class="co">*</span> For genomics<span class="co">:</span> the probe set ID <span class="co">(</span>e<span class="co">.</span>g<span class="co">.,</span> <span class="co">&quot;</span>ACAA1A_7954<span class="co">&quot;).</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>     <span class="co">*</span> For apical data<span class="co">:</span> the endpoint name <span class="co">(</span>e<span class="co">.</span>g<span class="co">.,</span> <span class="co">&quot;</span>Alanine aminotransferase<span class="co">&quot;).</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>     <span class="co">*/</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> <span class="fu">getId</span><span class="op">();</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="fu">setId</span><span class="op">(</span><span class="bu">String</span> id<span class="op">);</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong><code>src/main/java/com/sciome/bmdexpress2/mvp/model/probe/EndpointResponse.java</code></strong></p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span><span class="im"> com</span><span class="op">.</span><span class="im">sciome</span><span class="op">.</span><span class="im">bmdexpress2</span><span class="op">.</span><span class="im">mvp</span><span class="op">.</span><span class="im">model</span><span class="op">.</span><span class="im">probe</span><span class="op">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">java</span><span class="op">.</span><span class="im">util</span><span class="op">.</span><span class="im">List</span><span class="op">;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a> <span class="co">*</span> Domain<span class="co">-</span>neutral interface for a single endpoint<span class="co">&#39;</span>s dose<span class="co">-</span>response data<span class="co">.</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a> <span class="co">*</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a> <span class="co">*</span> Each EndpointResponse pairs an <span class="an">{@link</span> Endpoint<span class="an">}</span> <span class="co">(</span>what was measured<span class="co">)</span> with</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a> <span class="co">*</span> a list of response values <span class="co">(</span>one per treatment<span class="co">/</span>animal in the experiment<span class="co">).</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a> <span class="co">*/</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">interface</span> EndpointResponse</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Endpoint</span> <span class="fu">getEndpoint</span><span class="op">();</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">List</span><span class="op">&lt;</span><span class="bu">Float</span><span class="op">&gt;</span> <span class="fu">getResponses</span><span class="op">();</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="fu">setResponses</span><span class="op">(</span><span class="bu">List</span><span class="op">&lt;</span><span class="bu">Float</span><span class="op">&gt;</span> responses<span class="op">);</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h4 id="222-probe-implements-endpoint">2.2.2 <code>Probe</code>
+implements <code>Endpoint</code></h4>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Probe.java — diff</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="kw">public</span> <span class="kw">class</span> Probe <span class="kw">implements</span> <span class="bu">Serializable</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="kw">public</span> <span class="kw">class</span> Probe <span class="kw">implements</span> <span class="bu">Serializable</span><span class="op">,</span> <span class="bu">Endpoint</span></span></code></pre></div>
+<p><code>Probe</code> already had <code>getId()</code> /
+<code>setId(String)</code> so no further changes were needed — the
+interface is a pure marker + contract addition.</p>
+<h4 id="223-proberesponse-implements-endpointresponse">2.2.3
+<code>ProbeResponse</code> implements <code>EndpointResponse</code></h4>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ProbeResponse.java — diff</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="kw">public</span> <span class="kw">class</span> ProbeResponse <span class="kw">extends</span> BMDExpressAnalysisRow <span class="kw">implements</span> <span class="bu">Serializable</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="kw">public</span> <span class="kw">class</span> ProbeResponse <span class="kw">extends</span> BMDExpressAnalysisRow <span class="kw">implements</span> <span class="bu">Serializable</span><span class="op">,</span> EndpointResponse</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a> <span class="at">@Deprecated</span><span class="op">(</span>forRemoval <span class="op">=</span> <span class="kw">false</span><span class="op">)</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> Probe <span class="fu">getProbe</span><span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> probe<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="at">@Override</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="at">@JsonIgnore</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="kw">public</span> <span class="bu">Endpoint</span> <span class="fu">getEndpoint</span><span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> probe<span class="op">;</span> <span class="op">}</span></span></code></pre></div>
+<p>The <code>@Deprecated(forRemoval = false)</code> pattern signals
+<em>"prefer the new API but we're not removing this"</em> — lets
+genomics code keep using <code>getProbe()</code> without IDE warnings
+promising deletion.</p>
+<h4 id="224-doseresponseexperiment-gets-endpoint-aliases">2.2.4
+<code>DoseResponseExperiment</code> gets endpoint aliases</h4>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">// DoseResponseExperiment.java — diff</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="at">@JsonAlias</span><span class="op">(</span><span class="st">&quot;endpointResponses&quot;</span><span class="op">)</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">private</span> <span class="bu">List</span><span class="op">&lt;</span>ProbeResponse<span class="op">&gt;</span> probeResponses<span class="op">;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="at">@Deprecated</span><span class="op">(</span>forRemoval <span class="op">=</span> <span class="kw">false</span><span class="op">)</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="bu">List</span><span class="op">&lt;</span>ProbeResponse<span class="op">&gt;</span> <span class="fu">getProbeResponses</span><span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> probeResponses<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="at">@Deprecated</span><span class="op">(</span>forRemoval <span class="op">=</span> <span class="kw">false</span><span class="op">)</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setProbeResponses</span><span class="op">(</span><span class="bu">List</span><span class="op">&lt;</span>ProbeResponse<span class="op">&gt;</span> probeResponses<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>     <span class="kw">this</span><span class="op">.</span><span class="fu">probeResponses</span> <span class="op">=</span> probeResponses<span class="op">;</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a> <span class="op">}</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">/**</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">+</span> <span class="co">*</span> Domain<span class="co">-</span>neutral alias for <span class="an">{@link</span> <span class="an">#</span>getProbeResponses<span class="an">()}</span><span class="co">.</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co">+</span> <span class="co">*</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co">+</span> <span class="co">*</span> Returns the dose<span class="co">-</span>response matrix as a list of <span class="an">{@link</span> EndpointResponse<span class="an">}</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">+</span> <span class="co">*</span> objects<span class="co">.</span>  Each entry is one measured endpoint <span class="co">(</span>gene probe<span class="co">,</span> clinical</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co">+</span> <span class="co">*</span> measurement<span class="co">,</span> organ weight<span class="co">,</span> etc<span class="co">.)</span> with its response values across all</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co">+</span> <span class="co">*</span> treatments<span class="co">.</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co">+</span> <span class="co">*/</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="at">@JsonIgnore</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="kw">public</span> <span class="bu">List</span><span class="op">&lt;?</span> <span class="kw">extends</span> EndpointResponse<span class="op">&gt;</span> <span class="fu">getEndpointResponses</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    <span class="cf">return</span> probeResponses<span class="op">;</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="op">+}</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="op">+</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="at">@JsonIgnore</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="kw">public</span> <span class="dt">void</span> <span class="fu">setEndpointResponses</span><span class="op">(</span><span class="bu">List</span><span class="op">&lt;</span>ProbeResponse<span class="op">&gt;</span> endpointResponses<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    <span class="kw">this</span><span class="op">.</span><span class="fu">probeResponses</span> <span class="op">=</span> endpointResponses<span class="op">;</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a><span class="op">+}</span></span></code></pre></div>
+<p>Key detail:
+<strong><code>@JsonAlias("endpointResponses")</code></strong> on the
+backing field. This means Jackson can deserialize <code>.bm2</code>
+files that use <em>either</em> the legacy <code>"probeResponses"</code>
+key <em>or</em> the new <code>"endpointResponses"</code> key, letting
+new domain-neutral writers emit the new name without breaking old
+readers.</p>
+<p>Similar changes for <code>ChipInfo getChip()</code> →
+<code>getPlatform()</code> aliases.</p>
+<h4 id="225-istatmodelprocessable--default-method-for-the-alias">2.2.5
+<code>IStatModelProcessable</code> — default method for the alias</h4>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">// IStatModelProcessable.java — diff</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">/**</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">+</span> <span class="co">*</span> Contract for any dataset that can be sent to BMD statistical model fitting<span class="co">.</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">+</span> <span class="co">*</span> Provides both genomics<span class="co">-</span>named and domain<span class="co">-</span>neutral method names for compatibility<span class="co">.</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">+</span> <span class="co">*/</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="kw">interface</span> IStatModelProcessable</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a> <span class="op">{</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>     DoseResponseExperiment <span class="fu">getProcessableDoseResponseExperiment</span><span class="op">();</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    <span class="at">@Deprecated</span><span class="op">(</span>forRemoval <span class="op">=</span> <span class="kw">false</span><span class="op">)</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>     <span class="bu">List</span><span class="op">&lt;</span>ProbeResponse<span class="op">&gt;</span> <span class="fu">getProcessableProbeResponses</span><span class="op">();</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    <span class="co">/**</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co">+</span>     <span class="co">*</span> <span class="co">@</span>JsonIgnore because this returns the same list as getProcessableProbeResponses<span class="co">()</span> <span class="co">—</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">+</span>     <span class="co">*</span> Jackson would serialize it as redundant <span class="co">@</span>ref integer arrays<span class="co">,</span> cluttering the JSON tree<span class="co">.</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">+</span>     <span class="co">*/</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    <span class="at">@JsonIgnore</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    <span class="kw">default</span> <span class="bu">List</span><span class="op">&lt;?</span> <span class="kw">extends</span> EndpointResponse<span class="op">&gt;</span> <span class="fu">getProcessableEndpointResponses</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>        <span class="cf">return</span> <span class="fu">getProcessableProbeResponses</span><span class="op">();</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    <span class="op">}</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>     <span class="bu">String</span> <span class="fu">getParentDataSetName</span><span class="op">();</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>     <span class="bu">String</span> <span class="fu">getDataSetName</span><span class="op">();</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a> <span class="op">}</span></span></code></pre></div>
+<p>All existing implementers (<code>DoseResponseExperiment</code>,
+<code>OneWayANOVAResults</code>, <code>WilliamsTrendResults</code>,
+<code>OriogenResults</code>, <code>CurveFitPrefilterResults</code>,
+<code>BMDResult</code>) get the new default for free — no edits
+needed.</p>
+<h4 id="226-datatype-field-on-experimentdescription">2.2.6
+<code>dataType</code> field on <code>ExperimentDescription</code></h4>
+<p>New field for data-completeness classification:</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ExperimentDescription.java — diff</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">// Data completeness classification: &quot;tox_study&quot; (raw, may have gaps),</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">// &quot;inferred&quot; (gap-filled for BMD modeling), or &quot;gene_expression&quot;.</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">// Nullable for backward compatibility: old .bm2 files won&#39;t have this field.</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="kw">private</span> <span class="bu">String</span> dataType<span class="op">;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="kw">public</span> <span class="dt">static</span> <span class="bu">List</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> <span class="fu">getDataTypeVocabulary</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    <span class="cf">return</span> VocabularyConfig<span class="op">.</span><span class="fu">getInstance</span><span class="op">().</span><span class="fu">getDataTypes</span><span class="op">();</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="op">+}</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getDataType</span><span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> dataType<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="kw">public</span> <span class="dt">void</span> <span class="fu">setDataType</span><span class="op">(</span><span class="bu">String</span> dataType<span class="op">)</span> <span class="op">{</span> <span class="kw">this</span><span class="op">.</span><span class="fu">dataType</span> <span class="op">=</span> dataType<span class="op">;</span> <span class="op">}</span></span></code></pre></div>
+<p>And in <code>vocabulary.yml</code>:</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data completeness classification.  Describes whether a file/experiment</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># contains raw tox study data (may have gaps from dead/excluded animals)</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or gap-filled data suitable for BMD modeling.</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   tox_study       — actual experimental values, may have missing data</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   inferred        — gap-filled (dose-group averages substituted for missing)</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   gene_expression — transcriptomics data (always complete, different pipeline)</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dataTypes</span><span class="kw">:</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> tox_study</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> inferred</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> gene_expression</span></span></code></pre></div>
+<h4 id="227-vocabularyyml--apical--observations-support">2.2.7
+vocabulary.yml — apical &amp; observations support</h4>
+<p>Providers list grew:</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">providers</span><span class="kw">:</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">+</span><span class="co">  # Genomics providers — commercial entities or reference databases</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> Affymetrix</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> Agilent</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> BioSpyder</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> RefSeq</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> Ensembl</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at">  </span><span class="kw">-</span><span class="at"> Clinical Endpoint</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="at">+</span><span class="co">  # Apical provider — in vivo tox study numeric dose-response endpoints</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="at">+  - Apical</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="at">+</span><span class="co">  # Observations provider — categorical event data (clinical observations)</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="at">+  - Observations</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> Generic</span></span></code></pre></div>
+<p>Platforms list grew:</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="at">   ...</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="co">  # Clinical endpoints</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="at">+</span><span class="co">  # Apical platforms — each is a class of in vivo tox study numeric endpoints</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="at">+  - Body Weight</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="at">+  - Organ Weight</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> Clinical Chemistry</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> Hematology</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at">  </span><span class="kw">-</span><span class="at"> Organ Weight</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="at">+  - Hormones</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="at">+  - Tissue Concentration</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="at">+</span><span class="co">  # Observations platforms — categorical event data</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="at">+  - Clinical</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> Generic</span></span></code></pre></div>
+<h4 id="228-jackson-jsonignore-audit-on-experimentdescription">2.2.8
+Jackson @JsonIgnore audit on <code>ExperimentDescription</code></h4>
+<p>Multiple computed / formatting methods now carry
+<code>@JsonIgnore</code> to prevent Jackson from serializing them as
+fake properties:</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a> <span class="at">@JsonIgnore</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="bu">List</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> <span class="fu">getColumnHeaders</span><span class="op">()</span> <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a> <span class="at">@JsonIgnore</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="bu">List</span><span class="op">&lt;</span><span class="bu">Object</span><span class="op">&gt;</span> <span class="fu">getColumnValues</span><span class="op">()</span> <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a> <span class="at">@JsonIgnore</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="bu">String</span> <span class="fu">getExperimentType</span><span class="op">()</span> <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a> <span class="at">@JsonIgnore</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">isInVivo</span><span class="op">()</span> <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a> <span class="at">@JsonIgnore</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">isInVitro</span><span class="op">()</span> <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a> <span class="at">@JsonIgnore</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="bu">String</span> <span class="fu">getStatusBarString</span><span class="op">()</span> <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a> <span class="at">@JsonIgnore</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="bu">String</span> <span class="fu">getFormattedString</span><span class="op">()</span> <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span></code></pre></div>
+<p>This cleans up the <code>.bm2</code> JSON output — no more
+<code>"columnHeaders": [...]</code>, <code>"inVivo": true</code>, etc.
+polluting the serialized model.</p>
+<h4 id="229-experimentdescriptionparser--data-type-parsing">2.2.9
+<code>ExperimentDescriptionParser</code> — data type parsing</h4>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a> <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span><span class="op">[]</span> PROVIDER_KEYS <span class="op">=</span> <span class="op">{</span><span class="st">&quot;provider&quot;</span><span class="op">};</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span><span class="op">[]</span> DATA_TYPE_KEYS <span class="op">=</span> <span class="op">{</span><span class="st">&quot;data type&quot;</span><span class="op">,</span> <span class="st">&quot;datatype&quot;</span><span class="op">,</span> <span class="st">&quot;data_type&quot;</span><span class="op">};</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">...</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">// Parse data type classification — tox_study, inferred, or gene_expression.</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">// Validated against the dataTypes vocabulary from vocabulary.yml.</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="bu">String</span> dataType <span class="op">=</span> <span class="fu">parseVocabularyField</span><span class="op">(</span>metadata<span class="op">,</span> issues<span class="op">,</span> <span class="st">&quot;Data Type&quot;</span><span class="op">,</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    ExperimentDescription<span class="op">.</span><span class="fu">getDataTypeVocabulary</span><span class="op">(),</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    desc<span class="op">::</span>setDataType<span class="op">,</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="op">+</span>    DATA_TYPE_KEYS<span class="op">);</span></span></code></pre></div>
+<h4 id="2210-tests">2.2.10 Tests</h4>
+<p><code>src/test/java/com/sciome/bmdexpress2/model/Bm2DeserializationTest.java</code>
+moved from <code>src/main/java/...</code> (where it was awkwardly
+sitting) to <code>src/test/java/...</code> — the standard Maven
+location.</p>
+<h4 id="2211-docs-directory">2.2.11 Docs directory</h4>
+<p><code>docs/domain-agnostic-refactoring.html</code> (not detailed
+here) — design notes for the Endpoint/EndpointResponse refactor, written
+earlier in this session.</p>
+<h3 id="23-conversation-glue--bmdx-core">2.3 Conversation glue —
+<code>bmdx-core</code></h3>
+<p>The current conversation (<code>9f7fce81.jsonl</code>) began with an
+LLM-metadata deduction plan and branched into UI work on the dialogs.
+During that session the user asked to verify branch state, leading to
+this report.</p>
+<p>Earlier Claude conversations that touched <code>bmdx-core</code>
+themes:</p>
+<ul>
+<li><p><strong><code>3e7848b3.jsonl</code></strong> — <em>"i want to
+develop a new data type for bmd express. use the rlm-code mcp service to
+research the code's object model"</em>. This is the research phase that
+informed the apical / observations extensions now landing in the
+uncommitted diff.</p></li>
+<li><p><strong><code>af484666.jsonl</code></strong> — <em>"branch the
+repo. llm-metadata"</em> and <em>"use llm to deduce metadata from
+combination of filename, category analysis names"</em> — spawned the
+separate <code>llm-metadata</code> branch where the LLM deduction logic
+was originally prototyped.</p></li>
+<li><p><strong><code>9d30fa37.jsonl</code></strong> — integrated
+<code>ExperimentDescription</code> into the object model. Its work is in
+the <code>experiment-metadata</code> branch (commit
+<code>0767a73</code>) but the refactors it set up are what made the
+bmdx-core strip feasible — the metadata system was self-contained enough
+to carry forward without the analysis engines.</p></li>
+</ul>
+<hr />
+<h2 id="part-3--dependency-additions">Part 3 — Dependency additions</h2>
+<p>Tracked via <code>pom.xml</code> across the two branches.</p>
+<h3 id="in-experiment-metadata">In
+<code>experiment-metadata</code>:</h3>
+<table>
+<thead>
+<tr>
+<th>Dep</th>
+<th>Version</th>
+<th>Purpose</th>
+<th>Commit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>org.yaml:snakeyaml</code></td>
+<td>2.0</td>
+<td>Load <code>vocabulary.yml</code></td>
+<td><code>024eba5</code></td>
+</tr>
+<tr>
+<td><code>org.jeasy:easy-rules-core</code></td>
+<td>4.1.0</td>
+<td>Metadata validation engine</td>
+<td><code>995d99c</code></td>
+</tr>
+<tr>
+<td><code>org.jeasy:easy-rules-support</code></td>
+<td>4.1.0</td>
+<td>YAML-defined rules support</td>
+<td><code>995d99c</code></td>
+</tr>
+<tr>
+<td><code>org.testfx:testfx-core</code></td>
+<td>4.0.16-alpha</td>
+<td>Visual GUI test runner</td>
+<td><code>f0e7e1c</code></td>
+</tr>
+<tr>
+<td><code>org.testfx:testfx-junit5</code></td>
+<td>4.0.16-alpha</td>
+<td>JUnit 5 bindings</td>
+<td><code>f0e7e1c</code></td>
+</tr>
+<tr>
+<td>(SLF4J / logback)</td>
+<td>existing</td>
+<td>Validator logging</td>
+<td><code>995d99c</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="in-bmdx-core">In <code>bmdx-core</code>:</h3>
+<ul>
+<li>No new deps. The strip commit actually keeps the full
+<code>pom.xml</code> intact — the library still needs JavaFX for the UI
+model classes (ObservableList etc. are used pervasively), Jackson,
+SnakeYAML, easy-rules.</li>
+</ul>
+<hr />
+<h2 id="part-4--how-the-branches-relate">Part 4 — How the branches
+relate</h2>
+<pre><code>main  ─────────────────────────────────────────────────────────────►
+              │
+              │ (branch)
+              ▼
+experiment-metadata  ─┬── metadata model ────────────────►
+                      │
+                      │    +vocabulary.yml
+                      │    +validation rules
+                      │    +dialogs
+                      │    +column propagation
+                      │    +TestFX runner
+                      │
+                      └── (branch)
+                          │
+                          ▼
+                     bmdx-core  ──┬── strip GUI/engines (committed)
+                                  │
+                                  ├── Endpoint/EndpointResponse (WIP)
+                                  ├── dataType vocabulary (WIP)
+                                  ├── apical/observations platforms (WIP)
+                                  └── @JsonIgnore audit (WIP)</code></pre>
+<p><code>bmdx-core</code> is <strong>strictly downstream</strong> of
+<code>experiment-metadata</code>. The sync-from-upstream.sh script
+codifies the intent that any further additions to
+<code>experiment-metadata</code> should flow down into
+<code>bmdx-core</code> with minimal friction.</p>
+<p>Other related branches (not in scope for this report):</p>
+<ul>
+<li><strong><code>llm-metadata</code></strong> — LLM-based metadata
+deduction, spawned from <code>experiment-metadata</code> (commit
+<code>af484666</code> conversation).</li>
+<li><strong><code>origin/pvalue_passthru</code>,
+<code>origin/duckdb</code>,
+<code>origin/zscore_newtoxicr</code></strong>, etc. — unrelated upstream
+feature branches.</li>
+</ul>
+<hr />
+<h2 id="part-5--statistics">Part 5 — Statistics</h2>
+<h3 id="experiment-metadata-vs-main"><code>experiment-metadata</code> vs
+<code>main</code></h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Files</th>
+<th>Insertions</th>
+<th>Deletions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model / metadata</td>
+<td>18</td>
+<td>~3,200</td>
+<td>~20</td>
+</tr>
+<tr>
+<td>UI dialogs</td>
+<td>3</td>
+<td>~700</td>
+<td>~10</td>
+</tr>
+<tr>
+<td>Parser</td>
+<td>1</td>
+<td>779</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Rules engine</td>
+<td>9</td>
+<td>~1,200</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Vocabulary YAML</td>
+<td>1</td>
+<td>151</td>
+<td>0</td>
+</tr>
+<tr>
+<td>TestFX runner</td>
+<td>11</td>
+<td>~1,000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>pom.xml + module-info</td>
+<td>2</td>
+<td>~50</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Tests</td>
+<td>2</td>
+<td>~380</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>54</strong></td>
+<td><strong>~5,900</strong></td>
+<td><strong>~50</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="bmdx-core-vs-experiment-metadata"><code>bmdx-core</code> vs
+<code>experiment-metadata</code></h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Files</th>
+<th>Insertions</th>
+<th>Deletions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Committed (strip)</td>
+<td>501</td>
+<td>238</td>
+<td>93,674</td>
+</tr>
+<tr>
+<td>Uncommitted (domain-neutral refactor + apical vocab + dataType)</td>
+<td>11</td>
+<td>~252</td>
+<td>~14</td>
+</tr>
+<tr>
+<td><strong>Total (commit + WIP)</strong></td>
+<td><strong>~512</strong></td>
+<td><strong>~490</strong></td>
+<td><strong>~93,688</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="part-6--outstanding-items">Part 6 — Outstanding items</h2>
+<p>On <code>bmdx-core</code>, these items are still uncommitted:</p>
+<ol type="1">
+<li><code>Endpoint.java</code> / <code>EndpointResponse.java</code> —
+new interfaces</li>
+<li><code>Probe implements Endpoint</code>,
+<code>ProbeResponse implements EndpointResponse</code></li>
+<li><code>getEndpointResponses()</code> aliases on
+<code>DoseResponseExperiment</code> + <code>@JsonAlias</code></li>
+<li><code>IStatModelProcessable.getProcessableEndpointResponses()</code>
+default method</li>
+<li><code>dataType</code> field on
+<code>ExperimentDescription</code></li>
+<li><code>vocabulary.yml</code> apical + observations + dataTypes
+extensions</li>
+<li><code>@JsonIgnore</code> audit on <code>ExperimentDescription</code>
+computed methods</li>
+<li><code>ExperimentDescriptionParser</code> — data type key
+parsing</li>
+<li>Move <code>Bm2DeserializationTest</code> from <code>src/main/</code>
+to <code>src/test/</code></li>
+<li><code>docs/domain-agnostic-refactoring.html</code></li>
+</ol>
+<p>These form a coherent next commit: <em>"Introduce domain-neutral
+Endpoint interfaces and apical-data vocabulary support"</em>.</p>
+<hr />
+<h2 id="appendix--report-methodology">Appendix — Report methodology</h2>
+<p>This report was generated by inspecting:</p>
+<ul>
+<li><code>git log --oneline main..experiment-metadata</code> (18
+commits)</li>
+<li><code>git log --oneline experiment-metadata..bmdx-core</code> (1
+commit)</li>
+<li><code>git log --stat</code> for per-file byte-level impact per
+commit</li>
+<li><code>git diff --stat main...experiment-metadata</code> and
+<code>git diff --stat experiment-metadata...bmdx-core</code></li>
+<li><code>git status</code> and <code>git diff HEAD</code> for
+uncommitted bmdx-core WIP</li>
+<li>Source reads of the key files cited above</li>
+<li>Claude Code transcripts in
+<code>~/.claude/projects/-home-svobodadl-Dev-Projects-BMDExpress-3/*.jsonl</code>
+(8 transcripts, ~21MB total) for user-intent context</li>
+</ul>
+<p>The 8 transcripts map roughly to the branch arc:</p>
+<table>
+<thead>
+<tr>
+<th>Transcript</th>
+<th>Date</th>
+<th>Primary theme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>c1e98253</code> (5.5MB)</td>
+<td>Mar 3</td>
+<td>Branch review, pattern alignment</td>
+</tr>
+<tr>
+<td><code>4965bbe9</code> (2.0MB)</td>
+<td>Feb 26</td>
+<td>Fix misalignments with main</td>
+</tr>
+<tr>
+<td><code>7cd3506f</code> (2.6MB)</td>
+<td>Feb 26</td>
+<td>TestFX visual runner plan</td>
+</tr>
+<tr>
+<td><code>3e7848b3</code> (1.8MB)</td>
+<td>Mar 3</td>
+<td>New data type research (apical)</td>
+</tr>
+<tr>
+<td><code>9d30fa37</code> (4.5MB)</td>
+<td>Mar 3</td>
+<td>First-class ExperimentDescription integration</td>
+</tr>
+<tr>
+<td><code>af484666</code> (1.5MB)</td>
+<td>Mar 3</td>
+<td>Import robustness + <code>llm-metadata</code> branch</td>
+</tr>
+<tr>
+<td><code>9f7fce81</code> (3.9MB)</td>
+<td>Apr 17</td>
+<td>LLM metadata deduction UI (current session)</td>
+</tr>
+<tr>
+<td><code>5d856aac</code> (1KB)</td>
+<td>Mar 3</td>
+<td>(empty transcript)</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

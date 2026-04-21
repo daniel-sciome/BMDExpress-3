@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMDExpress 3: Domain-Agnostic Dose-Response Framework</title>
+<style>
+  :root {
+    --bg: #fdfdfd;
+    --fg: #1a1a1a;
+    --muted: #555;
+    --accent: #2563eb;
+    --border: #ddd;
+    --code-bg: #f4f4f5;
+    --aside-bg: #f0f4ff;
+    --decision-bg: #fffbe6;
+    --risk-bg: #fff0f0;
+    --done-bg: #f0fdf4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--fg);
+    background: var(--bg);
+    line-height: 1.6;
+    max-width: 52em;
+    margin: 0 auto;
+    padding: 2em 1.5em 4em;
+  }
+  h1 { font-size: 1.8em; margin-bottom: 0.2em; }
+  h2 { font-size: 1.4em; margin-top: 2.5em; margin-bottom: 0.6em; border-bottom: 2px solid var(--border); padding-bottom: 0.3em; }
+  h3 { font-size: 1.15em; margin-top: 1.5em; margin-bottom: 0.4em; }
+  h4 { font-size: 1em; margin-top: 1.2em; margin-bottom: 0.3em; color: var(--muted); }
+  p, li { margin-bottom: 0.5em; }
+  ul, ol { padding-left: 1.5em; }
+  code { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.9em; background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 1em; border-radius: 6px; overflow-x: auto; margin: 0.8em 0; line-height: 1.4; }
+  pre code { background: none; padding: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 0.8em 0; font-size: 0.95em; }
+  th, td { border: 1px solid var(--border); padding: 0.5em 0.75em; text-align: left; }
+  th { background: var(--code-bg); font-weight: 600; }
+
+  aside {
+    border-left: 4px solid var(--accent);
+    background: var(--aside-bg);
+    padding: 0.8em 1em;
+    margin: 1em 0;
+    border-radius: 0 6px 6px 0;
+  }
+  aside.decision { border-left-color: #eab308; background: var(--decision-bg); }
+  aside.risk     { border-left-color: #ef4444; background: var(--risk-bg); }
+  aside.done     { border-left-color: #22c55e; background: var(--done-bg); }
+  aside > strong:first-child { display: block; margin-bottom: 0.3em; }
+
+  .status {
+    display: inline-block; font-size: 0.8em; font-weight: 600;
+    padding: 0.1em 0.5em; border-radius: 3px;
+  }
+  .status.done       { background: #dcfce7; color: #166534; }
+  .status.in-progress { background: #dbeafe; color: #1e40af; }
+  .status.planned    { background: #f3f4f6; color: #6b7280; }
+
+  .subtitle { color: var(--muted); font-size: 1.1em; margin-bottom: 1.5em; }
+  .meta { color: var(--muted); font-size: 0.9em; margin-bottom: 2em; }
+  .file-ref { font-family: monospace; font-size: 0.9em; }
+  dl { margin: 0.5em 0; }
+  dt { font-weight: 600; margin-top: 0.5em; }
+  dd { margin-left: 1.5em; color: var(--muted); }
+
+  /* ---- Role toggle bar ---- */
+  .role-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6em 0; margin: -0.5em 0 1.5em;
+    display: flex; align-items: center; gap: 0.5em; flex-wrap: wrap;
+  }
+  .role-bar-label {
+    font-size: 0.8em; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--muted); margin-right: 0.3em;
+  }
+  .role-btn {
+    font-size: 0.82em; font-weight: 600; padding: 0.3em 0.75em;
+    border-radius: 4px; border: 2px solid transparent;
+    cursor: pointer; transition: all 0.15s; user-select: none;
+  }
+  .role-btn:hover { filter: brightness(0.92); }
+  .role-btn.active { border-color: var(--fg); }
+  .role-btn[data-role="lead"]      { background: #fef3c7; color: #92400e; }
+  .role-btn[data-role="architect"] { background: #dbeafe; color: #1e40af; }
+  .role-btn[data-role="developer"] { background: #e0e7ff; color: #3730a3; }
+  .role-btn[data-role="qa"]        { background: #fce7f3; color: #9d174d; }
+  .role-btn[data-role="sme"]       { background: #d1fae5; color: #065f46; }
+
+  /* Role-variant content blocks: hidden by default, shown by JS */
+  .rv { display: none; }
+  .rv.active { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BMDExpress 3: Domain-Agnostic Dose-Response Framework</h1>
+  <p class="subtitle">Extending bmdx-core beyond genomics to support arbitrary toxicology data domains</p>
+  <p class="meta">
+    Branch: <code>bmdx-core</code> &middot;
+    Repo: <code>auerbachs/BMDExpress-3</code> &middot;
+    Last updated: 2026-03-09 &middot;
+    Status: Phase 1 complete + JSON round-trip + metadata capture
+  </p>
+</header>
+
+<nav class="role-bar" aria-label="Select your role">
+  <span class="role-bar-label">I am a:</span>
+  <button class="role-btn" data-role="lead">Project Lead</button>
+  <button class="role-btn" data-role="architect">Architect</button>
+  <button class="role-btn" data-role="developer">Developer</button>
+  <button class="role-btn" data-role="qa">QA</button>
+  <button class="role-btn" data-role="sme">Subject Matter Expert</button>
+</nav>
+
+
+<!-- ================================================================ -->
+<h2>1. What This Project Is</h2>
+<!-- ================================================================ -->
+
+<div class="rv" data-role="lead">
+  <p>BMDExpress 3 is a dose-response modeling tool used across NIEHS, EPA, and
+  the broader toxicology community. Today it only handles <strong>gene expression</strong>
+  data. We are extending it to handle <strong>any toxicology data domain</strong> &mdash;
+  clinical chemistry, organ weights, hematology, histopathology, and more &mdash;
+  through configuration rather than code.</p>
+
+  <p><strong>Why now:</strong> The 5dToxReport project (rlm-bmdx) already pushes
+  apical endpoint data through BMDExpress&rsquo;s <code>.bm2</code> format, but the
+  integration is fragile. Domain identity is guessed from filenames. Metadata
+  fields are null and must be inferred by an LLM. The genomics terminology in the
+  API creates constant friction for team members working with clinical data.</p>
+
+  <p><strong>End state:</strong> A new data domain (e.g., coagulation, urinalysis)
+  is added by writing a YAML configuration file. No Java code changes. No
+  developer involvement beyond review.</p>
+
+  <aside>
+    <strong>Resource impact</strong>
+    <p>8 phases. Phases 1&ndash;2 are low-risk and already underway. Phase 6
+    (annotation abstraction) is the most complex and may require dedicated
+    design time. New domain rollout (Phase 8) can be done by SMEs writing
+    config files.</p>
+  </aside>
+</div>
+
+<div class="rv" data-role="architect">
+  <p>BMDExpress 3&rsquo;s data model is genomics-specific: <code>Probe</code>,
+  <code>ProbeResponse</code>, <code>ChipInfo</code>, <code>ReferenceGeneAnnotation</code>,
+  <code>CategoryAnalysis</code>. The core abstraction &mdash;
+  <code>DoseResponseExperiment</code> &mdash; is domain-neutral in concept but
+  genomics-specific in API surface.</p>
+
+  <p>We are introducing a domain-agnostic layer through interfaces, aliases,
+  and a YAML-driven configuration system. The approach preserves full backward
+  compatibility with existing <code>.bm2</code> serialization while making the
+  API bilingual (genomics callers keep working; new code uses domain-neutral names).</p>
+
+  <p><strong>Key constraint:</strong> Jackson serialization format must not change.
+  Existing <code>.bm2</code> files must deserialize without modification across
+  all BMDExpress 3 versions.</p>
+</div>
+
+<div class="rv" data-role="developer">
+  <p>We are refactoring the bmdx-core data model so that genomics-specific class
+  and method names have domain-neutral alternatives. This is being done incrementally
+  &mdash; new interfaces and alias methods, not renames &mdash; so nothing breaks.</p>
+
+  <p>The work happens on the <code>bmdx-core</code> branch, which is the headless
+  library version of BMDExpress 3 (132 source files, no GUI). Prior work on the
+  <code>llm-metadata</code> branch added <code>ExperimentDescription</code> with
+  controlled vocabularies from <code>vocabulary.yml</code>.</p>
+</div>
+
+<div class="rv" data-role="qa">
+  <p>BMDExpress 3 is being extended to support data domains beyond gene expression.
+  The first phase (terminology aliasing) adds new interfaces and methods alongside
+  existing ones. <strong>No existing behavior changes.</strong> Your primary
+  concern is verifying that nothing regressed &mdash; <code>.bm2</code> files still
+  load, existing API calls still work, and new alias methods return identical results.</p>
+</div>
+
+<div class="rv" data-role="sme">
+  <p>BMDExpress 3 currently only supports gene expression dose-response data.
+  We are extending it to support the full range of toxicology endpoints you work
+  with in NTP/NIEHS studies:</p>
+
+  <ul>
+    <li><strong>Clinical chemistry</strong> &mdash; ALT, AST, glucose, BUN, creatinine, bilirubin, cholesterol</li>
+    <li><strong>Hematology</strong> &mdash; RBC, WBC, hemoglobin, hematocrit, platelets, differential counts</li>
+    <li><strong>Organ weights</strong> &mdash; absolute and relative (to body weight / brain weight)</li>
+    <li><strong>Body weights</strong> &mdash; terminal, interim, and gain</li>
+    <li><strong>Histopathology severity scores</strong> &mdash; ordinal grading (0=normal through 4&ndash;5=severe)</li>
+    <li><strong>Urinalysis</strong> &mdash; specific gravity, pH, protein (dipstick), glucose</li>
+    <li><strong>Coagulation</strong> &mdash; prothrombin time, APTT, fibrinogen</li>
+    <li><strong>Neurobehavioral</strong> &mdash; functional observational battery (FOB), motor activity, grip strength</li>
+    <li><strong>Reproductive/developmental</strong> &mdash; implantation sites, litter size, fetal weights, malformations</li>
+    <li><strong>Toxicokinetics</strong> &mdash; C<sub>max</sub>, AUC, t<sub>&frac12;</sub></li>
+  </ul>
+
+  <p>Each domain will be defined by a configuration file that captures the domain&rsquo;s
+  scientific characteristics: what endpoints exist, what units they use, which direction
+  is adverse, what reference ranges apply, and how endpoints group into organ systems.
+  <strong>Your expertise is needed to validate these configurations.</strong></p>
+</div>
+
+
+<!-- ================================================================ -->
+<h2>2. Current Status</h2>
+<!-- ================================================================ -->
+
+<div class="rv" data-role="lead">
+  <table>
+    <thead><tr><th>Phase</th><th>Description</th><th>Risk</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Terminology aliasing</td><td>Very low</td><td><span class="status done">Done</span></td></tr>
+      <tr><td>2</td><td>Domain identity fields</td><td>Low</td><td><span class="status planned">Planned</span></td></tr>
+      <tr><td>3</td><td>Domain config schema (YAML)</td><td>Medium</td><td><span class="status planned">Planned</span></td></tr>
+      <tr><td>4</td><td>Import format generalization</td><td>Medium</td><td><span class="status planned">Planned</span></td></tr>
+      <tr><td>5</td><td>Statistical method gating</td><td>Medium</td><td><span class="status planned">Planned</span></td></tr>
+      <tr><td>6</td><td>Annotation/grouping abstraction</td><td>High</td><td><span class="status planned">Planned</span></td></tr>
+      <tr><td>7</td><td>Reference ranges &amp; adverse direction</td><td>Low</td><td><span class="status planned">Planned</span></td></tr>
+      <tr><td>8</td><td>New domain rollout (config-only)</td><td>Low</td><td><span class="status planned">Planned</span></td></tr>
+    </tbody>
+  </table>
+
+  <aside class="decision">
+    <strong>Decision point after Phase 3</strong>
+    <p>The YAML domain config schema (Phase 3) is the architectural pivot. Once that
+    schema is stable, Phases 4&ndash;7 can proceed in parallel. Phase 3 needs
+    architect + SME review before implementation begins.</p>
+  </aside>
+</div>
+
+<div class="rv" data-role="architect">
+  <aside class="done">
+    <strong>Phase 1 complete (2026-03-09)</strong>
+    <p>Terminology aliasing layer is in place. New interfaces (<code>Endpoint</code>,
+    <code>EndpointResponse</code>), alias methods on <code>DoseResponseExperiment</code>
+    and <code>IStatModelProcessable</code>, <code>@JsonAlias</code> for deserialization
+    compatibility, <code>@Deprecated</code> on genomics-specific names.</p>
+
+    <p><strong>Jackson round-trip hardening:</strong> Added <code>@JsonIgnore</code> to
+    prevent Jackson from serializing redundant computed properties that break
+    deserialization:</p>
+    <ul>
+      <li><code>ExperimentDescription</code> &mdash; 7 computed getters
+      (<code>getColumnHeaders</code>, <code>getColumnValues</code>,
+      <code>getExperimentType</code>, <code>isInVivo</code>, <code>isInVitro</code>,
+      <code>getStatusBarString</code>, <code>getFormattedString</code>).
+      These used <code>Arrays.asList()</code> (fixed-size list) which caused
+      <code>UnsupportedOperationException</code> during deserialization.</li>
+      <li><code>IStatModelProcessable.getProcessableEndpointResponses()</code> &mdash;
+      default interface method that returns the same list as
+      <code>getProcessableProbeResponses()</code>. Jackson serialized it as
+      redundant <code>@ref</code> integer arrays, cluttering the JSON tree.</li>
+    </ul>
+
+    <p><strong>JSON &rarr; .bm2 round-trip proven:</strong> <code>JsonToBm2.java</code>
+    (in rlm-bmdx) reads Jackson-annotated BMDProject JSON and writes canonical
+    <code>.bm2</code> via <code>ObjectOutputStream</code>. This closes the metadata
+    loop: LLM-inferred metadata &rarr; user review &rarr; JSON &rarr; .bm2 &rarr;
+    BMDExpress 3 can consume.</p>
+  </aside>
+
+  <p><strong>Next:</strong> Phase 2 adds <code>domain</code>, <code>responseType</code>,
+  and <code>doseMetric</code> fields to <code>ExperimentDescription</code>. These are
+  the self-describing identity fields that let downstream code branch on data type
+  without guessing from filenames or probe patterns.</p>
+
+  <p><strong>Design needed:</strong> Phase 3 (domain config YAML schema). This is where
+  the framework&rsquo;s extensibility model gets locked in. Key questions:</p>
+  <ul>
+    <li>Should domain configs live in the JAR or be user-loadable at runtime?</li>
+    <li>How does <code>DomainRegistry</code> resolve configs &mdash; classpath scan, explicit registration, or directory watch?</li>
+    <li>Can domain configs extend/inherit from a base config?</li>
+  </ul>
+</div>
+
+<div class="rv" data-role="developer">
+  <aside class="done">
+    <strong>Phase 1 complete (2026-03-09)</strong>
+    <p>BUILD SUCCESS &middot; 0 errors &middot; Full backward compatibility &middot;
+    140 tests pass (90 original + 50 new alias tests across 10 .bm2 files)</p>
+  </aside>
+
+  <h3>What changed</h3>
+
+  <h4>New files (bmdx-core)</h4>
+  <dl>
+    <dt><span class="file-ref">src/.../model/probe/Endpoint.java</span></dt>
+    <dd>Interface: <code>getId()</code>, <code>setId()</code>. Implemented by <code>Probe</code>.</dd>
+
+    <dt><span class="file-ref">src/.../model/probe/EndpointResponse.java</span></dt>
+    <dd>Interface: <code>getEndpoint()</code>, <code>getResponses()</code>,
+    <code>setResponses()</code>, <code>getResponseArray()</code>.
+    Implemented by <code>ProbeResponse</code>.</dd>
+  </dl>
+
+  <h4>New files (rlm-bmdx)</h4>
+  <dl>
+    <dt><span class="file-ref">java/JsonToBm2.java</span></dt>
+    <dd>Java helper (~80 LOC) that reads Jackson-annotated BMDProject JSON and writes
+    canonical <code>.bm2</code> via <code>ObjectOutputStream</code>. Uses
+    <code>FAIL_ON_UNKNOWN_PROPERTIES = false</code> to skip app-specific keys
+    (<code>_meta</code>, <code>_category_lookup</code>). Called by
+    <code>pool_integrator.export_integrated_bm2()</code>.</dd>
+  </dl>
+
+  <h4>Modified files (bmdx-core)</h4>
+  <dl>
+    <dt><span class="file-ref">Probe.java</span></dt>
+    <dd>Now <code>implements Endpoint</code>. Existing <code>getId()</code>/<code>setId()</code>
+    satisfy the contract &mdash; no new methods needed.</dd>
+
+    <dt><span class="file-ref">ProbeResponse.java</span></dt>
+    <dd><code>implements EndpointResponse</code>. Added <code>getEndpoint()</code>
+    (returns <code>probe</code> cast to <code>Endpoint</code>).
+    <code>getProbe()</code> and <code>setProbe()</code> are now <code>@Deprecated</code>.</dd>
+
+    <dt><span class="file-ref">DoseResponseExperiment.java</span></dt>
+    <dd>
+      <ul>
+        <li><code>@JsonAlias("endpointResponses")</code> on the <code>probeResponses</code> field</li>
+        <li>Added: <code>getEndpointResponses()</code>, <code>setEndpointResponses()</code></li>
+        <li>Added: <code>getPlatform()</code>, <code>setPlatform()</code> (alias for chip)</li>
+        <li>Deprecated: <code>getProbeResponses()</code>, <code>setProbeResponses()</code>, <code>getChip()</code>, <code>setChip()</code></li>
+      </ul>
+    </dd>
+
+    <dt><span class="file-ref">IStatModelProcessable.java</span></dt>
+    <dd>Added <code>getProcessableEndpointResponses()</code> as a <code>default</code> method
+    with <code>@JsonIgnore</code> (prevents redundant <code>@ref</code> arrays in JSON).
+    <code>getProcessableProbeResponses()</code> is now <code>@Deprecated</code>.</dd>
+
+    <dt><span class="file-ref">ExperimentDescription.java</span></dt>
+    <dd>Added <code>@JsonIgnore</code> to 7 computed getters that blocked Jackson
+    round-trip deserialization (<code>Arrays.asList()</code> returns immutable lists):
+    <code>getColumnHeaders</code>, <code>getColumnValues</code>,
+    <code>getExperimentType</code>, <code>isInVivo</code>, <code>isInVitro</code>,
+    <code>getStatusBarString</code>, <code>getFormattedString</code>.</dd>
+  </dl>
+
+  <h4>Modified files (rlm-bmdx)</h4>
+  <dl>
+    <dt><span class="file-ref">pool_integrator.py</span></dt>
+    <dd>After writing enriched <code>integrated.json</code>, now also calls
+    <code>export_integrated_bm2()</code> to produce <code>integrated.bm2</code>.</dd>
+
+    <dt><span class="file-ref">session_routes.py</span></dt>
+    <dd>New endpoints: <code>GET/POST /api/experiment-metadata/{dtxsid}</code> for
+    metadata review/approval, <code>POST /api/pool/reset/{dtxsid}</code> for full
+    pool reset. <code>GET /api/export-bm2/{dtxsid}</code> for on-demand .bm2 download.</dd>
+
+    <dt><span class="file-ref">web/js/main.js</span></dt>
+    <dd>Metadata review UI (~250 LOC): renders experiment metadata table with controlled
+    vocabulary dropdowns, species-filtered strain selection, approval workflow.
+    Pool reset: <code>confirmResetPool()</code> with destructive-action confirmation dialog.</dd>
+  </dl>
+
+  <h3>Migration guide</h3>
+  <p>No immediate migration required. When writing <strong>new</strong> code:</p>
+  <table>
+    <thead><tr><th>Instead of</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><code>Probe probe = pr.getProbe()</code></td><td><code>Endpoint ep = pr.getEndpoint()</code></td></tr>
+      <tr><td><code>exp.getProbeResponses()</code></td><td><code>exp.getEndpointResponses()</code></td></tr>
+      <tr><td><code>exp.getChip()</code></td><td><code>exp.getPlatform()</code></td></tr>
+      <tr><td><code>p.getProcessableProbeResponses()</code></td><td><code>p.getProcessableEndpointResponses()</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="rv" data-role="qa">
+  <aside class="done">
+    <strong>Phase 1 verification (2026-03-09)</strong>
+    <p>140 tests pass &mdash; 90 original deserialization tests + 50 new domain-neutral
+    alias tests, across 10 .bm2 files.</p>
+  </aside>
+
+  <h3>Build verification</h3>
+  <ul>
+    <li><code>mvn compile</code> &mdash; BUILD SUCCESS, 0 errors, 0.5s</li>
+    <li>Jackson 2.18.1 &mdash; <code>@JsonAlias</code> and <code>@JsonIgnore</code> fully supported</li>
+    <li><code>mvn test</code> &mdash; 140 tests, 0 failures, 0 errors</li>
+  </ul>
+
+  <h3>Regression test checklist</h3>
+  <ul>
+    <li>Load an existing <code>.bm2</code> file &mdash; verify all experiments, probes, and responses deserialize correctly</li>
+    <li>Serialize a <code>DoseResponseExperiment</code> to JSON &mdash; verify the field is emitted as <code>"probeResponses"</code> (not <code>"endpointResponses"</code>)</li>
+    <li>Construct JSON with <code>"endpointResponses"</code> key &mdash; verify it deserializes into the same field</li>
+    <li>Call <code>getEndpointResponses()</code> &mdash; verify it returns the same list reference as <code>getProbeResponses()</code></li>
+    <li>Call <code>getPlatform()</code> &mdash; verify it returns the same object as <code>getChip()</code></li>
+    <li>Call <code>getProcessableEndpointResponses()</code> on any <code>IStatModelProcessable</code> &mdash; verify same result as <code>getProcessableProbeResponses()</code></li>
+    <li>Verify 18 existing callers of deprecated methods still compile (deprecation warnings only, no errors)</li>
+  </ul>
+
+  <h3>JSON round-trip verification</h3>
+  <ul>
+    <li>Verify <code>@JsonIgnore</code> on <code>ExperimentDescription</code> computed getters &mdash;
+    JSON output must NOT contain <code>columnHeaders</code>, <code>columnValues</code>,
+    <code>experimentType</code>, <code>inVivo</code>, <code>inVitro</code>,
+    <code>statusBarString</code>, <code>formattedString</code></li>
+    <li>Verify <code>@JsonIgnore</code> on <code>IStatModelProcessable.getProcessableEndpointResponses()</code> &mdash;
+    JSON output must NOT contain <code>processableEndpointResponses</code></li>
+    <li>Round-trip: .bm2 &rarr; JSON &rarr; .bm2 via <code>JsonToBm2.java</code> &mdash;
+    verify the re-serialized .bm2 loads correctly and all experiments, endpoints,
+    and response arrays are intact</li>
+    <li>Verify <code>ProbeResponse.setResponses()</code> rebuilds both <code>responsesBlob</code>
+    (byte[]) and <code>responseArray</code> (float[]) during JSON&rarr;object deserialization</li>
+  </ul>
+
+  <h3>What to watch in future phases</h3>
+  <p>Phase 2 adds new fields to <code>ExperimentDescription</code>. Test that
+  old <code>.bm2</code> files without these fields still load (fields default to null).
+  Phase 3 introduces YAML configs &mdash; test that missing or malformed configs
+  fail gracefully.</p>
+</div>
+
+<div class="rv" data-role="sme">
+  <p>Phase 1 (terminology aliasing) is complete. This was an internal code
+  restructuring &mdash; no visible changes to data or behavior. The gene expression
+  workflow is unchanged.</p>
+
+  <p><strong>Your input is needed starting in Phase 2&ndash;3</strong>, when we define
+  the domain identity fields and configuration schema. Specifically:</p>
+
+  <ul>
+    <li>Validating the list of data domains and their categorization</li>
+    <li>Reviewing endpoint vocabularies per domain (what measurements exist, what units)</li>
+    <li>Defining adverse direction for each endpoint (increase vs decrease vs both)</li>
+    <li>Providing historical control reference ranges where available</li>
+    <li>Reviewing endpoint-to-organ-system groupings</li>
+  </ul>
+</div>
+
+
+<!-- ================================================================ -->
+<h2>3. Domain Configuration</h2>
+<!-- ================================================================ -->
+
+<div class="rv" data-role="lead">
+  <p>The central idea: each toxicology data domain is described by a YAML file
+  that the framework reads at startup. Adding a new domain means writing a config
+  file &mdash; not modifying Java source code. This makes the system extensible by
+  anyone who understands the science, not just developers.</p>
+
+  <aside class="decision">
+    <strong>Decision needed: config ownership</strong>
+    <p>Should domain configs ship inside the JAR (curated, versioned with the
+    software), or be loadable from an external directory (user-contributed,
+    lab-customizable)? Recommendation: ship defaults in the JAR, allow
+    overrides from an external directory.</p>
+  </aside>
+</div>
+
+<div class="rv" data-role="architect">
+  <p>Each domain config declares everything the framework needs to handle that
+  data type: import format, applicable statistical methods, endpoint schema,
+  grouping hierarchy, and reference ranges.</p>
+
+  <pre><code>domain: clinical_chemistry
+display_name: "Clinical Chemistry"
+response_type: continuous
+
+endpoint_schema:
+  id_format: name
+  unit_field: unit
+
+platform: "Clinical Endpoint"
+provider: "Clinical Endpoint"
+adverse_direction: endpoint_specific
+adverse_direction_map:
+  "ALT": increase
+  "Albumin": decrease
+analysis_unit: animal
+dose_metric: mg/kg/day
+
+import:
+  format: long
+  required_columns: [animal_id, dose, endpoint, value]
+
+prefilters:
+  available: [williams_trend, dunnetts, anova]
+  default: [williams_trend, dunnetts]
+
+bmd_models:
+  available: [hill, exponential, power, poly2, poly3]
+  default: [hill, exponential, power, poly2]
+
+grouping:
+  levels:
+    - name: endpoint
+      source: identity
+    - name: organ_system
+      source: organ_map.yml
+
+reference_ranges:
+  source: historical_controls.yml</code></pre>
+
+  <aside class="risk">
+    <strong>Risk: response_type polymorphism</strong>
+    <p>Some domains (urinalysis, neurobehavioral) have <em>mixed</em> response types
+    &mdash; continuous for some endpoints, ordinal for others. The config may need
+    per-endpoint <code>response_type</code> overrides, not just a single domain-level
+    declaration. This complicates model gating logic.</p>
+  </aside>
+</div>
+
+<div class="rv" data-role="developer">
+  <p>Domain configs are YAML files loaded by a <code>DomainRegistry</code> singleton
+  (similar pattern to <code>VocabularyConfig</code>). Each config maps to a
+  <code>DomainConfig</code> POJO deserialized by Jackson YAML.</p>
+
+  <p>The <code>ExperimentDescription.domain</code> field (Phase 2) links an experiment
+  to its config. Access pattern:</p>
+
+  <pre><code>ExperimentDescription desc = experiment.getExperimentDescription();
+DomainConfig config = DomainRegistry.get(desc.getDomain());
+
+// Gate prefilters by domain
+List&lt;String&gt; prefilters = config.getPrefilters().getAvailable();
+
+// Check adverse direction for an endpoint
+String direction = config.getAdverseDirection("ALT"); // "increase"</code></pre>
+
+  <p>Config files go in <code>src/main/resources/domains/</code> and are loaded
+  from the classpath. External overrides (future) would check a user directory first.</p>
+</div>
+
+<div class="rv" data-role="qa">
+  <p>Domain configuration is <strong>planned for Phase 3</strong>. When it arrives,
+  key test scenarios:</p>
+  <ul>
+    <li>Valid config loads without error</li>
+    <li>Missing config file &rarr; graceful fallback (not a crash)</li>
+    <li>Malformed YAML &rarr; clear error message identifying the problem</li>
+    <li>Unknown <code>domain</code> value in an experiment &rarr; treated as generic/unrecognized</li>
+    <li>Config with unknown fields &rarr; ignored (forward compatibility)</li>
+    <li>Each shipped domain config round-trips: load &rarr; serialize &rarr; reload &rarr; identical</li>
+  </ul>
+</div>
+
+<div class="rv" data-role="sme">
+  <p>Each data domain will have a configuration file that captures its scientific
+  characteristics. Here is what a clinical chemistry config looks like:</p>
+
+  <table>
+    <thead><tr><th>Property</th><th>Value</th><th>Your review needed?</th></tr></thead>
+    <tbody>
+      <tr><td>Domain name</td><td>Clinical Chemistry</td><td></td></tr>
+      <tr><td>Response type</td><td>Continuous</td><td></td></tr>
+      <tr><td>Analysis unit</td><td>Per animal</td><td></td></tr>
+      <tr><td>Dose metric</td><td>mg/kg/day (default)</td><td></td></tr>
+      <tr>
+        <td>Adverse direction</td>
+        <td>Endpoint-specific (e.g., ALT &uarr; = adverse, albumin &darr; = adverse)</td>
+        <td><strong>Yes</strong> &mdash; need complete mapping</td>
+      </tr>
+      <tr>
+        <td>Endpoint vocabulary</td>
+        <td>ALT, AST, ALP, GGT, bilirubin, albumin, total protein, glucose, BUN, creatinine, cholesterol, triglycerides, ...</td>
+        <td><strong>Yes</strong> &mdash; need canonical names and synonyms</td>
+      </tr>
+      <tr>
+        <td>Organ system grouping</td>
+        <td>ALT/AST/ALP/bilirubin &rarr; liver; BUN/creatinine &rarr; kidney; glucose &rarr; metabolic; ...</td>
+        <td><strong>Yes</strong> &mdash; need validated mapping</td>
+      </tr>
+      <tr>
+        <td>Reference ranges</td>
+        <td>Historical control data from your lab/strain/species</td>
+        <td><strong>Yes</strong> &mdash; provide if available</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>We will need similar information for each domain. For domains with ordinal
+  data (histopathology severity scores, FOB observations), we also need:</p>
+  <ul>
+    <li>The grading scale (e.g., 0=normal, 1=minimal, 2=mild, 3=moderate, 4=marked, 5=severe)</li>
+    <li>Whether grades are consistent across organs/findings or vary</li>
+    <li>Whether incidence (present/absent) is more appropriate than severity for certain findings</li>
+  </ul>
+</div>
+
+
+<!-- ================================================================ -->
+<h2>4. Structural Challenges</h2>
+<!-- ================================================================ -->
+
+<div class="rv" data-role="lead">
+  <p>Six design challenges go beyond simple renaming. Most are solvable with
+  the domain config approach, but two deserve attention:</p>
+
+  <aside class="risk">
+    <strong>High risk: Annotation/grouping abstraction (Phase 6)</strong>
+    <p>GO term and pathway analysis is deeply embedded in the codebase.
+    Making it pluggable (so clinical data can group by organ system, histopath
+    by tissue, etc.) is the most architecturally complex change. All other
+    phases can proceed independently.</p>
+  </aside>
+
+  <aside class="risk">
+    <strong>Medium risk: Reproductive/developmental data (Phase 8)</strong>
+    <p>This is the only domain where the analysis unit changes from individual
+    animal to litter. The nested structure (dam &rarr; litter &rarr; pups)
+    may require framework-level changes beyond what a config file can express.</p>
+  </aside>
+</div>
+
+<div class="rv" data-role="architect">
+  <h3>Response type</h3>
+  <p>Not all dose-response data is continuous. The domain config declares
+  <code>response_type: continuous | ordinal | dichotomous | count</code>,
+  which gates applicable BMD models and prefilters. BMDExpress has dichotomous
+  modeling ancestry from EPA BMDS &mdash; needs assessment of what&rsquo;s
+  still functional in bmdx-core after the GUI strip.</p>
+
+  <h3>Analysis unit</h3>
+  <p>Reproductive data is per-litter with nested observations. Config declares
+  <code>analysis_unit: animal | litter</code>. Framework handles aggregation.
+  This may require a new data structure (litter-level experiment) rather than
+  just configuration.</p>
+
+  <h3>Adverse direction</h3>
+  <p>Per-endpoint directionality affects BMD model selection (one-sided vs
+  two-sided fitting). Config carries <code>adverse_direction_map</code>
+  with per-endpoint overrides.</p>
+
+  <h3>Endpoint hierarchies</h3>
+  <p>Genomics: gene &rarr; gene set &rarr; pathway. Clinical: endpoint &rarr;
+  organ system &rarr; systemic effect. The grouping scheme is declared per-domain
+  with external mapping files. Phase 6 abstracts <code>ReferenceGeneAnnotation</code>
+  and <code>CategoryAnalysis</code> into pluggable interfaces.</p>
+
+  <h3>Dose metric</h3>
+  <p>mg/kg/day (oral), mg/m&sup3; (inhalation), mg/cm&sup2; (dermal).
+  Config-declared, flows into BMD reporting.</p>
+
+  <h3>Reference ranges</h3>
+  <p>Historical control data enables pre-modeling QC (flag outliers),
+  adverse direction inference, and BMD context assessment. Config points
+  to an external data file.</p>
+</div>
+
+<div class="rv" data-role="developer">
+  <p>The domain config drives behavior at several points in the pipeline.
+  Key integration points you&rsquo;ll encounter:</p>
+
+  <table>
+    <thead><tr><th>Challenge</th><th>Where it hits</th><th>Phase</th></tr></thead>
+    <tbody>
+      <tr><td>Response type gating</td><td><code>BMDAnalysisRunner</code> model selection</td><td>5</td></tr>
+      <tr><td>Import format dispatch</td><td><code>ExperimentFileUtil.readFile()</code></td><td>4</td></tr>
+      <tr><td>Adverse direction</td><td>BMD model fitting (one-sided constraint)</td><td>7</td></tr>
+      <tr><td>Grouping abstraction</td><td><code>CategoryAnalysis*</code> classes</td><td>6</td></tr>
+      <tr><td>Reference ranges</td><td>New QC step before prefiltering</td><td>7</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="rv" data-role="qa">
+  <p>Structural challenges mostly affect future phases. For now, be aware
+  that Phase 5+ will introduce domain-dependent behavior &mdash; the same
+  operation may produce different results depending on the domain config.
+  Test matrices will need to cover multiple domains.</p>
+
+  <p>The highest-risk area for regression is Phase 6 (annotation/grouping),
+  where the GO term pipeline gets abstracted. Gene expression analysis
+  must produce identical results before and after.</p>
+</div>
+
+<div class="rv" data-role="sme">
+  <p>Several scientific questions need your input as we design the framework:</p>
+
+  <h3>Response types</h3>
+  <p>We need to correctly categorize each domain&rsquo;s data type, because
+  different statistical models apply:</p>
+  <table>
+    <thead><tr><th>Data type</th><th>Examples</th><th>Models</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Continuous</strong></td><td>Body weight, ALT, organ weight</td><td>Hill, exponential, power, polynomial</td></tr>
+      <tr><td><strong>Ordinal</strong></td><td>Histopathology severity (0&ndash;5)</td><td>Ordinal logistic, proportional odds</td></tr>
+      <tr><td><strong>Dichotomous</strong></td><td>Tumor incidence (yes/no)</td><td>Logistic, probit, log-logistic, multistage</td></tr>
+      <tr><td><strong>Count</strong></td><td>Number of implantation sites</td><td>Poisson, negative binomial</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Question:</strong> Some domains have mixed types (e.g., urinalysis has
+  continuous specific gravity AND semi-quantitative protein dipstick). Should we
+  handle these as one domain with per-endpoint types, or split into sub-domains?</p>
+
+  <h3>Endpoint groupings</h3>
+  <p>We need scientifically validated mappings of endpoints to organ systems.
+  For example:</p>
+  <ul>
+    <li>ALT, AST, ALP, bilirubin, albumin &rarr; <strong>Hepatic</strong></li>
+    <li>BUN, creatinine &rarr; <strong>Renal</strong></li>
+    <li>Glucose, cholesterol, triglycerides &rarr; <strong>Metabolic</strong></li>
+    <li>RBC, hemoglobin, hematocrit &rarr; <strong>Erythroid</strong></li>
+    <li>WBC, lymphocytes, neutrophils &rarr; <strong>Leukocyte</strong></li>
+  </ul>
+  <p>Do these groupings match your conventions? Are there endpoints that belong
+  to multiple systems?</p>
+
+  <h3>Adverse direction</h3>
+  <p>For each clinical chemistry and hematology endpoint, which direction of
+  change is considered adverse? Some are obvious (ALT &uarr; = hepatotoxicity),
+  others are context-dependent (glucose can be adverse in either direction).
+  We need a complete mapping.</p>
+</div>
+
+
+<!-- ================================================================ -->
+<h2>5. Downstream Impact</h2>
+<!-- ================================================================ -->
+
+<div class="rv" data-role="lead">
+  <p>The 5dToxReport web application (rlm-bmdx) is the primary downstream
+  consumer. As bmdx-core becomes domain-aware, rlm-bmdx sheds workarounds:</p>
+  <ul>
+    <li>No more guessing domain from filenames</li>
+    <li>No more LLM-based metadata inference (populated at import time)</li>
+    <li>No more Python-side data format conversion</li>
+    <li>Single export path instead of separate genomics vs apical code</li>
+  </ul>
+  <p>This reduces maintenance burden and eliminates a class of bugs caused
+  by incorrect domain inference.</p>
+
+  <aside class="done">
+    <strong>Metadata loop closed (2026-03-09)</strong>
+    <p>rlm-bmdx now captures experiment metadata via a review UI with controlled
+    vocabulary dropdowns (species, strain, sex, organ, platform, etc.).  After
+    user approval, metadata is written back to <code>integrated.json</code> and
+    re-exported to <code>integrated.bm2</code> via <code>JsonToBm2</code>.
+    BMDExpress 3 can consume this .bm2 with metadata pre-populated &mdash; closing
+    the loop even for file pools that started with no .bm2 files.</p>
+  </aside>
+</div>
+
+<div class="rv" data-role="architect">
+  <table>
+    <thead><tr><th>Current rlm-bmdx workaround</th><th>Replaced by bmdx-core native</th><th>Phase</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>_BM2_DOMAIN_MAP</code> &mdash; filename-based domain guessing</td>
+        <td><code>experimentDescription.domain</code> field</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td><code>experiment_metadata.py</code> &mdash; LLM metadata inference</td>
+        <td>Metadata populated at import via domain config</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td><code>pool_integrator.py</code> xlsx &rarr; txt pivot</td>
+        <td>bmdx-core long-format import</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td><code>export_genomics()</code> vs <code>export_bm2()</code></td>
+        <td>Single domain-aware export</td>
+        <td>3&ndash;4</td>
+      </tr>
+      <tr>
+        <td>Hardcoded stat selection per domain</td>
+        <td>Domain config declares prefilters</td>
+        <td>5</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="rv" data-role="developer">
+  <p>If you work on rlm-bmdx (the Python side), these changes will progressively
+  simplify your code. No immediate action needed &mdash; existing integration
+  continues to work. As each phase lands in bmdx-core, the corresponding
+  Python workaround can be removed.</p>
+
+  <p>The key file to watch: <code>experiment_metadata.py</code>. Once bmdx-core
+  populates <code>experimentDescription</code> natively at import time (Phase 3),
+  the LLM-based metadata inference becomes unnecessary for domains with configs.</p>
+
+  <h3>What&rsquo;s already built in rlm-bmdx</h3>
+  <p>As an interim solution (until bmdx-core has native primary metadata capture),
+  rlm-bmdx now handles the full metadata lifecycle:</p>
+  <ul>
+    <li><strong>LLM inference:</strong> <code>experiment_metadata.py</code> infers
+    species, strain, sex, organ, platform, etc. from experiment names and file context</li>
+    <li><strong>User review:</strong> Metadata review UI with controlled vocabulary
+    dropdowns, species&rarr;strain filtering, and per-experiment editing</li>
+    <li><strong>Approval:</strong> User explicitly approves metadata, which writes
+    <code>metadata_approved.json</code> marker</li>
+    <li><strong>.bm2 export:</strong> <code>JsonToBm2.java</code> writes
+    <code>integrated.bm2</code> with approved metadata baked in</li>
+    <li><strong>Pool reset:</strong> <code>POST /api/pool/reset/{dtxsid}</code> provides
+    a clean slate &mdash; removes all files, integrated data, metadata, and approved
+    sections while preserving chemical identity and version history</li>
+  </ul>
+</div>
+
+<div class="rv" data-role="qa">
+  <p>Downstream impact is gradual. Each phase in bmdx-core enables removing a
+  workaround in rlm-bmdx, but the workaround continues to function until
+  explicitly removed. No forced migration.</p>
+
+  <p>Key regression risk: when rlm-bmdx switches from its own domain inference
+  to reading bmdx-core&rsquo;s native <code>domain</code> field, verify that
+  the domain assignment matches for all existing test chemicals.</p>
+</div>
+
+<div class="rv" data-role="sme">
+  <p>The 5dToxReport web application currently uses workarounds to handle
+  non-genomics data. As BMDExpress gains native support for your data domains,
+  the report generation will become more reliable &mdash; no more guessing
+  which organ a dataset belongs to from the filename.</p>
+
+  <p>You should see improved accuracy in section headings, table labels, and
+  BMD summary organization once domain identity is carried natively in the data.</p>
+</div>
+
+
+<!-- ================================================================ -->
+<h2>6. Open Questions</h2>
+<!-- ================================================================ -->
+
+<div class="rv" data-role="lead">
+  <ol>
+    <li><strong>Upstream adoption:</strong> How do these changes flow back into
+    the main BMDExpress 3 repository? Direct PR, or proposal process?</li>
+    <li><strong>Config ownership:</strong> Who authors domain configs &mdash;
+    developers, SMEs, or both? Review process?</li>
+    <li><strong>Timeline:</strong> Phase 3 (config schema) is the critical
+    design gate. Target date for schema review?</li>
+  </ol>
+</div>
+
+<div class="rv" data-role="architect">
+  <ol>
+    <li><strong>ChipInfo rename:</strong> Class-level rename to <code>PlatformInfo</code>
+    (with Jackson mixin for backward compat), or is the method alias sufficient?</li>
+    <li><strong>Ordinal/dichotomous models:</strong> Does bmdx-core retain the
+    statistical infrastructure for non-continuous BMD models after the GUI strip,
+    or does it need to be rebuilt/integrated from EPA BMDS?</li>
+    <li><strong>Litter-based analysis:</strong> Is this configurable, or does it
+    require a new experiment subclass?</li>
+    <li><strong>DomainConfig loading:</strong> Classpath-only, or support
+    external directory for user-contributed configs?</li>
+  </ol>
+</div>
+
+<div class="rv" data-role="developer">
+  <ol>
+    <li><strong>Branch strategy:</strong> Continue on <code>bmdx-core</code>,
+    or create feature branches per phase?</li>
+    <li><strong>Test infrastructure:</strong> Do we need a test harness for
+    round-trip .bm2 serialization before Phase 2?</li>
+    <li><strong>vocabulary.yml expansion:</strong> Phase 2 adds new vocab lists
+    (domains, response types, dose metrics). Same file or split?</li>
+  </ol>
+</div>
+
+<div class="rv" data-role="qa">
+  <ol>
+    <li><strong>Test data:</strong> Do we have representative <code>.bm2</code>
+    files for each existing domain (gene expression, clinical chemistry,
+    organ weight, hematology, body weight)?</li>
+    <li><strong>Regression baseline:</strong> Should we capture current
+    serialization output as golden files before Phase 2?</li>
+  </ol>
+</div>
+
+<div class="rv" data-role="sme">
+  <ol>
+    <li><strong>Endpoint vocabularies:</strong> Can you provide canonical endpoint
+    names and common synonyms for clinical chemistry, hematology, and organ weights?</li>
+    <li><strong>Adverse direction mapping:</strong> For which endpoints is the
+    adverse direction context-dependent (e.g., dose-level, species, strain)?</li>
+    <li><strong>Histopathology grading:</strong> Is the 0&ndash;5 severity scale
+    universal across NTP studies, or do some use different scales?</li>
+    <li><strong>Historical control data:</strong> What format is your reference
+    range data in? Can it be exported to CSV/YAML?</li>
+    <li><strong>Reproductive endpoints:</strong> Which developmental endpoints
+    are analyzed per-litter vs per-fetus? Is this study-dependent?</li>
+  </ol>
+</div>
+
+
+<footer style="margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85em;">
+  <p>Document maintained alongside code on the <code>bmdx-core</code> branch.
+  Updated after each implementation phase.</p>
+</footer>
+
+<script>
+(function() {
+  const buttons  = document.querySelectorAll('.role-btn');
+  const variants = document.querySelectorAll('.rv');
+
+  // Restore saved role (default to lead for first-time visitors)
+  let activeRole = localStorage.getItem('bmdx-doc-role') || 'lead';
+
+  function applyRole(role) {
+    activeRole = role;
+    localStorage.setItem('bmdx-doc-role', role);
+
+    // Update button active state
+    buttons.forEach(b => b.classList.toggle('active', b.dataset.role === role));
+
+    // Show only the content variant matching the active role
+    variants.forEach(v => v.classList.toggle('active', v.dataset.role === role));
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => applyRole(btn.dataset.role));
+  });
+
+  applyRole(activeRole);
+})();
+</script>
+
+</body>
+</html>
