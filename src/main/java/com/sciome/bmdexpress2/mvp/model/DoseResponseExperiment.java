@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sciome.bmdexpress2.mvp.model.chip.ChipInfo;
 import com.sciome.bmdexpress2.mvp.model.info.AnalysisInfo;
 import com.sciome.bmdexpress2.mvp.model.info.ExperimentDescription;
+import com.sciome.bmdexpress2.mvp.model.probe.EndpointResponse;
 import com.sciome.bmdexpress2.mvp.model.probe.ProbeResponse;
 import com.sciome.bmdexpress2.mvp.model.probe.Treatment;
 import com.sciome.bmdexpress2.mvp.model.refgene.ReferenceGeneAnnotation;
@@ -32,7 +34,11 @@ public class DoseResponseExperiment extends BMDExpressAnalysisDataSet
 	// this will contain doses.
 	private List<Treatment> treatments;
 
-	// this is your dose response matrix
+	// Dose-response matrix: each row is one endpoint (probe or clinical measurement)
+	// with response values across all treatments.
+	// @JsonAlias allows deserialization from either "probeResponses" (legacy genomics)
+	// or "endpointResponses" (new domain-agnostic format).
+	@JsonAlias("endpointResponses")
 	private List<ProbeResponse> probeResponses;
 	private List<ReferenceGeneAnnotation> referenceGeneAnnotations;
 	private ChipInfo chip;
@@ -90,14 +96,49 @@ public class DoseResponseExperiment extends BMDExpressAnalysisDataSet
 		this.treatments = treatments;
 	}
 
+	/**
+	 * @deprecated Use {@link #getEndpointResponses()} for domain-agnostic code.
+	 *             This method remains for genomics-specific callers.
+	 */
+	@Deprecated(forRemoval = false)
 	public List<ProbeResponse> getProbeResponses()
 	{
 		return probeResponses;
 	}
 
+	/**
+	 * @deprecated Use {@link #setEndpointResponses(List)} for domain-agnostic code.
+	 *             This method remains for genomics-specific callers.
+	 */
+	@Deprecated(forRemoval = false)
 	public void setProbeResponses(List<ProbeResponse> probeResponses)
 	{
 		this.probeResponses = probeResponses;
+	}
+
+	/**
+	 * Domain-neutral alias for {@link #getProbeResponses()}.
+	 *
+	 * Returns the dose-response matrix as a list of {@link EndpointResponse}
+	 * objects.  Each entry is one measured endpoint (gene probe, clinical
+	 * measurement, organ weight, etc.) with its response values across all
+	 * treatments.
+	 *
+	 * New domain-agnostic code should prefer this method over getProbeResponses().
+	 */
+	@JsonIgnore
+	public List<? extends EndpointResponse> getEndpointResponses()
+	{
+		return probeResponses;
+	}
+
+	/**
+	 * Domain-neutral alias for {@link #setProbeResponses(List)}.
+	 */
+	@JsonIgnore
+	public void setEndpointResponses(List<ProbeResponse> endpointResponses)
+	{
+		this.probeResponses = endpointResponses;
 	}
 
 	public List<ReferenceGeneAnnotation> getReferenceGeneAnnotations()
@@ -110,14 +151,45 @@ public class DoseResponseExperiment extends BMDExpressAnalysisDataSet
 		this.referenceGeneAnnotations = referenceGeneAnnotations;
 	}
 
+	/**
+	 * @deprecated Use {@link #getPlatform()} for domain-agnostic code.
+	 *             This method remains for genomics-specific callers.
+	 */
+	@Deprecated(forRemoval = false)
 	public ChipInfo getChip()
 	{
 		return chip;
 	}
 
+	/**
+	 * @deprecated Use {@link #setPlatform(ChipInfo)} for domain-agnostic code.
+	 *             This method remains for genomics-specific callers.
+	 */
+	@Deprecated(forRemoval = false)
 	public void setChip(ChipInfo chip)
 	{
 		this.chip = chip;
+	}
+
+	/**
+	 * Domain-neutral alias for {@link #getChip()}.
+	 *
+	 * Returns the platform metadata (microarray chip for genomics, or
+	 * "Clinical Endpoint" / "Generic" for apical data domains).
+	 */
+	@JsonIgnore
+	public ChipInfo getPlatform()
+	{
+		return chip;
+	}
+
+	/**
+	 * Domain-neutral alias for {@link #setChip(ChipInfo)}.
+	 */
+	@JsonIgnore
+	public void setPlatform(ChipInfo platform)
+	{
+		this.chip = platform;
 	}
 
 	public Long getChipCreationDate()

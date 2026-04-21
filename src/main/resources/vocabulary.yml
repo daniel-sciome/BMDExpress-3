@@ -2,12 +2,16 @@
 # These values can be extended or overridden for custom deployments
 
 providers:
+  # Genomics providers — commercial entities or reference databases
   - Affymetrix
   - Agilent
   - BioSpyder
   - RefSeq
   - Ensembl
-  - Clinical Endpoint
+  # Apical provider — in vivo tox study numeric dose-response endpoints
+  - Apical
+  # Observations provider — categorical event data (clinical observations)
+  - Observations
   - Generic
 
 platforms:
@@ -45,10 +49,15 @@ platforms:
   - hg19_ensembl
   - mm10_ensembl
   - rn6_ensembl
-  # Clinical endpoints
+  # Apical platforms — each is a class of in vivo tox study numeric endpoints
+  - Body Weight
+  - Organ Weight
   - Clinical Chemistry
   - Hematology
-  - Organ Weight
+  - Hormones
+  - Tissue Concentration
+  # Observations platforms — categorical event data
+  - Clinical
   - Generic
 
 subjectTypes:
@@ -132,6 +141,17 @@ organs:
   - thymus
   - thyroid
   - uterus
+
+# Data completeness classification.  Describes whether a file/experiment
+# contains raw tox study data (may have gaps from dead/excluded animals)
+# or gap-filled data suitable for BMD modeling.
+#   tox_study      — actual experimental values, may have missing data
+#   inferred       — gap-filled (dose-group averages substituted for missing)
+#   gene_expression — transcriptomics data (always complete, different pipeline)
+dataTypes:
+  - tox_study
+  - inferred
+  - gene_expression
 
 strains:
   rat:

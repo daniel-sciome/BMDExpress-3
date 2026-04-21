@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -98,6 +99,16 @@ public class ExperimentDescription implements Serializable
 		return VocabularyConfig.getInstance().getStrainsForSpecies(species);
 	}
 
+	/**
+	 * Get the list of valid data type classifications from vocabulary.yml.
+	 * Describes data completeness: tox_study (raw, may have gaps),
+	 * inferred (gap-filled for BMD modeling), gene_expression.
+	 */
+	public static List<String> getDataTypeVocabulary()
+	{
+		return VocabularyConfig.getInstance().getDataTypes();
+	}
+
 	// Legacy constants - delegate to methods for backward compatibility
 	// These are kept for existing code that references them directly
 	public static final List<String> PROVIDER_VOCABULARY = getProviderVocabulary();
@@ -135,6 +146,11 @@ public class ExperimentDescription implements Serializable
 	// In vitro specific field
 	private String cellLine;
 
+	// Data completeness classification: "tox_study" (raw, may have gaps),
+	// "inferred" (gap-filled for BMD modeling), or "gene_expression".
+	// Nullable for backward compatibility: old .bm2 files won't have this field.
+	private String dataType;
+
 	// ── Column name constants for table display and export ──
 	// These 8 columns represent the scientifically meaningful metadata fields
 	// that should appear in every table view and export throughout the pipeline.
@@ -163,6 +179,7 @@ public class ExperimentDescription implements Serializable
 	 *
 	 * @return list of 8 column header strings
 	 */
+	@JsonIgnore
 	public List<String> getColumnHeaders() {
 		return Arrays.asList(
 			COL_TEST_ARTICLE, COL_CASRN, COL_SPECIES, COL_STRAIN,
@@ -178,6 +195,7 @@ public class ExperimentDescription implements Serializable
 	 *
 	 * @return list of 8 non-null values matching the column header order
 	 */
+	@JsonIgnore
 	public List<Object> getColumnValues() {
 		// TestArticleIdentifier fields (getName/getCasrn) can themselves be null
 		// even when the testArticle object exists, so we double-check both levels.
@@ -347,11 +365,27 @@ public class ExperimentDescription implements Serializable
 		this.cellLine = cellLine;
 	}
 
+	/**
+	 * Get the data type classification for this experiment.
+	 * One of: "tox_study" (raw data, may have gaps), "inferred" (gap-filled
+	 * for BMD modeling), "gene_expression", or null for legacy .bm2 files.
+	 */
+	public String getDataType()
+	{
+		return dataType;
+	}
+
+	public void setDataType(String dataType)
+	{
+		this.dataType = dataType;
+	}
+
 	// Helper methods
 
 	/**
 	 * Get the experiment type based on subject type
 	 */
+	@JsonIgnore
 	public String getExperimentType()
 	{
 		return subjectType != null ? subjectType : "in vivo";
@@ -360,6 +394,7 @@ public class ExperimentDescription implements Serializable
 	/**
 	 * Check if this is an in vivo experiment
 	 */
+	@JsonIgnore
 	public boolean isInVivo()
 	{
 		return !"in vitro".equals(subjectType);
@@ -368,6 +403,7 @@ public class ExperimentDescription implements Serializable
 	/**
 	 * Check if this is an in vitro experiment
 	 */
+	@JsonIgnore
 	public boolean isInVitro()
 	{
 		return "in vitro".equals(subjectType);
@@ -391,13 +427,15 @@ public class ExperimentDescription implements Serializable
 		       (strain != null && !strain.isEmpty()) ||
 		       (sex != null && !sex.isEmpty()) ||
 		       (organ != null && !organ.isEmpty()) ||
-		       (cellLine != null && !cellLine.isEmpty());
+		       (cellLine != null && !cellLine.isEmpty()) ||
+	       (dataType != null && !dataType.isEmpty());
 	}
 
 	/**
 	 * Get a single-line string suitable for status bar display.
 	 * Fields are separated by " | " delimiter.
 	 */
+	@JsonIgnore
 	public String getStatusBarString()
 	{
 		StringBuilder sb = new StringBuilder();
@@ -431,12 +469,19 @@ public class ExperimentDescription implements Serializable
 			sb.append(" | Cell Line: ").append(cellLine);
 		}
 
+		// Data type classification
+		if (dataType != null && !dataType.isEmpty())
+		{
+			sb.append(" | Data Type: ").append(dataType);
+		}
+
 		return sb.toString();
 	}
 
 	/**
 	 * Get a formatted string representation of the description
 	 */
+	@JsonIgnore
 	public String getFormattedString()
 	{
 		StringBuilder sb = new StringBuilder();
@@ -512,6 +557,11 @@ public class ExperimentDescription implements Serializable
 			sb.append("Article Type: ").append(articleType).append("\n");
 		}
 
+		if (dataType != null && !dataType.isEmpty())
+		{
+			sb.append("Data Type: ").append(dataType).append("\n");
+		}
+
 		return sb.toString();
 	}
 
@@ -542,6 +592,7 @@ public class ExperimentDescription implements Serializable
 		copy.setSex(sex);
 		copy.setOrgan(organ);
 		copy.setCellLine(cellLine);
+		copy.setDataType(dataType);
 
 		return copy;
 	}

@@ -38,6 +38,7 @@ public class VocabularyConfig
 	private List<String> sexes = new ArrayList<>();
 	private List<String> organs = new ArrayList<>();
 	private Map<String, List<String>> strains = new HashMap<>();
+	private List<String> dataTypes = new ArrayList<>();
 
 	/**
 	 * Get singleton instance
@@ -87,9 +88,10 @@ public class VocabularyConfig
 			this.sexes = loaded.sexes != null ? loaded.sexes : new ArrayList<>();
 			this.organs = loaded.organs != null ? loaded.organs : new ArrayList<>();
 			this.strains = loaded.strains != null ? loaded.strains : new HashMap<>();
+			this.dataTypes = loaded.dataTypes != null ? loaded.dataTypes : new ArrayList<>();
 
-			logger.info("Loaded vocabulary configuration: {} species, {} platforms, {} organs",
-					this.species.size(), this.platforms.size(), this.organs.size());
+			logger.info("Loaded vocabulary configuration: {} species, {} platforms, {} organs, {} dataTypes",
+					this.species.size(), this.platforms.size(), this.organs.size(), this.dataTypes.size());
 
 		}
 		catch (Exception e)
@@ -178,6 +180,16 @@ public class VocabularyConfig
 		return Collections.unmodifiableList(strains.getOrDefault(speciesName, List.of()));
 	}
 
+	/**
+	 * Get the list of valid data type classifications.
+	 * Describes data completeness: tox_study (raw, may have gaps),
+	 * inferred (gap-filled for BMD modeling), gene_expression.
+	 */
+	public List<String> getDataTypes()
+	{
+		return Collections.unmodifiableList(dataTypes);
+	}
+
 	// Setters (required for Jackson deserialization)
 
 	public void setProviders(List<String> providers)
@@ -243,5 +255,10 @@ public class VocabularyConfig
 	public void setStrains(Map<String, List<String>> strains)
 	{
 		this.strains = strains;
+	}
+
+	public void setDataTypes(List<String> dataTypes)
+	{
+		this.dataTypes = dataTypes;
 	}
 }

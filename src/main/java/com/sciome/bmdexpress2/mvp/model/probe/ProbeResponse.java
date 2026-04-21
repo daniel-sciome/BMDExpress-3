@@ -13,9 +13,21 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.sciome.bmdexpress2.mvp.model.BMDExpressAnalysisRow;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+/**
+ * One row of dose-response data: an endpoint (probe) paired with its measured
+ * values across all treatments in the experiment.
+ *
+ * Implements {@link EndpointResponse} to provide domain-neutral access.
+ * Existing genomics code uses {@code getProbe()}.  New domain-agnostic code
+ * should prefer {@code getEndpoint()} via the {@link EndpointResponse} interface.
+ *
+ * Response values are stored as a byte blob ({@code responsesBlob}) for efficient
+ * serialization, and reconstituted into a {@code List<Float>} and {@code float[]}
+ * cache on deserialization.
+ */
 @JsonTypeInfo(use = Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@ref")
-public class ProbeResponse extends BMDExpressAnalysisRow implements Serializable
+public class ProbeResponse extends BMDExpressAnalysisRow implements Serializable, EndpointResponse
 {
 
 	/**
@@ -44,7 +56,23 @@ public class ProbeResponse extends BMDExpressAnalysisRow implements Serializable
 
 	private Long						id;
 
+	/**
+	 * @deprecated Use {@link #getEndpoint()} for domain-agnostic code.
+	 *             This method remains for genomics-specific callers.
+	 */
+	@Deprecated(forRemoval = false)
 	public Probe getProbe()
+	{
+		return probe;
+	}
+
+	/**
+	 * Domain-neutral alias for {@link #getProbe()}.
+	 * Returns the endpoint (probe) this response belongs to.
+	 */
+	@Override
+	@JsonIgnore
+	public Endpoint getEndpoint()
 	{
 		return probe;
 	}
@@ -60,6 +88,11 @@ public class ProbeResponse extends BMDExpressAnalysisRow implements Serializable
 		this.id = id;
 	}
 
+	/**
+	 * @deprecated Use {@link Endpoint} interface for domain-agnostic code.
+	 *             This method remains for genomics-specific callers.
+	 */
+	@Deprecated(forRemoval = false)
 	public void setProbe(Probe probe)
 	{
 		this.probe = probe;

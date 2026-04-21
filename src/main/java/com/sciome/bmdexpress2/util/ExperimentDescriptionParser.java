@@ -63,6 +63,7 @@ public class ExperimentDescriptionParser {
 	private static final String[] ARTICLE_TYPE_KEYS = {"article type", "test article type"};
 	private static final String[] PLATFORM_KEYS = {"platform", "chip"};
 	private static final String[] PROVIDER_KEYS = {"provider"};
+	private static final String[] DATA_TYPE_KEYS = {"data type", "datatype", "data_type"};
 
 	// Common sex keywords
 	private static final Set<String> SEX_KEYWORDS = new HashSet<>(Arrays.asList(
@@ -341,6 +342,13 @@ public class ExperimentDescriptionParser {
 			ExperimentDescription.PROVIDER_VOCABULARY,
 			desc::setProvider,
 			PROVIDER_KEYS);
+
+		// Parse data type classification — tox_study, inferred, or gene_expression.
+		// Validated against the dataTypes vocabulary from vocabulary.yml.
+		String dataType = parseVocabularyField(metadata, issues, "Data Type",
+			ExperimentDescription.getDataTypeVocabulary(),
+			desc::setDataType,
+			DATA_TYPE_KEYS);
 
 		// === Run Easy Rules validation for dependencies and applicability ===
 		MetadataFacts facts = new MetadataFacts()

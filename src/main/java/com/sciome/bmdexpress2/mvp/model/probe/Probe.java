@@ -7,9 +7,17 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+/**
+ * A measured quantity in a dose-response experiment — originally a microarray
+ * probe, now generalized to any endpoint (clinical measurement, organ weight,
+ * gene expression target, etc.) via the {@link Endpoint} interface.
+ *
+ * Existing genomics code uses {@code Probe} directly.  New domain-agnostic code
+ * should prefer the {@link Endpoint} interface for type declarations.
+ */
 @JsonTypeInfo(use = Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@ref")
-public class Probe implements Serializable
+public class Probe implements Serializable, Endpoint
 {
 	/**
 	 * 
